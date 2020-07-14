@@ -1,0 +1,487 @@
+@import url('https://fonts.googleapis.com/css?family=Bebas+Neue|Source+Sans+Pro:wght@400;600&display=swap');
+
+@import 'sheet.scss';
+@import 'navigation.scss';
+
+/* Sheet grid */
+.sheet-grid {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 2rem;
+}
+
+.sheet-grid__item--ability-scores {
+  grid-column: 1;
+  grid-row: 1 / 4;
+}
+
+.sheet-grid__item--skills {
+  grid-column: 1;
+  grid-row: 4 / 6;
+}
+
+.sheet-grid__item--initiative {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.sheet-grid__item--health-and-resolve {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.sheet-grid__item--armor-class {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.sheet-grid__item--saving-throws {
+  grid-column: 2;
+  grid-row: 4;
+}
+
+.sheet-grid__item--attack-bonuses {
+  grid-column: 2;
+  grid-row: 5;
+}
+
+/* Sheet Wrapper */
+.sheet-section-block {
+  margin: 3.25rem 0 0 1rem;
+  border: 2px solid #3893cd;
+  padding: 1rem;
+
+  &--stand-alone {
+    align-items: flex-end;
+    border: 0;
+    column-gap: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: -1.1rem 0 0;
+    padding: 0;
+
+    .sheet-section-block__heading {
+      height: 36px;
+      margin: 0;
+      width: 100%;
+    }
+
+    .sheet-section-block__row {
+      display: grid;
+      column-gap: 0.5rem;
+      grid-template-columns: 1fr 6px 1fr 6px 1fr;
+
+      &--heading {
+        .sheet-section-block__label {
+          font-size: 1rem;
+          line-height: 1;
+          margin: 0 0 0.5rem;
+          text-align: center;
+
+          &--total {
+            grid-column: 1;
+          }
+
+          &--dexterity-mod {
+            grid-column: 3;
+          }
+
+          &--misc {
+            grid-column: 5;
+          }
+        }
+      }
+    }
+  }
+
+  &__label {
+    font: bold 1.2rem 'Source Sans Pro';
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__operation {
+    font: 1.5rem/3rem 'Source Sans Pro';
+    text-align: center;
+  }
+}
+
+.sheet-section-block__heading {
+  background-color: #245680;
+  background-image: url('https://raw.githubusercontent.com/primarilysnark/roll20-starfinder-character-sheet/master/assets/header-background.svg');
+  border: 2px solid #3893cd;
+  box-sizing: border-box;
+  color: white;
+  display: block;
+  font-family: 'Bebas Neue';
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1;
+  margin: calc(-4.25rem - 4px) 0 1rem -2rem;
+  padding: 0.75rem 1.75rem 0.5rem 1.75rem;
+  position: relative;
+  text-transform: uppercase;
+  width: 50%;
+}
+
+.sheet-section-block__heading:before {
+  background: white;
+  border-right: 2px solid #3893cd;
+  bottom: calc(-0.75rem - 1px);
+  content: '';
+  height: 1.5rem;
+  left: calc(-0.75rem - 2px);
+  position: absolute;
+  transform: rotate(-45deg);
+  width: 1.5rem;
+  z-index: 0;
+}
+
+.sheet-section-block__heading:after {
+  background: white;
+  border-right: 2px solid #3893cd;
+  top: calc(-1rem - 2px);
+  content: '';
+  height: 2rem;
+  right: calc(-1rem - 2px);
+  position: absolute;
+  transform: rotate(135deg);
+  width: 2rem;
+  z-index: 0;
+}
+
+.sheet-ability-score-grid {
+  &__row {
+    display: grid;
+    column-gap: 1rem;
+    grid-template-columns: 80px 2fr repeat(3, 1fr);
+    margin-bottom: 1rem;
+
+    &--heading {
+      grid-template-columns: 2fr repeat(3, 1fr);
+      margin-left: calc(80px + 1rem);
+
+      .sheet-ability-score-grid__label {
+        font-size: 1rem;
+        line-height: 1;
+        margin: 0 0 -0.25rem;
+        text-align: center;
+      }
+    }
+  }
+
+  &__label {
+    font: bold 1.2rem 'Source Sans Pro';
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__abbreviation {
+    background: #000000;
+    border-radius: 4px;
+    color: #ffffff;
+    font: bold 1.5rem 'Source Sans Pro';
+    padding: 4px 0;
+    text-align: center;
+  }
+}
+
+.sheet-saving-throws-grid {
+  &__row {
+    display: grid;
+    column-gap: 1rem;
+    grid-template-columns: 120px 1fr 4px 1fr 4px 1fr 4px 1fr;
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &--heading {
+      grid-template-columns: 1fr 4px 1fr 4px 1fr 4px 1fr;
+      margin-left: calc(120px + 1rem);
+
+      .sheet-saving-throws-grid__label {
+        font-size: 1rem;
+        line-height: 1;
+        margin: 0 0 -0.25rem;
+        text-align: center;
+
+        &--total {
+          grid-column: 1;
+        }
+
+        &--base-save {
+          grid-column: 3;
+        }
+
+        &--ability-mod {
+          grid-column: 4 / 7;
+        }
+      }
+    }
+  }
+
+  &__label {
+    font: bold 1.2rem 'Source Sans Pro';
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__abbreviation {
+    background: #000000;
+    border-radius: 4px;
+    color: #ffffff;
+    font: bold 1.5rem 'Source Sans Pro';
+    padding: 4px 0;
+    text-align: center;
+  }
+
+  &__operation {
+    font: 1.5rem/3rem 'Source Sans Pro';
+    text-align: center;
+  }
+}
+
+.sheet-attack-bonuses-grid {
+  &__row {
+    align-items: center;
+    display: grid;
+    column-gap: 1rem;
+    grid-template-columns: 120px 1fr 4px 1fr 4px 1fr 4px 1fr;
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &--heading {
+      grid-template-columns: 1fr 4px 1fr 4px 1fr 4px 1fr;
+      margin-left: calc(120px + 1rem);
+
+      .sheet-attack-bonuses-grid__label {
+        font-size: 1rem;
+        line-height: 1;
+        margin: 0 0 -0.25rem;
+        text-align: center;
+
+        &--total {
+          grid-column: 1;
+        }
+
+        &--base-save {
+          grid-column: 3;
+        }
+
+        &--ability-mod {
+          grid-column: 4 / 7;
+        }
+      }
+    }
+
+    &:not(.sheet-attack-bonuses-grid__row--heading) {
+      border-bottom: 1px solid #aaaaaa;
+      padding-bottom: 1rem;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &__label {
+    font: bold 1.2rem 'Source Sans Pro';
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__abbreviation {
+    background: #000000;
+    border-radius: 4px;
+    color: #ffffff;
+    font: bold 1.5rem 'Source Sans Pro';
+    padding: 4px 0;
+    text-align: center;
+  }
+
+  &__operation {
+    font: 1.5rem/3rem 'Source Sans Pro';
+    text-align: center;
+  }
+}
+
+.sheet-skill-grid {
+  &__row {
+    display: grid;
+    column-gap: 0.5rem;
+    grid-template-columns: 16px 140px 1fr 6px 1fr 6px 1fr 6px 1fr 6px 1fr;
+    margin-bottom: 0.5rem;
+
+    &--heading {
+      align-items: flex-end;
+      grid-template-columns: 16px 140px 1fr 6px 1fr 6px 1fr 6px 1fr 6px 1fr;
+
+      .sheet-skill-grid__label {
+        font-size: 1rem;
+        line-height: 1;
+        text-align: center;
+
+        &--class-skill {
+          grid-column: 1;
+        }
+
+        &--total {
+          grid-column: 3;
+        }
+
+        &--ranks {
+          grid-column: 5;
+        }
+
+        &--class-bonus {
+          grid-column: 7;
+        }
+
+        &--ability-mod {
+          grid-column: 8 / 11;
+        }
+
+        &--misc {
+          grid-column: 11;
+        }
+      }
+    }
+  }
+
+  &__checkbox {
+    font: 1.5rem/3rem 'Source Sans Pro';
+  }
+
+  &__label {
+    font: bold 1.2rem/3rem 'Source Sans Pro';
+    text-transform: uppercase;
+  }
+
+  &__operation {
+    font: 1.5rem/3rem 'Source Sans Pro';
+    text-align: center;
+  }
+}
+
+/* Health and resolve class grid */
+.sheet-health-and-resolve-grid {
+  &__row {
+    display: grid;
+    column-gap: 1rem;
+    grid-template-columns: 40px 70px 1fr 1fr;
+    row-gap: 4rem;
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &--heading {
+      margin-left: calc(120px + 1rem);
+      grid-template-columns: repeat(2, 1fr);
+
+      .sheet-health-and-resolve-grid__label {
+        font-size: 1rem;
+        line-height: 1;
+        margin: 0 0 -0.25rem;
+        text-align: center;
+      }
+    }
+  }
+
+  &__abbreviation {
+    background: #000000;
+    border-radius: 4px;
+    color: #ffffff;
+    font: bold 1.5rem/3rem 'Source Sans Pro';
+    text-align: center;
+  }
+
+  &__label {
+    font: bold 1.2rem/3rem 'Source Sans Pro';
+    margin: 0 -0.5rem;
+    text-transform: uppercase;
+  }
+}
+
+/* Armor class grid */
+.sheet-armor-class-grid__row {
+  align-items: flex-end;
+  display: grid;
+  grid-template-columns: 40px 80px 1fr 8px 16px 8px 1fr 8px 1fr 8px 1fr;
+  column-gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sheet-armor-class-grid__row--heading {
+  margin: -0.4rem 0 0.5rem;
+}
+
+.sheet-armor-class-grid__row:last-child {
+  margin-bottom: 0;
+}
+
+.sheet-armor-class-grid__row--spacer {
+  border-top: 1px solid #aaaaaa;
+  padding-top: 1rem;
+}
+
+.sheet-armor-class-grid__abbreviation {
+  background: #000000;
+  border-radius: 4px;
+  color: #ffffff;
+  font: bold 1.5rem/3rem 'Source Sans Pro';
+  text-align: center;
+}
+
+.sheet-armor-class-grid__label, .sheet-armor-class-grid__combined-label {
+  font: 1.2rem 'Source Sans Pro';
+  padding: 0 2px;
+  text-transform: uppercase;
+}
+
+.sheet-armor-class-grid__label--total {
+  font-size: 1rem;
+  grid-column: 3;
+  text-align: center;
+}
+
+.sheet-armor-class-grid__label--armor-bonus {
+  font-size: 1rem;
+  grid-column: 7;
+  text-align: center;
+}
+
+.sheet-armor-class-grid__label--dex-mod {
+  font-size: 1rem;
+  grid-column: 8/11;
+  text-align: center;
+}
+
+.sheet-armor-class-grid__label--misc-mod {
+  font-size: 1rem;
+  grid-column: 11;
+  text-align: center;
+}
+
+.sheet-armor-class-grid__combined-label {
+  grid-column: 1 / 3;
+}
+
+.sheet-armor-class-grid__placeholder, .sheet-armor-class-grid__operation {
+  font: 1.5rem/3rem 'Source Sans Pro';
+  text-align: center;
+}
+
+.sheet-grid-input {
+  box-sizing: border-box;
+  font: 1.5rem 'Source Sans Pro';
+  text-align: center;
+  width: 100%;
+}

@@ -1,0 +1,22 @@
+{
+  "name": "starfinder-character-sheet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node ./bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/primarilysnark/roll20-starfinder-character-sheet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/primarilysnark/roll20-starfinder-character-sheet/issues"
+  },
+  "homepage": "https://github.com/primarilysnark/roll20-starfinder-character-sheet#readme",
+  "dependencies": {
+    "node-sass": "^4.14.1"
+  }
+}
