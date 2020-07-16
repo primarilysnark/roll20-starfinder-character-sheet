@@ -1,8 +1,8 @@
 {
   "name": "starfinder-character-sheet",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A Starfinder character sheet for Roll20",
+  "main": "./bin/sheet.js",
   "scripts": {
     "build": "npm run build-html && npm run build-styles",
     "build-html": "node ./bin/sheet.js",
@@ -12,8 +12,8 @@
     "type": "git",
     "url": "git+https://github.com/primarilysnark/roll20-starfinder-character-sheet.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "PrimarilySnark <starkey.joshua@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/primarilysnark/roll20-starfinder-character-sheet/issues"
   },
