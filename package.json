@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npm run build-html && npm run build-styles",
     "build-html": "node ./bin/sheet.js",
-    "build-styles": "node ./bin/styles.js"
+    "build-styles": "node ./bin/styles.js",
+    "lint": "eslint \"./src/**/*.{js,jsx}\""
   },
   "repository": {
     "type": "git",
@@ -20,9 +21,15 @@
   "homepage": "https://github.com/primarilysnark/roll20-starfinder-character-sheet#readme",
   "dependencies": {
     "@babel/core": "^7.10.5",
+    "babel-eslint": "^10.1.0",
     "babel-transform-roll20": "^1.0.1",
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
     "node-jsx": "^0.13.3",
     "node-sass": "^4.14.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }

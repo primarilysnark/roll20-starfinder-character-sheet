@@ -1,4 +1,5 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 
 function NavItem({ isActive, children }) {
   return (
@@ -9,6 +10,11 @@ function NavItem({ isActive, children }) {
     </li>
   )
 }
+
+NavItem.propTypes = {
+  isActive: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 module.exports = function Navigation() {
   return (

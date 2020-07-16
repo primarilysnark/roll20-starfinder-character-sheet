@@ -1,0 +1,28 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "globals": {
+    "getAttrs": true,
+    "setAttrs": true,
+    "on": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }  
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
