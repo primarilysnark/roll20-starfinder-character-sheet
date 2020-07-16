@@ -1,10 +1,14 @@
-const React = require('react');
-const PropTypes = require('prop-types');
+const React = require('react')
+const PropTypes = require('prop-types')
 
 function NavItem({ isActive, children }) {
   return (
     <li>
-      <button className={`navigation-option ${isActive ? 'navigation-option--active' : ''}`}>
+      <button
+        className={`navigation-option ${
+          isActive ? 'navigation-option--active' : ''
+        }`}
+      >
         {children}
       </button>
     </li>
@@ -14,7 +18,7 @@ function NavItem({ isActive, children }) {
 NavItem.propTypes = {
   isActive: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
-};
+}
 
 module.exports = function Navigation() {
   return (
@@ -27,5 +31,5 @@ module.exports = function Navigation() {
         <NavItem>Options</NavItem>
       </ul>
     </nav>
-  );
+  )
 }

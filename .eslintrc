@@ -10,7 +10,8 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "prettier"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -19,6 +20,12 @@
       "jsx": true,
       "modules": true
     }  
+  },
+  "plugins": [
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": "error"
   },
   "settings": {
     "react": {

@@ -1,5 +1,5 @@
-import { ChangeNotifier } from './change-notifier';
-import * as formatters from './utils/formatter';
+import { ChangeNotifier } from './change-notifier'
+import * as formatters from './utils/formatter'
 
 new ChangeNotifier()
   .register('strength_base', {
@@ -16,19 +16,19 @@ new ChangeNotifier()
   })
   .register('strength_mod', {
     calculate: ({ strength_base, strength_penalty, strength_drain }) => {
-      console.log(strength_base, strength_drain, strength_penalty);
+      console.log(strength_base, strength_drain, strength_penalty)
 
-      let adjustedScore = strength_base;
+      let adjustedScore = strength_base
 
       if (strength_penalty) {
-        adjustedScore = adjustedScore - 2 * Math.floor(strength_penalty / 2);
+        adjustedScore = adjustedScore - 2 * Math.floor(strength_penalty / 2)
       }
 
       if (strength_drain) {
-        adjustedScore = adjustedScore - strength_drain;
+        adjustedScore = adjustedScore - strength_drain
       }
 
-      return Math.floor((adjustedScore - 10) / 2);
+      return Math.floor((adjustedScore - 10) / 2)
     },
     dependencies: ['strength_base', 'strength_penalty', 'strength_drain'],
     format: formatters.formatModifier,
@@ -40,4 +40,4 @@ new ChangeNotifier()
     format: formatters.formatModifier,
     parse: formatters.parseModifier,
   })
-  .listen();
+  .listen()

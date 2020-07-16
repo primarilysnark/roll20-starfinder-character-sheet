@@ -1,6 +1,6 @@
-const React = require('react');
+const React = require('react')
 
-const Navigation = require('./navigation');
+const Navigation = require('./navigation')
 
 module.exports = function Example() {
   return (
@@ -73,14 +73,14 @@ module.exports = function Example() {
                 </select>
               </label>
             </div>
-      
+
             <div className="character-grid__field">
               <label>
                 <span>Deity</span>
                 <input className="grid-input" type="text" />
               </label>
             </div>
-      
+
             <div className="character-grid__field">
               <label>
                 <span>Player</span>
@@ -108,16 +108,32 @@ module.exports = function Example() {
                 Strength
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_strength_base" defaultValue="10" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_strength_base"
+                  defaultValue="10"
+                />
               </div>
               <div className="ability-score-grid__input">
-                <span className="grid-input grid-input--disabled" name="attr_strength_mod"></span>
+                <span
+                  className="grid-input grid-input--disabled"
+                  name="attr_strength_mod"
+                ></span>
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_strength_penalty" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_strength_penalty"
+                />
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_strength_drain" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_strength_drain"
+                />
               </div>
             </div>
 
@@ -127,16 +143,31 @@ module.exports = function Example() {
                 Dexterity
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_dexterity_base" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_dexterity_base"
+                />
               </div>
               <div className="ability-score-grid__input">
-                <span className="grid-input grid-input--disabled" name="attr_dexterity_mod"></span>
+                <span
+                  className="grid-input grid-input--disabled"
+                  name="attr_dexterity_mod"
+                ></span>
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_dexterity_penalty" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_dexterity_penalty"
+                />
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_dexterity_drain" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_dexterity_drain"
+                />
               </div>
             </div>
 
@@ -146,16 +177,31 @@ module.exports = function Example() {
                 Constitution
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_constitution_base" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_constitution_base"
+                />
               </div>
               <div className="ability-score-grid__input">
-                <span className="grid-input grid-input--disabled" name="attr_constitution_mod"></span>
+                <span
+                  className="grid-input grid-input--disabled"
+                  name="attr_constitution_mod"
+                ></span>
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_constitution_penalty" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_constitution_penalty"
+                />
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_constitution_drain" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_constitution_drain"
+                />
               </div>
             </div>
 
@@ -165,16 +211,31 @@ module.exports = function Example() {
                 Intelligence
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_intelligence_base" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_intelligence_base"
+                />
               </div>
               <div className="ability-score-grid__input">
-                <span className="grid-input grid-input--disabled" name="attr_intelligence_mod"></span>
+                <span
+                  className="grid-input grid-input--disabled"
+                  name="attr_intelligence_mod"
+                ></span>
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_intelligence_penalty" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_intelligence_penalty"
+                />
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_intelligence_drain" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_intelligence_drain"
+                />
               </div>
             </div>
 
@@ -184,16 +245,31 @@ module.exports = function Example() {
                 Wisdom
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_wisdom_base" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_wisdom_base"
+                />
               </div>
               <div className="ability-score-grid__input">
-                <span className="grid-input grid-input--disabled" name="attr_wisdom_mod"></span>
+                <span
+                  className="grid-input grid-input--disabled"
+                  name="attr_wisdom_mod"
+                ></span>
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_wisdom_penalty" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_wisdom_penalty"
+                />
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_wisdom_drain" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_wisdom_drain"
+                />
               </div>
             </div>
 
@@ -203,16 +279,31 @@ module.exports = function Example() {
                 Charisma
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_charisma_base" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_charisma_base"
+                />
               </div>
               <div className="ability-score-grid__input">
-                <span className="grid-input grid-input--disabled" name="attr_charisma_mod"></span>
+                <span
+                  className="grid-input grid-input--disabled"
+                  name="attr_charisma_mod"
+                ></span>
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_charisma_penalty" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_charisma_penalty"
+                />
               </div>
               <div className="ability-score-grid__input">
-                <input className="grid-input" type="text" name="attr_charisma_drain" />
+                <input
+                  className="grid-input"
+                  type="text"
+                  name="attr_charisma_drain"
+                />
               </div>
             </div>
           </div>
@@ -222,12 +313,24 @@ module.exports = function Example() {
           <h2 className="section-block__heading">Skills</h2>
           <div className="skill-grid">
             <div className="skill-grid__row skill-grid__row--heading">
-              <div className="skill-grid__label skill-grid__label--class-skill">Class Skill</div>
-              <div className="skill-grid__label skill-grid__label--total">Total</div>
-              <div className="skill-grid__label skill-grid__label--ranks">Ranks</div>
-              <div className="skill-grid__label skill-grid__label--class-bonus">Insight Bonus</div>
-              <div className="skill-grid__label skill-grid__label--ability-mod">Ability Mod</div>
-              <div className="skill-grid__label skill-grid__label--misc">Misc</div>
+              <div className="skill-grid__label skill-grid__label--class-skill">
+                Class Skill
+              </div>
+              <div className="skill-grid__label skill-grid__label--total">
+                Total
+              </div>
+              <div className="skill-grid__label skill-grid__label--ranks">
+                Ranks
+              </div>
+              <div className="skill-grid__label skill-grid__label--class-bonus">
+                Insight Bonus
+              </div>
+              <div className="skill-grid__label skill-grid__label--ability-mod">
+                Ability Mod
+              </div>
+              <div className="skill-grid__label skill-grid__label--misc">
+                Misc
+              </div>
             </div>
 
             <div className="skill-grid__row">
@@ -335,7 +438,10 @@ module.exports = function Example() {
             </div>
 
             <div className="skill-grid__notes">
-              <div className="skill-grid__label">* Trained only skill <span className="spacer"></span> ¤ Armor check penalty applies</div>
+              <div className="skill-grid__label">
+                * Trained only skill <span className="spacer"></span> ¤ Armor
+                check penalty applies
+              </div>
             </div>
           </div>
         </div>
@@ -344,9 +450,15 @@ module.exports = function Example() {
           <h2 className="section-block__heading">Initiative</h2>
           <div className="section-block__grid">
             <div className="section-block__row section-block__row--heading">
-              <div className="section-block__label section-block__label--total">Total</div>
-              <div className="section-block__label section-block__label--dexterity-mod">Dex Mod</div>
-              <div className="section-block__label section-block__label--misc">Misc</div>
+              <div className="section-block__label section-block__label--total">
+                Total
+              </div>
+              <div className="section-block__label section-block__label--dexterity-mod">
+                Dex Mod
+              </div>
+              <div className="section-block__label section-block__label--misc">
+                Misc
+              </div>
             </div>
 
             <div className="section-block__row">
@@ -412,10 +524,18 @@ module.exports = function Example() {
           <h2 className="section-block__heading">Armor Class</h2>
           <div className="armor-class-grid">
             <div className="armor-class-grid__row armor-class-grid__row--heading">
-              <div className="armor-class-grid__label armor-class-grid__label--total">Total</div>
-              <div className="armor-class-grid__label armor-class-grid__label--armor-bonus">Armor</div>
-              <div className="armor-class-grid__label armor-class-grid__label--dex-mod">Dex Mod</div>
-              <div className="armor-class-grid__label armor-class-grid__label--misc-mod">Misc</div>
+              <div className="armor-class-grid__label armor-class-grid__label--total">
+                Total
+              </div>
+              <div className="armor-class-grid__label armor-class-grid__label--armor-bonus">
+                Armor
+              </div>
+              <div className="armor-class-grid__label armor-class-grid__label--dex-mod">
+                Dex Mod
+              </div>
+              <div className="armor-class-grid__label armor-class-grid__label--misc-mod">
+                Misc
+              </div>
             </div>
 
             <div className="armor-class-grid__row">
@@ -463,7 +583,9 @@ module.exports = function Example() {
             </div>
 
             <div className="armor-class-grid__row armor-class-grid__row--spacer">
-              <div className="armor-class-grid__combined-label">AC vs. Combat Maneuvers</div>
+              <div className="armor-class-grid__combined-label">
+                AC vs. Combat Maneuvers
+              </div>
               <div className="armor-class-grid__input">
                 <input className="grid-input" disabled type="text" />
               </div>
@@ -471,7 +593,12 @@ module.exports = function Example() {
               <div className="armor-class-grid__placeholder">8</div>
               <div className="armor-class-grid__operation">+</div>
               <div className="armor-class-grid__input">
-                <input className="grid-input" disabled type="text" defaultValue="KAC" />
+                <input
+                  className="grid-input"
+                  disabled
+                  type="text"
+                  defaultValue="KAC"
+                />
               </div>
             </div>
           </div>
@@ -481,15 +608,25 @@ module.exports = function Example() {
           <h2 className="section-block__heading">Saving Throws</h2>
           <div className="saving-throws-grid">
             <div className="saving-throws-grid__row saving-throws-grid__row--heading">
-              <div className="saving-throws-grid__label saving-throws-grid__label--total">Total</div>
-              <div className="saving-throws-grid__label saving-throws-grid__label--base-save">Base</div>
-              <div className="saving-throws-grid__label saving-throws-grid__label--ability-mod">Ability Mod</div>
-              <div className="saving-throws-grid__label saving-throws-grid__label--misc">Misc</div>
+              <div className="saving-throws-grid__label saving-throws-grid__label--total">
+                Total
+              </div>
+              <div className="saving-throws-grid__label saving-throws-grid__label--base-save">
+                Base
+              </div>
+              <div className="saving-throws-grid__label saving-throws-grid__label--ability-mod">
+                Ability Mod
+              </div>
+              <div className="saving-throws-grid__label saving-throws-grid__label--misc">
+                Misc
+              </div>
             </div>
 
             <div className="saving-throws-grid__row">
               <div className="saving-throws-grid__label">
-                <div className="saving-throws-grid__abbreviation">Fortitude</div>
+                <div className="saving-throws-grid__abbreviation">
+                  Fortitude
+                </div>
                 Constitution
               </div>
               <div className="saving-throws-grid__input">
@@ -559,10 +696,18 @@ module.exports = function Example() {
           <h2 className="section-block__heading">Attack Bonuses</h2>
           <div className="attack-bonuses-grid">
             <div className="attack-bonuses-grid__row attack-bonuses-grid__row--heading">
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--total">Total</div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--base-save">BAB</div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--ability-mod">Strength Mod</div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--misc">Misc</div>
+              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--total">
+                Total
+              </div>
+              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--base-save">
+                BAB
+              </div>
+              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--ability-mod">
+                Strength Mod
+              </div>
+              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--misc">
+                Misc
+              </div>
             </div>
 
             <div className="attack-bonuses-grid__row">
@@ -585,10 +730,18 @@ module.exports = function Example() {
             </div>
 
             <div className="attack-bonuses-grid__row attack-bonuses-grid__row--heading">
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--total">Total</div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--base-save">BAB</div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--ability-mod">Dexterity Mod</div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--misc">Misc</div>
+              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--total">
+                Total
+              </div>
+              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--base-save">
+                BAB
+              </div>
+              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--ability-mod">
+                Dexterity Mod
+              </div>
+              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--misc">
+                Misc
+              </div>
             </div>
 
             <div className="attack-bonuses-grid__row">
@@ -611,10 +764,18 @@ module.exports = function Example() {
             </div>
 
             <div className="attack-bonuses-grid__row attack-bonuses-grid__row--heading">
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--total">Total</div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--base-save">BAB</div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--ability-mod">Strength Mod</div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--misc">Misc</div>
+              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--total">
+                Total
+              </div>
+              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--base-save">
+                BAB
+              </div>
+              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--ability-mod">
+                Strength Mod
+              </div>
+              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--misc">
+                Misc
+              </div>
             </div>
 
             <div className="attack-bonuses-grid__row">

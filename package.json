@@ -7,7 +7,8 @@
     "build": "npm run build-html && npm run build-styles",
     "build-html": "node ./bin/sheet.js",
     "build-styles": "node ./bin/styles.js",
-    "lint": "eslint \"./src/**/*.{js,jsx}\""
+    "lint": "eslint \"./src/**/*.{js,jsx}\"",
+    "format": "prettier --write \"./src/**/*.{js,jsx}\""
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "eslint-plugin-react": "^7.20.3",
     "node-jsx": "^0.13.3",
     "node-sass": "^4.14.1",
+    "prettier": "^2.0.5",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
