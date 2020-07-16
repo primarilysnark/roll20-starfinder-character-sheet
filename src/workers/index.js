@@ -17,7 +17,7 @@ const commonFormats = {
         adjustedScore = adjustedScore - drain
       }
 
-      return adjustedScore
+      return Math.max(adjustedScore, 0)
     },
     dependencies: [
       `${abilityScoreName}_base`,
