@@ -1,6 +1,8 @@
 const React = require('react')
 
+const AbilityScoreGrid = require('./ability-score-grid')
 const Navigation = require('./navigation')
+const SectionBlock = require('./section-block')
 
 module.exports = function Example() {
   return (
@@ -92,222 +94,48 @@ module.exports = function Example() {
       </div>
 
       <div className="grid">
-        <div className="grid__item--ability-scores section-block">
-          <h2 className="section-block__heading">Ability Scores</h2>
-          <div className="ability-score-grid">
-            <div className="ability-score-grid__row ability-score-grid__row--heading">
-              <div className="ability-score-grid__label">Score</div>
-              <div className="ability-score-grid__label">Modifier</div>
-              <div className="ability-score-grid__label">Penalty</div>
-              <div className="ability-score-grid__label">Drain</div>
-            </div>
+        <SectionBlock
+          className="grid__item--ability-scores"
+          title="Ability Scores"
+        >
+          <AbilityScoreGrid>
+            <AbilityScoreGrid.Row
+              abbreviation="STR"
+              name="Strength"
+              attribute="strength"
+            />
 
-            <div className="ability-score-grid__row">
-              <div className="ability-score-grid__label">
-                <div className="ability-score-grid__abbreviation">STR</div>
-                Strength
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_strength_base"
-                  defaultValue="10"
-                />
-              </div>
-              <div className="ability-score-grid__input">
-                <span
-                  className="grid-input grid-input--disabled"
-                  name="attr_strength_mod"
-                ></span>
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_strength_penalty"
-                />
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_strength_drain"
-                />
-              </div>
-            </div>
+            <AbilityScoreGrid.Row
+              abbreviation="DEX"
+              name="Dexterity"
+              attribute="dexterity"
+            />
 
-            <div className="ability-score-grid__row">
-              <div className="ability-score-grid__label">
-                <div className="ability-score-grid__abbreviation">DEX</div>
-                Dexterity
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_dexterity_base"
-                />
-              </div>
-              <div className="ability-score-grid__input">
-                <span
-                  className="grid-input grid-input--disabled"
-                  name="attr_dexterity_mod"
-                ></span>
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_dexterity_penalty"
-                />
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_dexterity_drain"
-                />
-              </div>
-            </div>
+            <AbilityScoreGrid.Row
+              abbreviation="CON"
+              name="Constitution"
+              attribute="constitution"
+            />
 
-            <div className="ability-score-grid__row">
-              <div className="ability-score-grid__label">
-                <div className="ability-score-grid__abbreviation">CON</div>
-                Constitution
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_constitution_base"
-                />
-              </div>
-              <div className="ability-score-grid__input">
-                <span
-                  className="grid-input grid-input--disabled"
-                  name="attr_constitution_mod"
-                ></span>
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_constitution_penalty"
-                />
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_constitution_drain"
-                />
-              </div>
-            </div>
+            <AbilityScoreGrid.Row
+              abbreviation="INT"
+              name="Intelligence"
+              attribute="intelligence"
+            />
 
-            <div className="ability-score-grid__row">
-              <div className="ability-score-grid__label">
-                <div className="ability-score-grid__abbreviation">INT</div>
-                Intelligence
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_intelligence_base"
-                />
-              </div>
-              <div className="ability-score-grid__input">
-                <span
-                  className="grid-input grid-input--disabled"
-                  name="attr_intelligence_mod"
-                ></span>
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_intelligence_penalty"
-                />
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_intelligence_drain"
-                />
-              </div>
-            </div>
+            <AbilityScoreGrid.Row
+              abbreviation="WIS"
+              name="Wisdom"
+              attribute="wisdom"
+            />
 
-            <div className="ability-score-grid__row">
-              <div className="ability-score-grid__label">
-                <div className="ability-score-grid__abbreviation">WIS</div>
-                Wisdom
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_wisdom_base"
-                />
-              </div>
-              <div className="ability-score-grid__input">
-                <span
-                  className="grid-input grid-input--disabled"
-                  name="attr_wisdom_mod"
-                ></span>
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_wisdom_penalty"
-                />
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_wisdom_drain"
-                />
-              </div>
-            </div>
-
-            <div className="ability-score-grid__row">
-              <div className="ability-score-grid__label">
-                <div className="ability-score-grid__abbreviation">CHA</div>
-                Charisma
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_charisma_base"
-                />
-              </div>
-              <div className="ability-score-grid__input">
-                <span
-                  className="grid-input grid-input--disabled"
-                  name="attr_charisma_mod"
-                ></span>
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_charisma_penalty"
-                />
-              </div>
-              <div className="ability-score-grid__input">
-                <input
-                  className="grid-input"
-                  type="text"
-                  name="attr_charisma_drain"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+            <AbilityScoreGrid.Row
+              abbreviation="CHA"
+              name="Charisma"
+              attribute="charisma"
+            />
+          </AbilityScoreGrid>
+        </SectionBlock>
 
         <div className="grid__item--skills section-block">
           <h2 className="section-block__heading">Skills</h2>
