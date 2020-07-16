@@ -120,16 +120,16 @@
             Strength
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_strength_base" value="10" />
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" disabled type="text" />
+            <span class="grid-input grid-input--disabled" name="attr_strength_mod"></span>
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_strength_penalty" />
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_strength_drain" />
           </div>
         </div>
 
@@ -139,16 +139,16 @@
             Dexterity
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_dexterity_base" />
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" disabled type="text" />
+            <span class="grid-input grid-input--disabled" name="attr_dexterity_mod"></span>
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_dexterity_penalty" />
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_dexterity_drain" />
           </div>
         </div>
 
@@ -158,16 +158,16 @@
             Constitution
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_constitution_base" />
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" disabled type="text" />
+            <span class="grid-input grid-input--disabled" name="attr_constitution_mod"></span>
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_constitution_penalty" />
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_constitution_drain" />
           </div>
         </div>
 
@@ -177,16 +177,16 @@
             Intelligence
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_intelligence_base" />
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" disabled type="text" />
+            <span class="grid-input grid-input--disabled" name="attr_intelligence_mod"></span>
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_intelligence_penalty" />
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_intelligence_drain" />
           </div>
         </div>
 
@@ -196,16 +196,16 @@
             Wisdom
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_wisdom_base" />
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" disabled type="text" />
+            <span class="grid-input grid-input--disabled" name="attr_wisdom_mod"></span>
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_wisdom_penalty" />
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_wisdom_drain" />
           </div>
         </div>
 
@@ -215,16 +215,16 @@
             Charisma
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_charisma_base" />
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" disabled type="text" />
+            <span class="grid-input grid-input--disabled" name="attr_charisma_mod"></span>
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_charisma_penalty" />
           </div>
           <div class="ability-score-grid__input">
-            <input class="grid-input" type="text" />
+            <input class="grid-input" type="text" name="attr_charisma_drain" />
           </div>
         </div>
       </div>
@@ -651,3 +651,80 @@
     </div>
   </div>
 </div>
+
+<script type="text/worker">
+  const SFGlobals = {
+    abilities: ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'],
+  };
+
+  const SFUtil = {
+    getBaseAttributeName: (attributeName) => {
+      const splitIndex = attributeName.lastIndexOf('_');
+
+      if (splitIndex === '-1') {
+        return attributeName;
+      }
+
+      return attributeName.substring(0, splitIndex);
+    },
+    calculateModifier: (score, penalty, drain) => {
+      const adjustedScore = score - 2 * Math.floor(penalty / 2) - drain;
+
+      return Math.floor((adjustedScore - 10) / 2);
+    },
+  };
+
+  const SFFormat = {
+    asInteger: (value) => {
+      if (typeof value === 'number') {
+        return value;
+      }
+
+      return parseInt(value, 10);
+    },
+    asModifier: (value) => {
+      if (value > 0) {
+        return `+${value}`;
+      }
+
+      if (value < 0) {
+        return `–${Math.abs(value)}`;
+      }
+
+      return `±${value}`;
+    },
+  };
+
+  on(SFGlobals.abilities.map((field) => `change:${field}_base change:${field}_penalty change:${field}_drain`).join(' '), (event) => {
+    const baseAttributeName = SFUtil.getBaseAttributeName(event.sourceAttribute);
+
+    const abilityScoreAttributeName = `${baseAttributeName}_base`;
+    const abilityPenaltyAttributeName = `${baseAttributeName}_penalty`;
+    const abilityDrainAttributeName = `${baseAttributeName}_drain`;
+    const abilityModifierAttributeName = `${baseAttributeName}_mod`;
+
+    getAttrs([
+      abilityScoreAttributeName,
+      abilityPenaltyAttributeName,
+      abilityDrainAttributeName,
+    ], (values) => {
+      const baseAbilityScore = SFFormat.asInteger(values[abilityScoreAttributeName]);
+      const abilityPenalty = SFFormat.asInteger(values[abilityPenaltyAttributeName]);
+      const abilityDrain = SFFormat.asInteger(values[abilityDrainAttributeName]);
+
+      console.log(values);
+
+      if (baseAbilityScore) {
+        const newModifier = SFUtil.calculateModifier(baseAbilityScore, abilityPenalty || 0, abilityDrain || 0);
+
+        setAttrs({
+          [abilityModifierAttributeName]: SFFormat.asModifier(newModifier),
+        });
+      } else {
+        setAttrs({
+          [abilityModifierAttributeName]: '',
+        });
+      }
+    });
+  })
+</script>

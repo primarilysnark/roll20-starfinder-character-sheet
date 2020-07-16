@@ -480,8 +480,17 @@
 }
 
 .sheet-grid-input {
+  border: 1px solid #cccccc;
+  border-radius: 4px;
   box-sizing: border-box;
-  font: 1.5rem 'Source Sans Pro';
+  display: inline-block;
+  font: 1.5rem/2rem 'Source Sans Pro';
+  padding: 4px;
+  height: 3rem;
   text-align: center;
   width: 100%;
+
+  &--disabled, &:disabled {
+    background: #f5f5f5;
+  }
 }
