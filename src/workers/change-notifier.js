@@ -9,6 +9,12 @@ export class ChangeNotifier {
   }
 
   register(name, { calculate, dependencies = [], format, parse } = {}) {
+    dependencies.forEach((dependency) => {
+      if (this.attributes[dependency] === undefined) {
+        throw new Error(`Dependency "${dependency}" must be registered before it can be relied on.`);
+      }
+    });
+
     this.attributes[name] = {
       name,
       calculate,
