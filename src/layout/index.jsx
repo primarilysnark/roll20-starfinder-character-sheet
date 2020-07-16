@@ -1,27 +1,11 @@
 const React = require('react');
 
+const Navigation = require('./navigation');
+
 module.exports = function Example() {
   return (
     <div className="character-sheet">
-      <nav className="navigation">
-        <ul className="navigation-grid">
-          <li>
-            <button className="navigation-option navigation-option--active">Character</button>
-          </li>
-          <li>
-            <button className="navigation-option">Feats and Abilities</button>
-          </li>
-          <li>
-            <button className="navigation-option">Equipment</button>
-          </li>
-          <li>
-            <button className="navigation-option">Spells</button>
-          </li>
-          <li>
-            <button className="navigation-option">Options</button>
-          </li>
-        </ul>
-      </nav>
+      <Navigation />
 
       <div className="overview-grid">
         <div className="character-grid">
