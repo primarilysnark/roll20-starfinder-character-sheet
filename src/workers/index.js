@@ -1,23 +1,19 @@
 import { ChangeNotifier } from './change-notifier'
 import * as formatters from './utils/formatter'
 
+const commonFormats = {
+  integer: {
+    format: formatters.formatInteger,
+    parse: formatters.parseInteger,
+  },
+}
+
 new ChangeNotifier()
-  .register('strength_base', {
-    format: formatters.formatInteger,
-    parse: formatters.parseInteger,
-  })
-  .register('strength_penalty', {
-    format: formatters.formatInteger,
-    parse: formatters.parseInteger,
-  })
-  .register('strength_drain', {
-    format: formatters.formatInteger,
-    parse: formatters.parseInteger,
-  })
+  .register('strength_base', commonFormats.integer)
+  .register('strength_penalty', commonFormats.integer)
+  .register('strength_drain', commonFormats.integer)
   .register('strength_mod', {
     calculate: ({ strength_base, strength_penalty, strength_drain }) => {
-      console.log(strength_base, strength_drain, strength_penalty)
-
       let adjustedScore = strength_base
 
       if (strength_penalty) {
