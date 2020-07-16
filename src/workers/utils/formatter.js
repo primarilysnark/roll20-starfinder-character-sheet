@@ -37,7 +37,7 @@ export const formatModifier = (value) => {
     return `–${Math.abs(value)}`
   }
 
-  return Math.abs(value)
+  return `${Math.abs(value)}`
 }
 
 export const parseInteger = (value) => {
