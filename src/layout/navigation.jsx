@@ -16,8 +16,12 @@ function NavItem({ isActive, children }) {
 }
 
 NavItem.propTypes = {
-  isActive: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool,
   children: PropTypes.node.isRequired,
+}
+
+NavItem.defaultProps = {
+  isActive: false,
 }
 
 module.exports = function Navigation() {
