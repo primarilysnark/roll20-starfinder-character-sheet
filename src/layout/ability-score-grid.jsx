@@ -1,6 +1,8 @@
 const React = require('react')
 const PropTypes = require('prop-types')
 
+const GridInput = require('./grid-input')
+
 function AbilityScoreGrid({ children }) {
   return (
     <div className="ability-score-grid">
@@ -31,32 +33,20 @@ AbilityScoreGrid.Row = function AbilityScoreRow({
         {name}
       </div>
       <div className="ability-score-grid__input">
-        <input
-          className="grid-input"
-          type="text"
-          name={`attr_${attribute}_base`}
-          defaultValue="10"
+        <GridInput
+          attribute={`attr_${attribute}_base`}
+          overlayAttribute={`attr_${attribute}_adjusted`}
+          value="10"
         />
       </div>
       <div className="ability-score-grid__input">
-        <span
-          className="grid-input grid-input--disabled"
-          name={`attr_${attribute}_mod`}
-        />
+        <GridInput attribute={`attr_${attribute}_mod`} disabled />
       </div>
       <div className="ability-score-grid__input">
-        <input
-          className="grid-input"
-          type="text"
-          name={`attr_${attribute}_penalty`}
-        />
+        <GridInput attribute={`attr_${attribute}_penalty`} />
       </div>
       <div className="ability-score-grid__input">
-        <input
-          className="grid-input"
-          type="text"
-          name={`attr_${attribute}_drain`}
-        />
+        <GridInput attribute={`attr_${attribute}_drain`} />
       </div>
     </div>
   )
