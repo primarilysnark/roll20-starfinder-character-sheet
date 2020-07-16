@@ -2,7 +2,7 @@ const fs = require('fs');
 const sass = require('node-sass');
 
 sass.render({
-  file: './src/index.scss',
+  file: './src/styles/index.scss',
 }, (error, result) => {
   if (error) {
     console.error(error);
@@ -14,10 +14,4 @@ sass.render({
       console.error(writeError);
     }
   });
-
-  fs.copyFile('./src/sheet.html', './dist/sheet.html', (copyError) => {
-    if (copyError) {
-      console.error(copyError);
-    }
-  })
 });

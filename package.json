@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node ./bin/index.js"
+    "build": "npm run build-html && npm run build-styles",
+    "build-html": "node ./bin/sheet.js",
+    "build-styles": "node ./bin/styles.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,11 @@
   },
   "homepage": "https://github.com/primarilysnark/roll20-starfinder-character-sheet#readme",
   "dependencies": {
-    "node-sass": "^4.14.1"
+    "@babel/core": "^7.10.5",
+    "babel-transform-roll20": "^1.0.1",
+    "node-jsx": "^0.13.3",
+    "node-sass": "^4.14.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
