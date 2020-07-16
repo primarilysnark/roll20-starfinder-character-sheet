@@ -1,3 +1,5 @@
+import * as formatters from './utils/formatter'
+
 export class ChangeNotifier {
   constructor() {
     this.attributes = {}
@@ -35,6 +37,21 @@ export class ChangeNotifier {
     attributes.forEach((attribute) => {
       on(`change:${attribute}`, (event) => {
         console.log('Change Event:', event.sourceAttribute)
+
+        try {
+          this.attributes[event.sourceAttribute].parse(event.newValue)
+        } catch (err) {
+          return setAttrs(
+            {
+              [event.sourceAttribute]: event.previousValue,
+              error_message: err.message,
+              show_error: formatters.formatBoolean(true),
+            },
+            {
+              silent: true,
+            }
+          )
+        }
 
         const dependencyAttributes = this._getDependencyAttributesByAttribute(
           event.sourceAttribute

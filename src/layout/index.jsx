@@ -1,12 +1,14 @@
 const React = require('react')
 
 const AbilityScoreGrid = require('./ability-score-grid')
+const ErrorToast = require('./error-toast')
 const Navigation = require('./navigation')
 const SectionBlock = require('./section-block')
 
 module.exports = function Example() {
   return (
     <div className="character-sheet">
+      <ErrorToast />
       <Navigation />
 
       <div className="overview-grid">
@@ -295,7 +297,11 @@ module.exports = function Example() {
               </div>
               <div className="section-block__operation">=</div>
               <div className="section-block__input">
-                <input className="grid-input" disabled type="text" />
+                <span
+                  className="grid-input grid-input--disabled"
+                  name="attr_dexterity_mod"
+                  type="text"
+                />
               </div>
               <div className="section-block__operation">+</div>
               <div className="section-block__input">

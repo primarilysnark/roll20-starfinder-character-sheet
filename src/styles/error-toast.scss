@@ -1,0 +1,60 @@
+.sheet-error-toast {
+  background: #cf371c;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  margin: 0 0 1rem;
+  overflow: hidden;
+  padding: 1rem;
+  position: sticky;
+  top: 20px;
+  transition: height 0.2s, margin 0.2s, padding 0.2s;
+  z-index: 1;
+
+  &__icon {
+    background: #ffffff;
+    border-radius: 1.5rem;
+    color: #cf371c;
+    font: 3rem/3rem 'Source Sans Pro';
+    height: 3rem;
+    text-align: center;
+    width: 3rem;
+  }
+
+  &__message {
+    color: #ffffff;
+    flex: 1;
+    font: bold 1.3rem 'Source Sans Pro';
+    padding: 0 1rem;
+
+    h2 {
+      color: inherit;
+      font: bold 2rem/1 'Source Sans Pro';
+      padding: 0 0 0.5rem;
+    }
+  }
+
+  &__close {
+    border: none;
+    background: none;
+    color: #ffffff;
+    font: 2rem/3rem 'Source Sans Pro';
+    height: 3rem;
+    margin: 0;
+    padding: 0;
+    width: 3rem;
+  }
+}
+
+.sheet-error-control {
+  display: none;
+
+  &:not(:checked) ~ .sheet-error-toast {
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+  }
+}

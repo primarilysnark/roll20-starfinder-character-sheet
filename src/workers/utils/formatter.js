@@ -1,3 +1,17 @@
+export const parseBoolean = (value) => {
+  if (value == null || value === '') {
+    return null
+  }
+
+  if (value === 'on') {
+    return true
+  }
+
+  return false
+}
+
+export const formatBoolean = (value) => (value ? 'on' : 'off')
+
 export const parseModifier = (value) => {
   if (typeof value === 'number') {
     return value
@@ -32,7 +46,12 @@ export const parseInteger = (value) => {
   }
 
   if (typeof value !== 'number') {
-    return parseInt(value, 10)
+    const parsedInt = parseInt(value, 10)
+    if (isNaN(parsedInt)) {
+      throw new Error('Provided value must be an integer number.')
+    }
+
+    return parsedInt
   }
 
   if (!Number.isInteger(value)) {
