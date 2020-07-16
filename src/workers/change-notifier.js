@@ -38,19 +38,21 @@ export class ChangeNotifier {
       on(`change:${attribute}`, (event) => {
         console.log('Change Event:', event.sourceAttribute)
 
-        try {
-          this.attributes[event.sourceAttribute].parse(event.newValue)
-        } catch (err) {
-          return setAttrs(
-            {
-              [event.sourceAttribute]: event.previousValue,
-              error_message: err.message,
-              show_error: formatters.formatBoolean(true),
-            },
-            {
-              silent: true,
-            }
-          )
+        if (this.attributes[event.sourceAttribute].parse) {
+          try {
+            this.attributes[event.sourceAttribute].parse(event.newValue)
+          } catch (err) {
+            return setAttrs(
+              {
+                [event.sourceAttribute]: event.previousValue,
+                error_message: err.message,
+                show_error: formatters.formatBoolean(true),
+              },
+              {
+                silent: true,
+              }
+            )
+          }
         }
 
         const dependencyAttributes = this._getDependencyAttributesByAttribute(
