@@ -4,6 +4,7 @@ const AbilityScoreGrid = require('./ability-score-grid')
 const ErrorToast = require('./error-toast')
 const Navigation = require('./navigation')
 const SectionBlock = require('./section-block')
+const GridInput = require('./grid-input')
 
 module.exports = function Example() {
   return (
@@ -293,19 +294,15 @@ module.exports = function Example() {
 
             <div className="section-block__row">
               <div className="section-block__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_initiative_bonus" disabled />
               </div>
               <div className="section-block__operation">=</div>
               <div className="section-block__input">
-                <span
-                  className="grid-input grid-input--disabled"
-                  name="attr_dexterity_mod"
-                  type="text"
-                />
+                <GridInput attribute="attr_dexterity_mod" disabled />
               </div>
               <div className="section-block__operation">+</div>
               <div className="section-block__input">
-                <input className="grid-input" type="text" />
+                <GridInput attribute="attr_initiative_misc" />
               </div>
             </div>
           </div>

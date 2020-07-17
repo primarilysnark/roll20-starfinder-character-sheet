@@ -93,11 +93,12 @@ new ChangeNotifier()
   .register('charisma_adjusted', commonFormats.adjustedScore('charisma'))
   .register('charisma_mod', commonFormats.modifier('charisma'))
 
-  .register('melee_attack_bonus', {
-    calculate: (values) => values['strength_mod'],
-    dependencies: ['strength_mod'],
-    format: formatters.formatModifier,
+  .register('initiative_misc', commonFormats.integer)
+  .register('initiative_bonus', {
+    calculate: (values) => values.dexterity_mod + (values.initiative_misc || 0),
+    dependencies: ['dexterity_mod', 'initiative_misc'],
     parse: formatters.parseModifier,
+    format: formatters.formatModifier,
   })
   .listen()
 
