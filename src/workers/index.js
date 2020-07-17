@@ -48,6 +48,7 @@ const commonFormats = {
 }
 
 new ChangeNotifier()
+  .register('navigation_tab')
   .register('error_message')
   .register('show_error', commonFormats.boolean)
 
@@ -106,5 +107,18 @@ on('clicked:close_error', () => {
   setAttrs({
     error_message: '',
     show_error: commonFormats.boolean.format(false),
+  })
+})
+
+const navItems = ['character', 'feats', 'equipment', 'spells', 'options']
+navItems.forEach((navItem) => {
+  console.log('Registering for ', navItem)
+
+  on(`clicked:navigation_${navItem}`, () => {
+    console.log('Clicked on ', navItem)
+
+    setAttrs({
+      navigation_tab: navItem,
+    })
   })
 })

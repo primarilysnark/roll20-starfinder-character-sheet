@@ -1,13 +1,13 @@
 const React = require('react')
 const PropTypes = require('prop-types')
 
-function NavItem({ isActive, children }) {
+function NavItem({ children, name }) {
   return (
     <li>
       <button
-        className={`navigation-option ${
-          isActive ? 'navigation-option--active' : ''
-        }`}
+        className="navigation-option"
+        name={`act_navigation_${name}`}
+        type="action"
       >
         {children}
       </button>
@@ -16,8 +16,9 @@ function NavItem({ isActive, children }) {
 }
 
 NavItem.propTypes = {
-  isActive: PropTypes.bool,
   children: PropTypes.node.isRequired,
+  isActive: PropTypes.bool,
+  name: PropTypes.string.isRequired,
 }
 
 NavItem.defaultProps = {
@@ -28,11 +29,17 @@ module.exports = function Navigation() {
   return (
     <nav className="navigation">
       <ul className="navigation-grid">
-        <NavItem isActive>Character</NavItem>
-        <NavItem>Feats and Abilities</NavItem>
-        <NavItem>Equipment</NavItem>
-        <NavItem>Spells</NavItem>
-        <NavItem>Options</NavItem>
+        <input
+          className="navigation-control"
+          type="hidden"
+          name="attr_navigation_tab"
+          value="character"
+        />
+        <NavItem name="character">Character</NavItem>
+        <NavItem name="feats">Feats and Abilities</NavItem>
+        <NavItem name="equipment">Equipment</NavItem>
+        <NavItem name="spells">Spells</NavItem>
+        <NavItem name="options">Options</NavItem>
       </ul>
     </nav>
   )

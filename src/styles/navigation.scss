@@ -53,13 +53,17 @@
     font-size: 1.75rem;
     padding: 1rem 0;
     width: 100%;
-
-    &--active {
-      background: none;
-    }
   }
   
   &navigation-grid li:last-child .sheet-navigation-option {
     border-right: 2px solid #3893cd;
   }
+}
+
+.sheet-navigation-control[value="character"] ~ li > .sheet-navigation-option[name="act_navigation_character"],
+.sheet-navigation-control[value="feats"] ~ li > .sheet-navigation-option[name="act_navigation_feats"],
+.sheet-navigation-control[value="equipment"] ~ li > .sheet-navigation-option[name="act_navigation_equipment"],
+.sheet-navigation-control[value="spells"] ~ li > .sheet-navigation-option[name="act_navigation_spells"],
+.sheet-navigation-control[value="options"] ~ li > .sheet-navigation-option[name="act_navigation_options"] {
+  background: none;
 }
