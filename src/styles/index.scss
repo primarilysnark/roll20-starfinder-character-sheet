@@ -3,6 +3,7 @@
 @import 'sheet.scss';
 @import 'error-toast.scss';
 @import 'navigation.scss';
+@import 'options.scss';
 
 /* Sheet grid */
 .sheet-grid {
@@ -515,4 +516,11 @@
       }
     }
   }
+}
+
+input[type="checkbox"].sheet-grid-input {
+  display: inline-block;
+  height: 1.5rem;
+  margin: 0.75rem;
+  width: 1.5rem;
 }

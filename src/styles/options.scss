@@ -1,0 +1,27 @@
+.sheet-options-class-grid {
+  &__row {
+    display: grid;
+    column-gap: 4px;
+    grid-template-columns: 8fr repeat(3, 2fr) 3fr repeat(3, 4fr) 2fr 5fr 2fr;
+
+    &--heading .sheet-options-class-grid__label:first-child {
+      text-align: left;
+    }
+  }
+
+  &__label {
+    font-size: 1rem;
+    line-height: 1;
+    margin: 0 0 0.5rem;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  &__input {
+    text-align: center;
+
+    &:first-of-type .sheet-grid-input {
+      text-align: left;
+    }
+  }
+}

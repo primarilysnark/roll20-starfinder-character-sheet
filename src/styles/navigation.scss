@@ -67,3 +67,15 @@
 .sheet-navigation-control[value="options"] ~ li > .sheet-navigation-option[name="act_navigation_options"] {
   background: none;
 }
+
+.sheet-character-tab {
+  display: none;
+}
+
+.sheet-navigation-control[value="character"] ~ .sheet-character-tab--character,
+.sheet-navigation-control[value="feats"] ~ .sheet-character-tab--feats,
+.sheet-navigation-control[value="equipment"] ~ .sheet-character-tab--equipment,
+.sheet-navigation-control[value="spells"] ~ .sheet-character-tab--spells,
+.sheet-navigation-control[value="options"] ~ .sheet-character-tab--options {
+  display: block;
+}
