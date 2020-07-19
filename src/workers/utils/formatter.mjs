@@ -23,6 +23,10 @@ export const formatBoolean = (value) => {
 }
 
 export const parseModifier = (value) => {
+  if (value == null || value == '') {
+    return null
+  }
+
   if (typeof value === 'number') {
     return value
   }
