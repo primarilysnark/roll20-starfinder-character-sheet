@@ -1,30 +1,34 @@
 import * as formatters from './utils/formatter.mjs'
 
-const repeatingRegex = /([a-z0-9_]+)_(-[a-z0-9]*)_([a-z0-9_]+)/
+const repeatingRegex = /([a-zA-Z0-9_]+)_(-[a-zA-Z0-9]*)_([a-zA-Z0-9_]+)$/
+
+export function parseAttributeName(attributeName) {
+  if (attributeName.startsWith('repeating')) {
+    if (!repeatingRegex.test(attributeName)) {
+      throw new Error('Given repeating attribute name is invalid.')
+    }
+
+    const [, kind, sectionId, attribute] = attributeName.match(repeatingRegex)
+
+    return {
+      attribute: `${kind}:${attribute}`,
+      repeating: {
+        kind,
+        sectionId,
+        attribute,
+      },
+    }
+  }
+
+  return {
+    attribute: attributeName,
+  }
+}
 
 export class ChangeNotifier {
   constructor() {
     this.attributes = {}
     this.repeatingAttributes = {}
-  }
-
-  _parseAttributeName(sourceAttribute) {
-    if (sourceAttribute.startsWith('repeating')) {
-      const [, repeating, id, subattribute] = sourceAttribute.match(
-        repeatingRegex
-      )
-
-      return {
-        repeating,
-        id,
-        subattribute,
-        attribute: `${repeating}:${subattribute}`,
-      }
-    }
-
-    return {
-      attribute: sourceAttribute,
-    }
   }
 
   _getDependencyAttributesByAttribute(source) {
@@ -68,7 +72,7 @@ export class ChangeNotifier {
 
     attributes.forEach((attribute) => {
       on(`change:${attribute}`, (event) => {
-        const eventAttribute = this._parseAttributeName(event.sourceAttribute)
+        const eventAttribute = parseAttributeName(event.sourceAttribute)
 
         console.log('Change Event:', event.sourceAttribute, eventAttribute)
 

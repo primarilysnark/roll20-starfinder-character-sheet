@@ -5,6 +5,7 @@
   },
   "globals": {
     "getAttrs": true,
+    "getSectionIDs": true,
     "setAttrs": true,
     "on": true,
     "beforeEach": true,

@@ -94,7 +94,7 @@ describe('Formatters', function () {
       it('should throw for an invalid integer', function () {
         should.throws(
           () => subject.parseInteger('asdf'),
-          'Provided value must be an integer number.'
+          /Provided value must be an integer number./
         )
       })
     })
