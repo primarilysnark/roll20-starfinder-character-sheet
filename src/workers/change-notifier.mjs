@@ -1,8 +1,30 @@
-import * as formatters from './utils/formatter'
+import * as formatters from './utils/formatter.mjs'
+
+const repeatingRegex = /([a-z0-9_]+)_(-[a-z0-9]*)_([a-z0-9_]+)/
 
 export class ChangeNotifier {
   constructor() {
     this.attributes = {}
+    this.repeatingAttributes = {}
+  }
+
+  _parseAttributeName(sourceAttribute) {
+    if (sourceAttribute.startsWith('repeating')) {
+      const [, repeating, id, subattribute] = sourceAttribute.match(
+        repeatingRegex
+      )
+
+      return {
+        repeating,
+        id,
+        subattribute,
+        attribute: `${repeating}:${subattribute}`,
+      }
+    }
+
+    return {
+      attribute: sourceAttribute,
+    }
   }
 
   _getDependencyAttributesByAttribute(source) {
@@ -31,16 +53,28 @@ export class ChangeNotifier {
     return this
   }
 
-  listen() {
+  repeating(name, properties) {
+    Object.keys(properties).forEach((property) => {
+      this.register(`${name}:${property}`, properties[property])
+    })
+
+    this.repeatingAttributes[name] = Object.keys(properties)
+
+    return this
+  }
+
+  start() {
     const attributes = Object.keys(this.attributes)
 
     attributes.forEach((attribute) => {
       on(`change:${attribute}`, (event) => {
-        console.log('Change Event:', event.sourceAttribute)
+        const eventAttribute = this._parseAttributeName(event.sourceAttribute)
 
-        if (this.attributes[event.sourceAttribute].parse) {
+        console.log('Change Event:', event.sourceAttribute, eventAttribute)
+
+        if (this.attributes[eventAttribute.attribute].parse) {
           try {
-            this.attributes[event.sourceAttribute].parse(event.newValue)
+            this.attributes[eventAttribute.attribute].parse(event.newValue)
           } catch (err) {
             return setAttrs(
               {
@@ -56,7 +90,7 @@ export class ChangeNotifier {
         }
 
         const dependencyAttributes = this._getDependencyAttributesByAttribute(
-          event.sourceAttribute
+          eventAttribute.attribute
         )
 
         if (dependencyAttributes.length === 0) {

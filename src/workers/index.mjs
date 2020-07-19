@@ -1,5 +1,5 @@
-import { ChangeNotifier } from './change-notifier'
-import * as formatters from './utils/formatter'
+import { ChangeNotifier } from './change-notifier.mjs'
+import * as formatters from './utils/formatter.mjs'
 
 const commonFormats = {
   adjustedScore: (abilityScoreName) => ({
@@ -101,7 +101,26 @@ new ChangeNotifier()
     parse: formatters.parseModifier,
     format: formatters.formatModifier,
   })
-  .listen()
+
+  .repeating('repeating_classes', {
+    name: commonFormats.string,
+    level: commonFormats.integer,
+    bab: {
+      format: formatters.formatBAB,
+      parse: formatters.parseBAB,
+    },
+  })
+  .register('bab', {
+    calculate: (values) => {
+      return values.repeating_classes
+        .map((repeatingClass) => repeatingClass.bab * repeatingClass.level)
+        .reduce((acc, val) => acc + val, 0)
+    },
+    dependencies: ['repeating_classes:bab', 'repeating_classes:level'],
+    format: formatters.formatModifier,
+    parse: formatters.parseModifier,
+  })
+  .start()
 
 on('clicked:close_error', () => {
   setAttrs({
@@ -120,5 +139,16 @@ navItems.forEach((navItem) => {
     setAttrs({
       navigation_tab: navItem,
     })
+  })
+})
+
+on('change:repeating_classes:bab', (event) => {
+  getSectionIDs('classes', (sectionIds) => {
+    getAttrs(
+      sectionIds.map((sectionId) => `repeating_classes_${sectionId}_bab`),
+      (babValues) => {
+        console.log(event, sectionIds, babValues)
+      }
+    )
   })
 })

@@ -10,7 +10,17 @@ export const parseBoolean = (value) => {
   return false
 }
 
-export const formatBoolean = (value) => (value ? 'on' : 'off')
+export const formatBoolean = (value) => {
+  if (value === true) {
+    return 'on'
+  }
+
+  if (value === false) {
+    return 'off'
+  }
+
+  return ''
+}
 
 export const parseModifier = (value) => {
   if (typeof value === 'number') {
