@@ -8,6 +8,8 @@
     "getSectionIDs": true,
     "setAttrs": true,
     "on": true,
+
+    "afterEach": true,
     "beforeEach": true,
     "describe": true,
     "it": true

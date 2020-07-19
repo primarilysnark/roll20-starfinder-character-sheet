@@ -14,6 +14,10 @@ describe('ChangeNotifier', function () {
     })
   })
 
+  afterEach(function () {
+    td.reset()
+  })
+
   describe('#parseAttributeName', function () {
     it('should parse non-repeating attribute names', function () {
       const result = subject.parseAttributeName('initiative_bonus')
