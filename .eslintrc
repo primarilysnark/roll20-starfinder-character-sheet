@@ -6,7 +6,10 @@
   "globals": {
     "getAttrs": true,
     "setAttrs": true,
-    "on": true
+    "on": true,
+    "beforeEach": true,
+    "describe": true,
+    "it": true
   },
   "extends": [
     "eslint:recommended",

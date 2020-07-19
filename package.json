@@ -8,7 +8,8 @@
     "build-html": "node ./bin/sheet.js",
     "build-styles": "node ./bin/styles.js",
     "lint": "eslint \"./src/**/*.{js,jsx}\"",
-    "format": "prettier --write \"./src/**/*.{js,jsx}\""
+    "format": "prettier --write \"./src/**/*.{js,jsx}\"",
+    "test": "mocha \"./test/**/*.mjs\""
   },
   "repository": {
     "type": "git",
@@ -34,5 +35,9 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "mocha": "^8.0.1",
+    "should": "^13.2.3"
   }
 }
