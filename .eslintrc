@@ -4,11 +4,6 @@
     "node": true
   },
   "globals": {
-    "getAttrs": true,
-    "getSectionIDs": true,
-    "setAttrs": true,
-    "on": true,
-
     "afterEach": true,
     "beforeEach": true,
     "describe": true,

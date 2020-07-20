@@ -1,29 +1,6 @@
 import * as formatters from './utils/formatter.mjs'
-
-const repeatingRegex = /([a-zA-Z0-9_]+)_(-[a-zA-Z0-9]*)_([a-zA-Z0-9_]+)$/
-
-export function parseAttributeName(attributeName) {
-  if (attributeName.startsWith('repeating')) {
-    if (!repeatingRegex.test(attributeName)) {
-      throw new Error('Given repeating attribute name is invalid.')
-    }
-
-    const [, kind, sectionId, attribute] = attributeName.match(repeatingRegex)
-
-    return {
-      attribute: `${kind}:${attribute}`,
-      repeating: {
-        kind,
-        sectionId,
-        attribute,
-      },
-    }
-  }
-
-  return {
-    attribute: attributeName,
-  }
-}
+import * as roll20 from './utils/roll20.mjs'
+import { parseAttributeName, validateAttribute } from './utils/attributes.mjs'
 
 export class ChangeNotifier {
   constructor() {
@@ -38,6 +15,14 @@ export class ChangeNotifier {
   }
 
   register(name, { calculate, dependencies = [], format, parse } = {}) {
+    validateAttribute({
+      name,
+      calculate,
+      dependencies,
+      format,
+      parse,
+    })
+
     dependencies.forEach((dependency) => {
       if (this.attributes[dependency] === undefined) {
         throw new Error(
@@ -71,7 +56,7 @@ export class ChangeNotifier {
     const attributes = Object.keys(this.attributes)
 
     attributes.forEach((attribute) => {
-      on(`change:${attribute}`, (event) => {
+      roll20.addEventListener(`change:${attribute}`, (event) => {
         const eventAttribute = parseAttributeName(event.sourceAttribute)
 
         console.log('Change Event:', event.sourceAttribute, eventAttribute)
@@ -80,7 +65,7 @@ export class ChangeNotifier {
           try {
             this.attributes[eventAttribute.attribute].parse(event.newValue)
           } catch (err) {
-            return setAttrs(
+            return roll20.setAttributes(
               {
                 [event.sourceAttribute]: event.previousValue,
                 error_message: err.message,
@@ -107,7 +92,7 @@ export class ChangeNotifier {
             .reduce((acc, val) => acc.concat(val))
         )
 
-        getAttrs([...uniqueDependencies], (values) => {
+        roll20.getAttributes([...uniqueDependencies], (values) => {
           console.log(values)
 
           Object.keys(values).forEach((key) => {
@@ -139,7 +124,7 @@ export class ChangeNotifier {
 
           console.log('Updating Fields:', result)
 
-          setAttrs(result)
+          roll20.setAttributes(result)
         })
       })
     })
