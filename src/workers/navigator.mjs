@@ -1,11 +1,9 @@
 import * as formatters from './utils/formatter.mjs'
 import * as roll20 from './utils/roll20.mjs'
 
-export class Navigator {
-  constructor({ tabs } = {}) {
-    this.tabs = tabs || []
-
-    this.tabs.forEach((tab) => {
+export const Navigator = {
+  addTabListeners(tabs) {
+    tabs.forEach((tab) => {
       roll20.addEventListener(`clicked:navigation_${tab}`, () => {
         console.log('Clicked on ', tab)
 
@@ -14,7 +12,8 @@ export class Navigator {
         })
       })
     })
-
+  },
+  addErrorListeners() {
     roll20.addEventListener('clicked:close_error', () => {
       roll20.setAttributes(
         {
@@ -26,8 +25,7 @@ export class Navigator {
         }
       )
     })
-  }
-
+  },
   showError(message) {
     roll20.setAttributes(
       {
@@ -38,5 +36,5 @@ export class Navigator {
         silent: true,
       }
     )
-  }
+  },
 }

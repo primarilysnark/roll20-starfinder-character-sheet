@@ -1,134 +1,197 @@
-import * as formatters from './utils/formatter.mjs'
 import * as roll20 from './utils/roll20.mjs'
+import { Navigator } from './navigator.mjs'
 import { parseAttributeName, validateAttribute } from './utils/attributes.mjs'
 
 export class ChangeNotifier {
-  constructor() {
-    this.attributes = {}
-    this.repeatingAttributes = {}
+  constructor({ shouldLog = true } = {}) {
+    this.listeners = new Map()
+    this.shouldLog = shouldLog
+
+    this._handleChangeEvent = this._handleChangeEvent.bind(this)
+    this._log = this._log.bind(this)
+
+    this._log('[create event] Created change notifier')
   }
 
-  _getDependencyAttributesByAttribute(source) {
-    return Object.values(this.attributes).filter((attribute) =>
-      attribute.dependencies.includes(source)
+  _getAttributesDependingOnAttribute(attribute) {
+    return [...this.listeners.values()].filter((possibleDependency) =>
+      possibleDependency.dependencies.includes(attribute.name)
     )
   }
 
-  register(name, { calculate, dependencies = [], format, parse } = {}) {
-    validateAttribute({
-      name,
-      calculate,
-      dependencies,
-      format,
-      parse,
-    })
+  _handleChangeEvent(event, callback) {
+    this._log('[change event] Updated', event.sourceAttribute)
 
-    dependencies.forEach((dependency) => {
-      if (this.attributes[dependency] === undefined) {
+    const attributeNameProperties = parseAttributeName(event.sourceAttribute)
+    const attribute = this.getListener(attributeNameProperties.attribute)
+
+    /* Validate new attribute value */
+    if (attribute.parse) {
+      const { success, message } = this._tryParseAttribute(
+        attribute,
+        event.newValue
+      )
+
+      if (!success) {
+        this._revertChangeEvent(event)
+        Navigator.showError(message)
+
+        if (callback && typeof callback === 'function') {
+          callback()
+        }
+
+        return
+      }
+    }
+
+    /* Check if updated attribute has any dependencies */
+    const attributesToUpdate = this._getAttributesDependingOnAttribute(
+      attribute
+    )
+
+    if (attributesToUpdate.length === 0) {
+      this._log('[change event] No dependencies for', event.sourceAttribute)
+
+      if (callback && typeof callback === 'function') {
+        callback()
+      }
+
+      return
+    }
+
+    /* Get current values of all dependencies for attributes to update */
+    const dependenciesOfAttributesToUpdate = new Set(
+      attributesToUpdate
+        .map((dependencyAttribute) => dependencyAttribute.dependencies)
+        .reduce((acc, val) => acc.concat(val), [])
+    )
+
+    roll20.getAttributes(
+      [...dependenciesOfAttributesToUpdate],
+      (attributeValues) => {
+        const currentDependencyValues = this._parseAttributeMap(attributeValues)
+
+        const updatedAttributes = attributesToUpdate
+          .map((attributeToUpdate) => {
+            let updatedValue = attributeToUpdate.calculate(
+              currentDependencyValues
+            )
+
+            if (attributeToUpdate.format) {
+              updatedValue = attributeToUpdate.format(updatedValue)
+            }
+
+            return [attributeToUpdate.name, updatedValue]
+          })
+          .reduce(
+            (updatedAttributeMap, [key, value]) => ({
+              ...updatedAttributeMap,
+              [key]: value,
+            }),
+            {}
+          )
+
+        roll20.setAttributes(updatedAttributes)
+
+        if (callback && typeof callback === 'function') {
+          callback()
+        }
+      }
+    )
+  }
+
+  _log(...messages) {
+    if (this.shouldLog) {
+      console.log(...messages)
+    }
+  }
+
+  _parseAttributeMap(attributeMap) {
+    return Object.keys(attributeMap)
+      .map((attributeName) => {
+        if (this.hasListener(attributeName)) {
+          const attribute = this.getListener(attributeName)
+
+          if (attribute.parse) {
+            return [attributeName, attribute.parse(attributeMap[attributeName])]
+          }
+        }
+
+        return [attributeName, attributeMap[attributeName]]
+      })
+      .reduce(
+        (map, [key, value]) => ({
+          ...map,
+          [key]: value,
+        }),
+        {}
+      )
+  }
+
+  _revertChangeEvent(event) {
+    this._log('[change event] Reverted', event.sourceAttribute)
+
+    roll20.setAttributes(
+      {
+        [event.sourceAttribute]: event.previousValue,
+      },
+      {
+        silent: true,
+      }
+    )
+  }
+
+  _tryParseAttribute(attribute, value) {
+    try {
+      return {
+        success: true,
+        value: attribute.parse(value),
+      }
+    } catch (err) {
+      return {
+        success: false,
+        message: err.message,
+      }
+    }
+  }
+
+  _validate(attribute) {
+    validateAttribute(attribute)
+
+    attribute.dependencies.forEach((dependencyName) => {
+      if (!this.hasListener(dependencyName)) {
         throw new Error(
-          `Dependency "${dependency}" must be registered before it can be relied on.`
+          `Dependency "${dependencyName}" must be added before it can be depended on.`
         )
       }
     })
 
-    this.attributes[name] = {
-      name,
-      calculate,
-      dependencies,
-      format,
-      parse,
-    }
-
-    return this
+    return attribute
   }
 
-  repeating(name, properties) {
-    Object.keys(properties).forEach((property) => {
-      this.register(`${name}:${property}`, properties[property])
+  addListener(name, attributes) {
+    const attribute = this._validate({
+      dependencies: [],
+      name: name,
+      ...attributes,
     })
+    this.listeners.set(attribute.name, attribute)
+  }
 
-    this.repeatingAttributes[name] = Object.keys(properties)
+  hasListener(attributeName) {
+    return this.listeners.has(attributeName)
+  }
 
-    return this
+  getListener(attributeName) {
+    return this.listeners.get(attributeName)
   }
 
   start() {
-    const attributes = Object.keys(this.attributes)
-
-    attributes.forEach((attribute) => {
-      roll20.addEventListener(`change:${attribute}`, (event) => {
-        const eventAttribute = parseAttributeName(event.sourceAttribute)
-
-        console.log('Change Event:', event.sourceAttribute, eventAttribute)
-
-        if (this.attributes[eventAttribute.attribute].parse) {
-          try {
-            this.attributes[eventAttribute.attribute].parse(event.newValue)
-          } catch (err) {
-            return roll20.setAttributes(
-              {
-                [event.sourceAttribute]: event.previousValue,
-                error_message: err.message,
-                show_error: formatters.formatBoolean(true),
-              },
-              {
-                silent: true,
-              }
-            )
-          }
-        }
-
-        const dependencyAttributes = this._getDependencyAttributesByAttribute(
-          eventAttribute.attribute
-        )
-
-        if (dependencyAttributes.length === 0) {
-          return
-        }
-
-        const uniqueDependencies = new Set(
-          dependencyAttributes
-            .map((dependencyAttribute) => dependencyAttribute.dependencies)
-            .reduce((acc, val) => acc.concat(val))
-        )
-
-        roll20.getAttributes([...uniqueDependencies], (values) => {
-          console.log(values)
-
-          Object.keys(values).forEach((key) => {
-            if (this.attributes[key].parse) {
-              values[key] = this.attributes[key].parse(values[key])
-            }
-          })
-
-          const result = dependencyAttributes
-            .map((dependencyAttribute) => {
-              let updatedValue = dependencyAttribute.calculate(values)
-
-              if (dependencyAttribute.format) {
-                updatedValue = dependencyAttribute.format(updatedValue)
-              }
-
-              return {
-                name: dependencyAttribute.name,
-                updatedValue,
-              }
-            })
-            .reduce(
-              (attributeSet, dependencyAttribute) => ({
-                ...attributeSet,
-                [dependencyAttribute.name]: dependencyAttribute.updatedValue,
-              }),
-              {}
-            )
-
-          console.log('Updating Fields:', result)
-
-          roll20.setAttributes(result)
-        })
-      })
+    // Register all attribute handlers
+    this.listeners.forEach((_, attributeName) => {
+      roll20.addEventListener(`change:${attributeName}`, (event) =>
+        this._handleChangeEvent(event)
+      )
     })
-
-    return this
   }
 }

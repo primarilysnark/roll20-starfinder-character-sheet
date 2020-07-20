@@ -9,7 +9,7 @@
     "build-styles": "node ./bin/styles.js",
     "lint": "eslint \"./src/**/*.{mjs,jsx}\"",
     "format": "prettier --write \"./src/**/*.{mjs,jsx}\"",
-    "test": "mocha \"./test/**/*.mjs\""
+    "test": "mocha --loader=testdouble \"./test/**/*.mjs\""
   },
   "repository": {
     "type": "git",
