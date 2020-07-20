@@ -1,5 +1,6 @@
-import { ChangeNotifier } from './change-notifier.mjs'
 import * as formatters from './utils/formatter.mjs'
+import { ChangeNotifier } from './change-notifier.mjs'
+import { Navigator } from './navigator.mjs'
 
 const commonFormats = {
   adjustedScore: (abilityScoreName) => ({
@@ -46,6 +47,10 @@ const commonFormats = {
     parse: formatters.parseModifier,
   }),
 }
+
+new Navigator({
+  tabs: ['character', 'feats', 'equipment', 'spells', 'options'],
+})
 
 new ChangeNotifier()
   .register('navigation_tab')
@@ -121,34 +126,3 @@ new ChangeNotifier()
     parse: formatters.parseModifier,
   })
   .start()
-
-on('clicked:close_error', () => {
-  setAttrs({
-    error_message: '',
-    show_error: commonFormats.boolean.format(false),
-  })
-})
-
-const navItems = ['character', 'feats', 'equipment', 'spells', 'options']
-navItems.forEach((navItem) => {
-  console.log('Registering for ', navItem)
-
-  on(`clicked:navigation_${navItem}`, () => {
-    console.log('Clicked on ', navItem)
-
-    setAttrs({
-      navigation_tab: navItem,
-    })
-  })
-})
-
-on('change:repeating_classes:bab', (event) => {
-  getSectionIDs('classes', (sectionIds) => {
-    getAttrs(
-      sectionIds.map((sectionId) => `repeating_classes_${sectionId}_bab`),
-      (babValues) => {
-        console.log(event, sectionIds, babValues)
-      }
-    )
-  })
-})
