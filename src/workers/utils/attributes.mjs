@@ -6,13 +6,13 @@ export function parseAttributeName(attributeName) {
       throw new Error('Given repeating attribute name is invalid.')
     }
 
-    const [, kind, sectionId, attribute] = attributeName.match(repeatingRegex)
+    const [, kind, sectionID, attribute] = attributeName.match(repeatingRegex)
 
     return {
       attribute: `${kind}:${attribute}`,
       repeating: {
         kind,
-        sectionId,
+        sectionID,
         attribute,
       },
     }

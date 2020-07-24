@@ -34,7 +34,7 @@ describe('attributes.mjs', function () {
         attribute: 'repeating_classes:bab',
         repeating: {
           kind: 'repeating_classes',
-          sectionId: '-mcufchhyvsryjrp9vtx',
+          sectionID: '-mcufchhyvsryjrp9vtx',
           attribute: 'bab',
         },
       })

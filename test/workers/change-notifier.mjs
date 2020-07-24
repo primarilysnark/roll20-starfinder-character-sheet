@@ -123,6 +123,72 @@ describe('ChangeNotifier', function () {
       subject.addListener(calculatedAttribute.name, calculatedAttribute)
     })
 
+    describe('Repeating sections', function () {
+      let repeatingSection
+      let dependencyAttribute
+
+      beforeEach(function () {
+        repeatingSection = {
+          nested_attribute: {
+            format: td.func(),
+            parse: td.func(),
+          },
+        }
+
+        dependencyAttribute = {
+          name: 'dependency_attribute',
+          calculate: td.func(),
+          dependencies: ['repeating_sections:nested_attribute'],
+        }
+
+        subject.addNestedListener('repeating_sections', repeatingSection)
+        subject.addListener(dependencyAttribute.name, dependencyAttribute)
+      })
+
+      it('should support dependencies on repeating sections', function () {
+        td.when(
+          repeatingSection.nested_attribute.parse('new value')
+        ).thenReturn('new parsed value')
+
+        td.when(
+          roll20Double.getAttributes(['repeating_sections:nested_attribute'])
+        ).thenCallback({
+          'repeating_sections:nested_attribute': ['new value'],
+          repeating_sections: {
+            '-testid': {
+              nested_attribute: 'new value',
+            },
+          },
+        })
+
+        td.when(
+          dependencyAttribute.calculate({
+            'repeating_sections:nested_attribute': ['new parsed value'],
+            repeating_sections: {
+              '-testid': {
+                nested_attribute: 'new parsed value',
+              },
+            },
+          })
+        ).thenReturn('new dependency value')
+
+        subject._handleChangeEvent(
+          {
+            sourceAttribute: 'repeating_sections_-testid_nested_attribute',
+            newValue: 'new value',
+            previousValue: 'previous value',
+          },
+          () => {
+            td.verify(
+              roll20Double.setAttributes({
+                [dependencyAttribute.name]: 'new dependency value',
+              })
+            )
+          }
+        )
+      })
+    })
+
     it('should revert invalid messages', function () {
       td.when(validatedAttribute.parse('invalid_value')).thenThrow(
         new Error('Invalid value received')

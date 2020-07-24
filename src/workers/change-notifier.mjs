@@ -5,6 +5,7 @@ import { parseAttributeName, validateAttribute } from './utils/attributes.mjs'
 export class ChangeNotifier {
   constructor({ shouldLog = true } = {}) {
     this.listeners = new Map()
+    this.nestedListeners = new Map()
     this.shouldLog = shouldLog
 
     this._handleChangeEvent = this._handleChangeEvent.bind(this)
@@ -23,7 +24,7 @@ export class ChangeNotifier {
     this._log('[change event] Updated', event.sourceAttribute)
 
     const attributeNameProperties = parseAttributeName(event.sourceAttribute)
-    const attribute = this.getListener(attributeNameProperties.attribute)
+    let attribute = this.getListener(attributeNameProperties.attribute)
 
     /* Validate new attribute value */
     if (attribute.parse) {
@@ -106,18 +107,41 @@ export class ChangeNotifier {
     }
   }
 
-  _parseAttributeMap(attributeMap) {
+  _parseAttributeMap(attributeMap, repeatingAttributeName = '') {
     return Object.keys(attributeMap)
-      .map((attributeName) => {
-        if (this.hasListener(attributeName)) {
-          const attribute = this.getListener(attributeName)
+      .map((attributeKey) => {
+        const value = attributeMap[attributeKey]
+        const name =
+          repeatingAttributeName !== ''
+            ? `${repeatingAttributeName}:${attributeKey}`
+            : attributeKey
+
+        if (this.hasListener(name)) {
+          const attribute = this.getListener(name)
 
           if (attribute.parse) {
-            return [attributeName, attribute.parse(attributeMap[attributeName])]
+            if (Array.isArray(value)) {
+              return [
+                attributeKey,
+                value.map((entry) => attribute.parse(entry)),
+              ]
+            }
+
+            return [attributeKey, attribute.parse(value)]
           }
         }
 
-        return [attributeName, attributeMap[attributeName]]
+        if (typeof value === 'object') {
+          return [
+            attributeKey,
+            this._parseAttributeMap(
+              value,
+              repeatingAttributeName !== '' ? repeatingAttributeName : name
+            ),
+          ]
+        }
+
+        return [attributeKey, attributeMap[name]]
       })
       .reduce(
         (map, [key, value]) => ({
@@ -178,12 +202,39 @@ export class ChangeNotifier {
     this.listeners.set(attribute.name, attribute)
   }
 
+  addNestedListener(name, nestedAttributes) {
+    Object.keys(nestedAttributes).forEach((nestedAttributeKey) => {
+      const nestedAttribute = nestedAttributes[nestedAttributeKey]
+      const nestedAttributeName = `${name}:${nestedAttributeKey}`
+
+      this.addListener(nestedAttributeName, {
+        ...nestedAttribute,
+        name: nestedAttributeName,
+      })
+    })
+
+    this.nestedListeners.set(
+      name,
+      Object.values(nestedAttributes).map(
+        (nestedAttribute) => nestedAttribute.name
+      )
+    )
+  }
+
   hasListener(attributeName) {
     return this.listeners.has(attributeName)
   }
 
+  hasNestedListener(attributeName) {
+    return this.nestedListeners.has(attributeName)
+  }
+
   getListener(attributeName) {
     return this.listeners.get(attributeName)
+  }
+
+  getNestedListener(attributeName) {
+    return this.nestedListeners.get(attributeName)
   }
 
   start() {

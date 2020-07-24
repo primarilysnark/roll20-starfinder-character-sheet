@@ -46,6 +46,10 @@ const commonFormats = {
     format: formatters.formatModifier,
     parse: formatters.parseModifier,
   }),
+  string: {
+    format: (value) => value,
+    parse: (value) => value,
+  },
 }
 
 Navigator.addErrorListeners()
@@ -119,6 +123,34 @@ notifier.addListener('initiative_bonus', {
   dependencies: ['dexterity_mod', 'initiative_misc'],
   parse: formatters.parseModifier,
   format: formatters.formatModifier,
+})
+
+notifier.addNestedListener('repeating_classes', {
+  level: commonFormats.integer,
+  bab: commonFormats.string,
+})
+notifier.addListener('bab_modifier', {
+  ...commonFormats.integer,
+  calculate: (values) =>
+    Object.values(values.repeating_classes)
+      .map((instance) => {
+        if (instance.level == null) {
+          return 0
+        }
+
+        switch (instance.bab) {
+          case 'full':
+            return instance.level
+
+          case 'three-quarter':
+            return Math.floor(0.75 * instance.level)
+
+          case 'half':
+            return Math.floor(0.5 * instance.level)
+        }
+      })
+      .reduce((total, bab) => total + bab, 0),
+  dependencies: ['repeating_classes:bab', 'repeating_classes:level'],
 })
 
 notifier.start()
