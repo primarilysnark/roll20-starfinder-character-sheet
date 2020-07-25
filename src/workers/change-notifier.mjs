@@ -75,7 +75,8 @@ export class ChangeNotifier {
         const updatedAttributes = attributesToUpdate
           .map((attributeToUpdate) => {
             let updatedValue = attributeToUpdate.calculate(
-              currentDependencyValues
+              currentDependencyValues,
+              attributeToUpdate.dependencies
             )
 
             if (attributeToUpdate.format) {
@@ -123,11 +124,16 @@ export class ChangeNotifier {
             if (Array.isArray(value)) {
               return [
                 attributeKey,
-                value.map((entry) => attribute.parse(entry)),
+                value.map(
+                  (entry) => attribute.parse(entry) || attribute.defaultValue
+                ),
               ]
             }
 
-            return [attributeKey, attribute.parse(value)]
+            return [
+              attributeKey,
+              attribute.parse(value) || attribute.defaultValue,
+            ]
           }
         }
 

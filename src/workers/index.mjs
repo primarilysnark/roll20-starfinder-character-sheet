@@ -35,6 +35,7 @@ const commonFormats = {
   integer: {
     format: formatters.formatInteger,
     parse: formatters.parseInteger,
+    defaultValue: 0,
   },
   modifier: (abilityScoreName) => ({
     calculate: (values) => {
@@ -50,6 +51,13 @@ const commonFormats = {
     format: (value) => value,
     parse: (value) => value,
   },
+}
+
+const commonCalculators = {
+  sum: (values, dependencies) =>
+    dependencies
+      .map((dependency) => values[dependency])
+      .reduce((sum, value) => sum + value, 0),
 }
 
 Navigator.addErrorListeners()
@@ -119,10 +127,9 @@ notifier.addListener('charisma_mod', commonFormats.modifier('charisma'))
 
 notifier.addListener('initiative_misc', commonFormats.integer)
 notifier.addListener('initiative_bonus', {
-  calculate: (values) => values.dexterity_mod + (values.initiative_misc || 0),
+  ...commonFormats.modifier,
+  calculate: commonCalculators.sum,
   dependencies: ['dexterity_mod', 'initiative_misc'],
-  parse: formatters.parseModifier,
-  format: formatters.formatModifier,
 })
 
 notifier.addNestedListener('repeating_classes', {
@@ -155,25 +162,22 @@ notifier.addListener('base_attack_bonus', {
 
 notifier.addListener('melee_attack_misc', commonFormats.integer)
 notifier.addListener('melee_attack_mod', {
-  ...commonFormats.modifier,
-  calculate: (values) =>
-    values.base_attack_bonus + values.strength_mod + values.melee_attack_misc,
+  ...commonFormats.integer,
+  calculate: commonCalculators.sum,
   dependencies: ['base_attack_bonus', 'strength_mod', 'melee_attack_misc'],
 })
 
 notifier.addListener('ranged_attack_misc', commonFormats.integer)
 notifier.addListener('ranged_attack_mod', {
-  ...commonFormats.modifier,
-  calculate: (values) =>
-    values.base_attack_bonus + values.dexterity_mod + values.ranged_attack_misc,
+  ...commonFormats.integer,
+  calculate: commonCalculators.sum,
   dependencies: ['base_attack_bonus', 'dexterity_mod', 'ranged_attack_misc'],
 })
 
 notifier.addListener('thrown_attack_misc', commonFormats.integer)
 notifier.addListener('thrown_attack_mod', {
-  ...commonFormats.modifier,
-  calculate: (values) =>
-    values.base_attack_bonus + values.strength_mod + values.thrown_attack_misc,
+  ...commonFormats.integer,
+  calculate: commonCalculators.sum,
   dependencies: ['base_attack_bonus', 'strength_mod', 'thrown_attack_misc'],
 })
 
