@@ -44,19 +44,28 @@ function OptionsScreen() {
                 </select>
               </div>
               <div className="options-class-grid__input">
-                <select className="grid-input" name="attr_fortitude">
+                <select
+                  className="grid-input"
+                  name="attr_fortitude_save_progression"
+                >
                   <option value="poor">Poor</option>
                   <option value="good">Good</option>
                 </select>
               </div>
               <div className="options-class-grid__input">
-                <select className="grid-input" name="attr_reflex">
+                <select
+                  className="grid-input"
+                  name="attr_reflex_save_progression"
+                >
                   <option value="poor">Poor</option>
                   <option value="good">Good</option>
                 </select>
               </div>
               <div className="options-class-grid__input">
-                <select className="grid-input" name="attr_will">
+                <select
+                  className="grid-input"
+                  name="attr_will_save_progression"
+                >
                   <option value="poor">Poor</option>
                   <option value="good">Good</option>
                 </select>

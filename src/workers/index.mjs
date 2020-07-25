@@ -135,6 +135,9 @@ notifier.addListener('initiative_bonus', {
 notifier.addNestedListener('repeating_classes', {
   level: commonFormats.integer,
   bab: commonFormats.string,
+  fortitude_save_progression: commonFormats.string,
+  reflex_save_progression: commonFormats.string,
+  will_save_progression: commonFormats.string,
 })
 notifier.addListener('base_attack_bonus', {
   ...commonFormats.integer,
@@ -179,6 +182,100 @@ notifier.addListener('thrown_attack_mod', {
   ...commonFormats.integer,
   calculate: commonCalculators.sum,
   dependencies: ['base_attack_bonus', 'strength_mod', 'thrown_attack_misc'],
+})
+
+notifier.addListener('fortitude_save_misc', commonFormats.integer)
+notifier.addListener('reflex_save_misc', commonFormats.integer)
+notifier.addListener('will_save_misc', commonFormats.integer)
+
+notifier.addListener('fortitude_save_base', {
+  ...commonFormats.integer,
+  calculate: (values) =>
+    Object.values(values.repeating_classes)
+      .map((instance) => {
+        if (instance.level == null) {
+          return 0
+        }
+
+        switch (instance.fortitude_save_progression) {
+          case 'poor':
+            return Math.floor((1 / 3) * instance.level)
+
+          case 'good':
+            return Math.floor(0.5 * instance.level) + 2
+        }
+      })
+      .reduce((total, baseSave) => total + baseSave, 0),
+  dependencies: [
+    'repeating_classes:fortitude_save_progression',
+    'repeating_classes:level',
+  ],
+})
+notifier.addListener('reflex_save_base', {
+  ...commonFormats.integer,
+  calculate: (values) =>
+    Object.values(values.repeating_classes)
+      .map((instance) => {
+        if (instance.level == null) {
+          return 0
+        }
+
+        switch (instance.reflex_save_progression) {
+          case 'poor':
+            return Math.floor((1 / 3) * instance.level)
+
+          case 'good':
+            return Math.floor(0.5 * instance.level) + 2
+        }
+      })
+      .reduce((total, baseSave) => total + baseSave, 0),
+  dependencies: [
+    'repeating_classes:reflex_save_progression',
+    'repeating_classes:level',
+  ],
+})
+notifier.addListener('will_save_base', {
+  ...commonFormats.integer,
+  calculate: (values) =>
+    Object.values(values.repeating_classes)
+      .map((instance) => {
+        if (instance.level == null) {
+          return 0
+        }
+
+        switch (instance.will_save_progression) {
+          case 'poor':
+            return Math.floor((1 / 3) * instance.level)
+
+          case 'good':
+            return Math.floor(0.5 * instance.level) + 2
+        }
+      })
+      .reduce((total, baseSave) => total + baseSave, 0),
+  dependencies: [
+    'repeating_classes:will_save_progression',
+    'repeating_classes:level',
+  ],
+})
+
+notifier.addListener('fortitude_save_mod', {
+  ...commonFormats.integer,
+  calculate: commonCalculators.sum,
+  dependencies: [
+    'fortitude_save_base',
+    'constitution_mod',
+    'fortitude_save_misc',
+  ],
+})
+notifier.addListener('reflex_save_mod', {
+  ...commonFormats.integer,
+  calculate: commonCalculators.sum,
+  dependencies: ['reflex_save_base', 'dexterity_mod', 'reflex_save_misc'],
+})
+notifier.addListener('will_save_mod', {
+  ...commonFormats.integer,
+  calculate: commonCalculators.sum,
+  dependencies: ['will_save_base', 'wisdom_mod', 'will_save_misc'],
 })
 
 notifier.start()

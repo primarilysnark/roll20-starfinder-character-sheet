@@ -456,19 +456,19 @@ function CharacterScreen() {
                 Constitution
               </div>
               <div className="saving-throws-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_fortitude_save_mod" disabled />
               </div>
               <div className="saving-throws-grid__operation">=</div>
               <div className="saving-throws-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_fortitude_save_base" disabled />
               </div>
               <div className="saving-throws-grid__operation">+</div>
               <div className="saving-throws-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_constitution_mod" disabled />
               </div>
               <div className="saving-throws-grid__operation">+</div>
               <div className="saving-throws-grid__input">
-                <input className="grid-input" type="text" />
+                <GridInput attribute="attr_fortitude_save_misc" />
               </div>
             </div>
 
@@ -478,19 +478,19 @@ function CharacterScreen() {
                 Dexterity
               </div>
               <div className="saving-throws-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_reflex_save_mod" disabled />
               </div>
               <div className="saving-throws-grid__operation">=</div>
               <div className="saving-throws-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_reflex_save_base" disabled />
               </div>
               <div className="saving-throws-grid__operation">+</div>
               <div className="saving-throws-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_dexterity_mod" disabled />
               </div>
               <div className="saving-throws-grid__operation">+</div>
               <div className="saving-throws-grid__input">
-                <input className="grid-input" type="text" />
+                <GridInput attribute="attr_reflex_save_misc" />
               </div>
             </div>
 
@@ -500,19 +500,19 @@ function CharacterScreen() {
                 Wisdom
               </div>
               <div className="saving-throws-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_will_save_mod" disabled />
               </div>
               <div className="saving-throws-grid__operation">=</div>
               <div className="saving-throws-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_will_save_base" disabled />
               </div>
               <div className="saving-throws-grid__operation">+</div>
               <div className="saving-throws-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_wisdom_mod" disabled />
               </div>
               <div className="saving-throws-grid__operation">+</div>
               <div className="saving-throws-grid__input">
-                <input className="grid-input" type="text" />
+                <GridInput attribute="attr_will_save_misc" />
               </div>
             </div>
           </div>
