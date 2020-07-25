@@ -129,7 +129,7 @@ notifier.addNestedListener('repeating_classes', {
   level: commonFormats.integer,
   bab: commonFormats.string,
 })
-notifier.addListener('bab_modifier', {
+notifier.addListener('base_attack_bonus', {
   ...commonFormats.integer,
   calculate: (values) =>
     Object.values(values.repeating_classes)
@@ -151,6 +151,30 @@ notifier.addListener('bab_modifier', {
       })
       .reduce((total, bab) => total + bab, 0),
   dependencies: ['repeating_classes:bab', 'repeating_classes:level'],
+})
+
+notifier.addListener('melee_attack_misc', commonFormats.integer)
+notifier.addListener('melee_attack_mod', {
+  ...commonFormats.modifier,
+  calculate: (values) =>
+    values.base_attack_bonus + values.strength_mod + values.melee_attack_misc,
+  dependencies: ['base_attack_bonus', 'strength_mod', 'melee_attack_misc'],
+})
+
+notifier.addListener('ranged_attack_misc', commonFormats.integer)
+notifier.addListener('ranged_attack_mod', {
+  ...commonFormats.modifier,
+  calculate: (values) =>
+    values.base_attack_bonus + values.dexterity_mod + values.ranged_attack_misc,
+  dependencies: ['base_attack_bonus', 'dexterity_mod', 'ranged_attack_misc'],
+})
+
+notifier.addListener('thrown_attack_misc', commonFormats.integer)
+notifier.addListener('thrown_attack_mod', {
+  ...commonFormats.modifier,
+  calculate: (values) =>
+    values.base_attack_bonus + values.strength_mod + values.thrown_attack_misc,
+  dependencies: ['base_attack_bonus', 'strength_mod', 'thrown_attack_misc'],
 })
 
 notifier.start()

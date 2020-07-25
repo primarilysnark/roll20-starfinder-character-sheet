@@ -539,19 +539,22 @@ function CharacterScreen() {
             <div className="attack-bonuses-grid__row">
               <div className="attack-bonuses-grid__label">Melee Attack</div>
               <div className="attack-bonuses-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_melee_attack_mod" disabled />
               </div>
               <div className="attack-bonuses-grid__operation">=</div>
               <div className="attack-bonuses-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_base_attack_bonus" disabled />
               </div>
               <div className="attack-bonuses-grid__operation">+</div>
               <div className="attack-bonuses-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_strength_mod" disabled />
               </div>
               <div className="attack-bonuses-grid__operation">+</div>
               <div className="attack-bonuses-grid__input">
-                <input className="grid-input" type="text" />
+                <GridInput
+                  attribute="attr_melee_attack_misc"
+                  defaultValue="0"
+                />
               </div>
             </div>
 
@@ -573,19 +576,22 @@ function CharacterScreen() {
             <div className="attack-bonuses-grid__row">
               <div className="attack-bonuses-grid__label">Ranged Attack</div>
               <div className="attack-bonuses-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_ranged_attack_mod" disabled />
               </div>
               <div className="attack-bonuses-grid__operation">=</div>
               <div className="attack-bonuses-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_base_attack_bonus" disabled />
               </div>
               <div className="attack-bonuses-grid__operation">+</div>
               <div className="attack-bonuses-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_dexterity_mod" disabled />
               </div>
               <div className="attack-bonuses-grid__operation">+</div>
               <div className="attack-bonuses-grid__input">
-                <input className="grid-input" type="text" />
+                <GridInput
+                  attribute="attr_ranged_attack_misc"
+                  defaultValue="0"
+                />
               </div>
             </div>
 
@@ -607,19 +613,22 @@ function CharacterScreen() {
             <div className="attack-bonuses-grid__row">
               <div className="attack-bonuses-grid__label">Thrown Attack</div>
               <div className="attack-bonuses-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_thrown_attack_mod" disabled />
               </div>
               <div className="attack-bonuses-grid__operation">=</div>
               <div className="attack-bonuses-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_base_attack_bonus" disabled />
               </div>
               <div className="attack-bonuses-grid__operation">+</div>
               <div className="attack-bonuses-grid__input">
-                <input className="grid-input" disabled type="text" />
+                <GridInput attribute="attr_strength_mod" disabled />
               </div>
               <div className="attack-bonuses-grid__operation">+</div>
               <div className="attack-bonuses-grid__input">
-                <input className="grid-input" type="text" />
+                <GridInput
+                  attribute="attr_thrown_attack_misc"
+                  defaultValue="0"
+                />
               </div>
             </div>
           </div>
