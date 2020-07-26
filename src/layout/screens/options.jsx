@@ -1,98 +1,124 @@
 const React = require('react')
 
+const Grid = require('../components/grid')
 const SectionBlock = require('../section-block')
-const GridInput = require('../grid-input')
 
 function OptionsScreen() {
   return (
     <div>
       <SectionBlock title="Class">
-        <div className="options-class-grid">
-          <div className="options-class-grid__row options-class-grid__row--heading">
-            <div className="options-class-grid__label">Name</div>
-            <div className="options-class-grid__label">Level</div>
-            <div className="options-class-grid__label">SP</div>
-            <div className="options-class-grid__label">HP</div>
-            <div className="options-class-grid__label">BAB</div>
-            <div className="options-class-grid__label">Fortitude</div>
-            <div className="options-class-grid__label">Reflex</div>
-            <div className="options-class-grid__label">Will</div>
-            <div className="options-class-grid__label">Skills</div>
-            <div className="options-class-grid__label">Key Ability</div>
-            <div className="options-class-grid__label">Spells</div>
-          </div>
+        <Grid>
+          <Grid.Heading>
+            <Grid.Label starting size="7fr">
+              Name
+            </Grid.Label>
+            <Grid.Label size="2fr">Level</Grid.Label>
+            <Grid.Label size="2fr">SP</Grid.Label>
+            <Grid.Label size="2fr">HP</Grid.Label>
+            <Grid.Label size="3fr">BAB</Grid.Label>
+            <Grid.Label size="4fr">Fortitude</Grid.Label>
+            <Grid.Label size="4fr">Reflex</Grid.Label>
+            <Grid.Label size="4fr">Will</Grid.Label>
+            <Grid.Label size="2fr">Skills</Grid.Label>
+            <Grid.Label size="6fr">Key Ability</Grid.Label>
+            <Grid.Label size="3rem">Spells</Grid.Label>
+          </Grid.Heading>
 
           <fieldset className="repeating_classes">
-            <div className="options-class-grid__row">
-              <div className="options-class-grid__input">
-                <GridInput attribute="attr_name" />
-              </div>
-              <div className="options-class-grid__input">
-                <GridInput attribute="attr_level" />
-              </div>
-              <div className="options-class-grid__input">
-                <GridInput attribute="attr_sp" />
-              </div>
-              <div className="options-class-grid__input">
-                <GridInput attribute="attr_hp" />
-              </div>
-              <div className="options-class-grid__input">
-                <select className="grid-input" name="attr_bab">
-                  <option value="half">1/2</option>
-                  <option value="three-quarter">3/4</option>
-                  <option value="full">Full</option>
-                </select>
-              </div>
-              <div className="options-class-grid__input">
-                <select
-                  className="grid-input"
-                  name="attr_fortitude_save_progression"
-                >
-                  <option value="poor">Poor</option>
-                  <option value="good">Good</option>
-                </select>
-              </div>
-              <div className="options-class-grid__input">
-                <select
-                  className="grid-input"
-                  name="attr_reflex_save_progression"
-                >
-                  <option value="poor">Poor</option>
-                  <option value="good">Good</option>
-                </select>
-              </div>
-              <div className="options-class-grid__input">
-                <select
-                  className="grid-input"
-                  name="attr_will_save_progression"
-                >
-                  <option value="poor">Poor</option>
-                  <option value="good">Good</option>
-                </select>
-              </div>
-              <div className="options-class-grid__input">
-                <GridInput attribute="attr_skills" />
-              </div>
-              <div className="options-class-grid__input">
-                <select className="grid-input" name="attr_key_ability">
-                  <option value="strength">Strength</option>
-                  <option value="dexterity">Dexterity</option>
-                  <option value="constitution">Constitution</option>
-                  <option value="intelligence">Intelligence</option>
-                  <option value="wisdom">Wisdom</option>
-                  <option value="charisma">Charisma</option>
-                </select>
-              </div>
-              <div className="options-class-grid__input">
-                <input
-                  className="grid-input"
-                  name="attr_spells"
-                  type="checkbox"
-                />
-              </div>
-            </div>
+            <Grid.Row>
+              <Grid.Input align="left" attribute="attr_name" />
+              <Grid.Input attribute="attr_level" />
+              <Grid.Input attribute="attr_sp" />
+              <Grid.Input attribute="attr_hp" />
+              <Grid.Input
+                attribute="attr_bab"
+                options={[
+                  ['half', '1/2'],
+                  ['three-quarter', '3/4'],
+                  ['full', 'Full'],
+                ]}
+                type="select"
+              />
+              <Grid.Input
+                attribute="attr_fortitude_save_progression"
+                options={[
+                  ['poor', 'Poor'],
+                  ['good', 'Good'],
+                ]}
+                type="select"
+              />
+              <Grid.Input
+                attribute="attr_reflex_save_progression"
+                options={[
+                  ['poor', 'Poor'],
+                  ['good', 'Good'],
+                ]}
+                type="select"
+              />
+              <Grid.Input
+                attribute="attr_will_save_progression"
+                options={[
+                  ['poor', 'Poor'],
+                  ['good', 'Good'],
+                ]}
+                type="select"
+              />
+              <Grid.Input attribute="attr_skills" />
+              <Grid.Input
+                attribute="attr_key_ability"
+                options={[
+                  ['strength', 'Strength'],
+                  ['dexterity', 'Dexterity'],
+                  ['constitution', 'Constitution'],
+                  ['intelligence', 'Intelligence'],
+                  ['wisdom', 'Wisdom'],
+                  ['charisma', 'Charisma'],
+                ]}
+                type="select"
+              />
+              <Grid.Input attribute="attr_spells" type="checkbox" />
+            </Grid.Row>
           </fieldset>
-        </div>
+        </Grid>
+      </SectionBlock>
+
+      <SectionBlock title="Race">
+        <Grid>
+          <Grid.Heading>
+            <Grid.Label starting size="4fr">
+              Name
+            </Grid.Label>
+            <Grid.Label size="4fr">Type</Grid.Label>
+            <Grid.Label size="4fr">Subtypes</Grid.Label>
+            <Grid.Label size="4fr">Size</Grid.Label>
+            <Grid.Label size="1fr">HP</Grid.Label>
+            <Grid.Label size="3fr">Speed</Grid.Label>
+          </Grid.Heading>
+
+          <Grid.Row>
+            <Grid.Input attribute="atr_race_name" />
+            <Grid.Input attribute="atr_race_type" />
+            <Grid.Input attribute="atr_race_subtypes" />
+            <Grid.Input
+              attribute="atr_race_size"
+              options={[
+                ['fine', 'Fine'],
+                ['diminutive', 'Diminutive'],
+                ['tiny', 'Tiny'],
+                ['small', 'Small'],
+                ['medium', 'Medium'],
+                ['large', 'Large'],
+                ['huge', 'Huge'],
+                ['gargantuan', 'Gargantuan'],
+                ['colossal', 'Colossal'],
+              ]}
+              defaultValue="medium"
+              type="select"
+            />
+            <Grid.Input attribute="atr_race_hp" />
+            <Grid.Input attribute="atr_race_speed" />
+          </Grid.Row>
+        </Grid>
       </SectionBlock>
     </div>
   )
