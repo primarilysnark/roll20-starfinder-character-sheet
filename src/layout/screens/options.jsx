@@ -10,7 +10,7 @@ function OptionsScreen() {
       <SectionBlock title="Class">
         <Grid>
           <Grid.Header>
-            <Grid.Label starting size="7fr">
+            <Grid.Label align="left" size="7fr">
               Name
             </Grid.Label>
             <Grid.Label size="2fr">Level</Grid.Label>
@@ -88,7 +88,7 @@ function OptionsScreen() {
           <SectionBlock title="Race">
             <Grid>
               <Grid.Header>
-                <Grid.Label starting size="4fr">
+                <Grid.Label align="left" size="4fr">
                   Name
                 </Grid.Label>
                 <Grid.Label size="4fr">Type</Grid.Label>

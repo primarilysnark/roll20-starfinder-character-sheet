@@ -56,12 +56,18 @@ GridRow.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-function GridLabel({ children, compact, starting }) {
+function GridLabel({ align, children, compact }) {
+  const style = {}
+
+  if (align) {
+    style.textAlign = align
+  }
+
   return (
     <div
-      className={`grid-layout__label${
-        starting ? ' grid-layout__label--starting' : ''
-      }${compact ? ' grid-layout__label--compact' : ''}`}
+      className={`grid-layout__label
+      ${compact ? ' grid-layout__label--compact' : ''}`}
+      style={style}
     >
       {children}
     </div>
@@ -69,14 +75,13 @@ function GridLabel({ children, compact, starting }) {
 }
 
 GridLabel.propTypes = {
+  align: PropTypes.string,
   children: PropTypes.node.isRequired,
   compact: PropTypes.bool,
-  starting: PropTypes.bool,
 }
 
 GridLabel.defaultProps = {
   compact: false,
-  starting: false,
 }
 
 function GridInput({ align, attribute, compact, options, defaultValue, type }) {
