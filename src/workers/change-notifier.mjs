@@ -124,16 +124,25 @@ export class ChangeNotifier {
             if (Array.isArray(value)) {
               return [
                 attributeKey,
-                value.map(
-                  (entry) => attribute.parse(entry) || attribute.defaultValue
-                ),
+                value.map((entry) => {
+                  const parsedValue = attribute.parse(entry)
+
+                  if (parsedValue === null) {
+                    return attribute.defaultValue
+                  }
+
+                  return parsedValue
+                }),
               ]
             }
 
-            return [
-              attributeKey,
-              attribute.parse(value) || attribute.defaultValue,
-            ]
+            const parsedValue = attribute.parse(value)
+
+            if (parsedValue === null) {
+              return [attributeKey, attribute.defaultValue]
+            }
+
+            return [attributeKey, parsedValue]
           }
         }
 
