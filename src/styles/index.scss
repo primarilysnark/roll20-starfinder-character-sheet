@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Bebas+Neue|Source+Sans+Pro:wght@400;600&display=swap');
 
-@import 'grid.scss';
+@import 'typography.scss';
+@import 'layout.scss';
 @import 'sheet.scss';
 @import 'error-toast.scss';
 @import 'navigation.scss';
@@ -51,9 +52,13 @@
 
 /* Sheet Wrapper */
 .sheet-section-block {
-  margin: 3.25rem 0 0 1rem;
+  margin: 3.25rem 0 1.75rem 1rem;
   border: 2px solid #3893cd;
   padding: 1rem;
+
+  & ~ .sheet-section-block {
+    margin-top: 5rem;
+  }
 
   &--stand-alone {
     align-items: flex-end;

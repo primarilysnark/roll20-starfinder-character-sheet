@@ -3,18 +3,22 @@ const PropTypes = require('prop-types')
 
 function Grid({ children }) {
   const childArray = React.Children.toArray(children)
-  const heading = childArray.filter((child) => child.type === GridHeading)[0]
-  const rows = childArray.filter((child) => child.type !== GridHeading)
+  const header = childArray.filter((child) => child.type === GridHeader)[0]
+  const rows = childArray.filter((child) => child.type !== GridHeader)
 
-  const columnSizes = React.Children.toArray(heading.props.children).map(
-    (child) => child.props.size
+  const headerChildren = React.Children.toArray(header.props.children)
+  const columnSizes = headerChildren.map((child) => child.props.size)
+  const headerIsEmpty = headerChildren.every(
+    (child) => child.type === GridSpacer
   )
 
   return (
     <div className={`grid-layout grid-layout--${columnSizes.join('-')}`}>
-      <div className="grid-layout__row grid-layout__row--heading">
-        {heading}
-      </div>
+      {headerIsEmpty ? null : (
+        <div className="grid-layout__row grid-layout__row--header">
+          {header}
+        </div>
+      )}
       {rows}
     </div>
   )
@@ -24,8 +28,20 @@ Grid.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-function GridHeading({ children }) {
+function GridHeader({ children }) {
   return <React.Fragment>{children}</React.Fragment>
+}
+
+GridHeader.propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
+function GridHeading({ children }) {
+  return (
+    <div className="grid-layout__row grid-layout__row--heading">
+      <h3>{children}</h3>
+    </div>
+  )
 }
 
 GridHeading.propTypes = {
@@ -40,12 +56,12 @@ GridRow.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-function GridLabel({ children, starting }) {
+function GridLabel({ children, compact, starting }) {
   return (
     <div
-      className={`grid-layout__label ${
-        starting ? 'grid-layout__label--starting' : ''
-      }`}
+      className={`grid-layout__label${
+        starting ? ' grid-layout__label--starting' : ''
+      }${compact ? ' grid-layout__label--compact' : ''}`}
     >
       {children}
     </div>
@@ -54,14 +70,16 @@ function GridLabel({ children, starting }) {
 
 GridLabel.propTypes = {
   children: PropTypes.node.isRequired,
+  compact: PropTypes.bool,
   starting: PropTypes.bool,
 }
 
 GridLabel.defaultProps = {
+  compact: false,
   starting: false,
 }
 
-function GridInput({ align, attribute, options, defaultValue, type }) {
+function GridInput({ align, attribute, compact, options, defaultValue, type }) {
   const style = {}
 
   if (align) {
@@ -71,7 +89,11 @@ function GridInput({ align, attribute, options, defaultValue, type }) {
   switch (type) {
     case 'select':
       return (
-        <div className="grid-layout__input">
+        <div
+          className={`grid-layout__input${
+            compact ? ' grid-layout__input--compact' : ''
+          }`}
+        >
           <select name={attribute}>
             {options.map((option, index) => {
               if (Array.isArray(option)) {
@@ -102,7 +124,11 @@ function GridInput({ align, attribute, options, defaultValue, type }) {
 
     case 'checkbox':
       return (
-        <div className="grid-layout__input">
+        <div
+          className={`grid-layout__input${
+            compact ? ' grid-layout__input--compact' : ''
+          }`}
+        >
           <input name={attribute} type="checkbox" />
         </div>
       )
@@ -110,7 +136,11 @@ function GridInput({ align, attribute, options, defaultValue, type }) {
     case 'text':
     default:
       return (
-        <div className="grid-layout__input">
+        <div
+          className={`grid-layout__input${
+            compact ? ' grid-layout__input--compact' : ''
+          }`}
+        >
           <input
             defaultValue={defaultValue}
             name={attribute}
@@ -125,6 +155,7 @@ function GridInput({ align, attribute, options, defaultValue, type }) {
 GridInput.propTypes = {
   align: PropTypes.string,
   attribute: PropTypes.string.isRequired,
+  compact: PropTypes.bool,
   options: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
@@ -134,12 +165,23 @@ GridInput.propTypes = {
 }
 
 GridInput.defaultProps = {
+  compact: false,
   type: 'text',
 }
 
+function GridSpacer() {
+  return <div />
+}
+
+GridSpacer.propTypes = {
+  size: PropTypes.string.isRequired,
+}
+
+Grid.Header = GridHeader
 Grid.Heading = GridHeading
 Grid.Input = GridInput
 Grid.Label = GridLabel
 Grid.Row = GridRow
+Grid.Spacer = GridSpacer
 
 module.exports = Grid

@@ -1,5 +1,6 @@
 const React = require('react')
 
+const ColumnLayout = require('../components/columns')
 const Grid = require('../components/grid')
 const SectionBlock = require('../section-block')
 
@@ -8,7 +9,7 @@ function OptionsScreen() {
     <div>
       <SectionBlock title="Class">
         <Grid>
-          <Grid.Heading>
+          <Grid.Header>
             <Grid.Label starting size="7fr">
               Name
             </Grid.Label>
@@ -22,7 +23,7 @@ function OptionsScreen() {
             <Grid.Label size="2fr">Skills</Grid.Label>
             <Grid.Label size="6fr">Key Ability</Grid.Label>
             <Grid.Label size="3rem">Spells</Grid.Label>
-          </Grid.Heading>
+          </Grid.Header>
 
           <fieldset className="repeating_classes">
             <Grid.Row>
@@ -82,44 +83,198 @@ function OptionsScreen() {
         </Grid>
       </SectionBlock>
 
-      <SectionBlock title="Race">
-        <Grid>
-          <Grid.Heading>
-            <Grid.Label starting size="4fr">
-              Name
-            </Grid.Label>
-            <Grid.Label size="4fr">Type</Grid.Label>
-            <Grid.Label size="4fr">Subtypes</Grid.Label>
-            <Grid.Label size="4fr">Size</Grid.Label>
-            <Grid.Label size="1fr">HP</Grid.Label>
-            <Grid.Label size="3fr">Speed</Grid.Label>
-          </Grid.Heading>
+      <ColumnLayout>
+        <ColumnLayout.Column size="2fr">
+          <SectionBlock title="Race">
+            <Grid>
+              <Grid.Header>
+                <Grid.Label starting size="4fr">
+                  Name
+                </Grid.Label>
+                <Grid.Label size="4fr">Type</Grid.Label>
+                <Grid.Label size="4fr">Subtypes</Grid.Label>
+                <Grid.Label size="5fr">Size</Grid.Label>
+                <Grid.Label size="2fr">HP</Grid.Label>
+                <Grid.Label size="3fr">Speed</Grid.Label>
+              </Grid.Header>
 
-          <Grid.Row>
-            <Grid.Input attribute="atr_race_name" />
-            <Grid.Input attribute="atr_race_type" />
-            <Grid.Input attribute="atr_race_subtypes" />
-            <Grid.Input
-              attribute="atr_race_size"
-              options={[
-                ['fine', 'Fine'],
-                ['diminutive', 'Diminutive'],
-                ['tiny', 'Tiny'],
-                ['small', 'Small'],
-                ['medium', 'Medium'],
-                ['large', 'Large'],
-                ['huge', 'Huge'],
-                ['gargantuan', 'Gargantuan'],
-                ['colossal', 'Colossal'],
-              ]}
-              defaultValue="medium"
-              type="select"
-            />
-            <Grid.Input attribute="atr_race_hp" />
-            <Grid.Input attribute="atr_race_speed" />
-          </Grid.Row>
-        </Grid>
-      </SectionBlock>
+              <Grid.Row>
+                <Grid.Input align="left" attribute="atr_race_name" />
+                <Grid.Input attribute="atr_race_type" />
+                <Grid.Input attribute="atr_race_subtypes" />
+                <Grid.Input
+                  attribute="atr_race_size"
+                  options={[
+                    ['fine', 'Fine'],
+                    ['diminutive', 'Diminutive'],
+                    ['tiny', 'Tiny'],
+                    ['small', 'Small'],
+                    ['medium', 'Medium'],
+                    ['large', 'Large'],
+                    ['huge', 'Huge'],
+                    ['gargantuan', 'Gargantuan'],
+                    ['colossal', 'Colossal'],
+                  ]}
+                  defaultValue="medium"
+                  type="select"
+                />
+                <Grid.Input attribute="atr_race_hp" />
+                <Grid.Input attribute="atr_race_speed" />
+              </Grid.Row>
+            </Grid>
+          </SectionBlock>
+
+          <SectionBlock title="Rolls">
+            <Grid>
+              <Grid.Header>
+                <Grid.Spacer size="2rem" />
+                <Grid.Spacer size="1fr" />
+                <Grid.Spacer size="2rem" />
+                <Grid.Spacer size="1fr" />
+              </Grid.Header>
+
+              <Grid.Heading>Display</Grid.Heading>
+              <Grid.Row>
+                <Grid.Input
+                  attribute="attr_rolls_whisper"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>Whisper rolls</Grid.Label>
+                <Grid.Input
+                  attribute="attr_rolls_show_name"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>Show character name</Grid.Label>
+              </Grid.Row>
+
+              <Grid.Heading>Query Modifiers</Grid.Heading>
+              <Grid.Row>
+                <Grid.Input
+                  attribute="attr_rolls_query_ability"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>Ability checks</Grid.Label>
+                <Grid.Input
+                  attribute="attr_rolls_query_initiative"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>Initiative checks</Grid.Label>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Input
+                  attribute="attr_rolls_query_saving_throws"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>Saving throws</Grid.Label>
+                <Grid.Input
+                  attribute="attr_rolls_query_skills"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>Skill checks</Grid.Label>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Input
+                  attribute="attr_rolls_query_attack"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>Attack rolls</Grid.Label>
+                <Grid.Input
+                  attribute="attr_rolls_query_damage"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>Damage rolls</Grid.Label>
+              </Grid.Row>
+            </Grid>
+          </SectionBlock>
+        </ColumnLayout.Column>
+
+        <ColumnLayout.Column size="1fr">
+          <SectionBlock title="House Rules">
+            <Grid>
+              <Grid.Header>
+                <Grid.Spacer size="2rem" />
+                <Grid.Spacer size="1fr" />
+              </Grid.Header>
+
+              <Grid.Heading>Resolve</Grid.Heading>
+              <Grid.Row>
+                <Grid.Input
+                  attribute="attr_homebrew_resolve"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>
+                  Resolve uses highest ability score
+                </Grid.Label>
+              </Grid.Row>
+
+              <Grid.Heading>Bonuses</Grid.Heading>
+              <Grid.Row>
+                <Grid.Input
+                  attribute="attr_homebrew_circumstance_stacking"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>Circumstance bonuses stack</Grid.Label>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Input
+                  attribute="attr_homebrew_luck_stacking"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>Luck bonuses stack</Grid.Label>
+              </Grid.Row>
+
+              <Grid.Heading>Combat</Grid.Heading>
+              <Grid.Row>
+                <Grid.Input
+                  attribute="attr_homebrew_kac"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>
+                  AC vs. combat maneuvers is 4 + KAC
+                </Grid.Label>
+              </Grid.Row>
+
+              <Grid.Heading>Specialization</Grid.Heading>
+              <Grid.Row>
+                <Grid.Input
+                  attribute="attr_homebrew_operative_specialization"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>
+                  Operative weapons add full level to specialization
+                </Grid.Label>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Input
+                  attribute="attr_homebrew_small_arms_specialization"
+                  compact
+                  type="checkbox"
+                />
+                <Grid.Label compact>
+                  Small Arms weapons add full level to specialization
+                </Grid.Label>
+              </Grid.Row>
+            </Grid>
+          </SectionBlock>
+        </ColumnLayout.Column>
+      </ColumnLayout>
     </div>
   )
 }
