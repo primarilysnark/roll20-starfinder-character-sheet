@@ -70,8 +70,8 @@ Navigator.addTabListeners([
 ])
 
 const notifier = new ChangeNotifier()
-notifier.addListener('navigation_tab')
-notifier.addListener('error_message')
+notifier.addListener('navigation_tab', commonFormats.string)
+notifier.addListener('error_message', commonFormats.string)
 notifier.addListener('show_error', commonFormats.boolean)
 
 notifier.addListener('strength_base', commonFormats.integer)
