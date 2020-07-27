@@ -162,14 +162,17 @@ describe('ChangeNotifier', function () {
         })
 
         td.when(
-          dependencyAttribute.calculate({
-            'repeating_sections:nested_attribute': ['new parsed value'],
-            repeating_sections: {
-              '-testid': {
-                nested_attribute: 'new parsed value',
+          dependencyAttribute.calculate(
+            {
+              'repeating_sections:nested_attribute': ['new parsed value'],
+              repeating_sections: {
+                '-testid': {
+                  nested_attribute: 'new parsed value',
+                },
               },
             },
-          })
+            dependencyAttribute.dependencies
+          )
         ).thenReturn('new dependency value')
 
         subject._handleChangeEvent(
@@ -230,9 +233,12 @@ describe('ChangeNotifier', function () {
       })
 
       td.when(
-        calculatedAttribute.calculate({
-          [baseAttribute.name]: 'new base value',
-        })
+        calculatedAttribute.calculate(
+          {
+            [baseAttribute.name]: 'new base value',
+          },
+          calculatedAttribute.dependencies
+        )
       ).thenReturn('new calculated value')
 
       subject._handleChangeEvent(
