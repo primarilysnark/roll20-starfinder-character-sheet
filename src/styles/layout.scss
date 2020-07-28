@@ -2,6 +2,10 @@
   display: grid;
   column-gap: 1.5rem;
 
+  &--1fr-1fr {
+    grid-template-columns: 1fr 1fr;
+  }
+
   &--2fr-1fr {
     grid-template-columns: 2fr 1fr;
   }
@@ -19,12 +23,16 @@
     column-gap: 1rem;
     margin-bottom: 1rem;
 
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
     &--header {
       margin-bottom: 0.5rem;
 
       .sheet-grid-layout__label {
         font-size: 1rem;
-        line-height: 1;
+        height: 1rem;
         margin: 0;
         text-align: center;
       }
@@ -34,11 +42,24 @@
       grid-template-columns: 1fr !important;
       margin-bottom: 0.5rem;
     }
+
+    &--separator {
+      border-top: 1px solid #aaaaaa;
+      grid-template-columns: 1fr !important;
+      margin-bottom: 0;
+      padding-top: 1rem;
+    }
   }
 
-  &--2rem-1fr-2rem-1fr {
+  &--compact {
     .sheet-grid-layout__row {
-      grid-template-columns: 2rem 1fr 2rem 1fr;
+      column-gap: 0.5rem;
+    }
+  }
+
+  &--1fr-6px-1fr-6px-1fr {
+    .sheet-grid-layout__row {
+      grid-template-columns: 1fr 6px 1fr 6px 1fr;
     }
   }
 
@@ -48,9 +69,9 @@
     }
   }
 
-  &--7fr-2fr-2fr-2fr-3fr-4fr-4fr-4fr-2fr-6fr-3rem {
+  &--2rem-1fr-2rem-1fr {
     .sheet-grid-layout__row {
-      grid-template-columns: 7fr repeat(3, 2fr) 3fr repeat(3, 4fr) 2fr 6fr 3rem;
+      grid-template-columns: 2rem 1fr 2rem 1fr;
     }
   }
 
@@ -60,8 +81,42 @@
     }
   }
 
-  &__label {
-    font: bold 1.2rem/3rem 'Source Sans Pro';
+  &--45px-65px-1fr-1fr {
+    .sheet-grid-layout__row {
+      grid-template-columns: 45px 65px 1fr 1fr;
+    }
+  }
+
+  &--45px-75px-1fr-8px-16px-8px-1fr-8px-1fr-8px-1fr {
+    .sheet-grid-layout__row {
+      grid-template-columns: 45px 75px 1fr 8px 16px 8px 1fr 8px 1fr 8px 1fr;
+    }
+  }
+
+  &--125px-1fr-8px-16px-8px-1fr-8px-1fr-8px-1fr {
+    .sheet-grid-layout__row {
+      grid-template-columns: 125px 1fr 8px 16px 8px 1fr 8px 1fr 8px 1fr;
+    }
+  }
+
+  &--7fr-2fr-2fr-2fr-3fr-4fr-4fr-4fr-2fr-6fr-3rem {
+    .sheet-grid-layout__row {
+      grid-template-columns: 7fr repeat(3, 2fr) 3fr repeat(3, 4fr) 2fr 6fr 3rem;
+    }
+  }
+
+  &--80px-2fr-1fr-1fr-1fr {
+    .sheet-grid-layout__row {
+      grid-template-columns: 80px 2fr repeat(3, 1fr);
+    }
+  }
+
+  &__block-label {
+    background: #000000;
+    border-radius: 4px;
+    color: #ffffff;
+    font: bold 1.5rem/3rem 'Source Sans Pro';
+    text-align: center;
     text-transform: uppercase;
 
     &--compact {
@@ -69,19 +124,64 @@
     }
   }
 
+  &__label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font: bold 1.2rem 'Source Sans Pro';
+    height: 3rem;
+    text-transform: uppercase;
+
+    &--compact {
+      height: 2rem;
+    }
+
+    &--abbreviated {
+      height: 4.5rem;
+      text-align: center;
+    }
+
+    &__abbreviation {
+      background: #000000;
+      border-radius: 4px;
+      color: #ffffff;
+      font: bold 1.5rem 'Source Sans Pro';
+      padding: 4px 0;
+      text-align: center;
+    }
+  }
+
   &__input {
-    input, select {
+    position: relative;
+
+    input, select, .sheet-grid-layout__input__field {
       background: #ffffff;
       border: 1px solid #cccccc;
       border-radius: 4px;
       box-sizing: border-box;
-      display: inline-block;
+      display: block;
       font: 1.5rem/2rem 'Source Sans Pro';
       margin: 0;
       padding: 4px;
       height: 3rem;
       text-align: center;
       width: 100%;
+
+      &--overlay {
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: -1;
+
+        & ~ input, select, .sheet-grid-layout__input__field {
+          opacity: 0;
+
+          &:hover, &:focus {
+            opacity: 1;
+          }
+        }
+      }
 
       &--disabled, &:disabled {
         background: #f5f5f5;
@@ -95,7 +195,7 @@
     }
 
     &--compact {
-      input, select {
+      input, select, .sheet-grid-layout__input__field {
         line-height: 1.6rem;
         padding: 1px 4px;
 

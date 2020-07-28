@@ -7,6 +7,10 @@
 @import 'navigation.scss';
 @import 'options.scss';
 
+* {
+  box-sizing: border-box;
+}
+
 /* Sheet grid */
 .sheet-grid {
   display: grid;
@@ -60,7 +64,7 @@
     margin-top: 5rem;
   }
 
-  &--stand-alone {
+  &--standalone {
     align-items: flex-end;
     border: 0;
     column-gap: 3rem;
@@ -68,6 +72,10 @@
     grid-template-columns: 1fr 1fr;
     margin: -1.1rem 0 0;
     padding: 0;
+
+    .sheet-grid-layout {
+      height: 4.5rem;
+    }
 
     .sheet-section-block__heading {
       height: 36px;

@@ -1,8 +1,10 @@
 const React = require('react')
 
-const AbilityScoreGrid = require('../ability-score-grid')
 const GridInput = require('../grid-input')
 const SectionBlock = require('../section-block')
+
+const ColumnLayout = require('../components/columns')
+const Grid = require('../components/grid')
 
 function CharacterScreen() {
   return (
@@ -91,50 +93,176 @@ function CharacterScreen() {
         </div>
       </div>
 
+      <ColumnLayout>
+        <ColumnLayout.Column size="1fr">
+          <SectionBlock title="Ability Scores">
+            <Grid>
+              <Grid.Header>
+                <Grid.Spacer size="80px" />
+                <Grid.Label size="2fr">Score</Grid.Label>
+                <Grid.Label size="1fr">Modifier</Grid.Label>
+                <Grid.Label size="1fr">Penalty</Grid.Label>
+                <Grid.Label size="1fr">Drain</Grid.Label>
+              </Grid.Header>
+
+              {[
+                ['STR', 'Strength'],
+                ['DEX', 'Dexterity'],
+                ['CON', 'Constitution'],
+                ['INT', 'Intelligence'],
+                ['WIS', 'Wisdom'],
+                ['CHA', 'Charisma'],
+              ].map(([abbreviation, field]) => (
+                <Grid.Row key={abbreviation}>
+                  <Grid.Abbreviation abbr={abbreviation}>
+                    {field}
+                  </Grid.Abbreviation>
+                  <Grid.Input
+                    attribute={`attr_${field.toLowerCase()}_base`}
+                    overlay={`attr_${field.toLowerCase()}_adjusted`}
+                    defaultValue="10"
+                  />
+                  <Grid.Input
+                    attribute={`attr_${field.toLowerCase()}_mod`}
+                    disabled
+                  />
+                  <Grid.Input
+                    attribute={`attr_${field.toLowerCase()}_penalty`}
+                  />
+                  <Grid.Input attribute={`attr_${field.toLowerCase()}_drain`} />
+                </Grid.Row>
+              ))}
+            </Grid>
+          </SectionBlock>
+        </ColumnLayout.Column>
+        <ColumnLayout.Column size="1fr">
+          <SectionBlock standalone title="Initiative">
+            <Grid compact>
+              <Grid.Header>
+                <Grid.Label size="1fr">Total</Grid.Label>
+                <Grid.Spacer size="6px" />
+                <Grid.Label size="1fr">Dex Mod</Grid.Label>
+                <Grid.Spacer size="6px" />
+                <Grid.Label size="1fr">Misc</Grid.Label>
+              </Grid.Header>
+
+              <Grid.Row>
+                <Grid.Input attribute="attr_initiative_bonus" disabled />
+                <Grid.Label align="center">=</Grid.Label>
+                <Grid.Input attribute="attr_dexterity_mod" disabled />
+                <Grid.Label align="center">+</Grid.Label>
+                <Grid.Input attribute="attr_initiative_misc" />
+              </Grid.Row>
+            </Grid>
+          </SectionBlock>
+
+          <SectionBlock title="Health and Resolve">
+            <Grid>
+              <Grid.Header>
+                <Grid.Spacer size="45px" />
+                <Grid.Spacer size="65px" />
+                <Grid.Label size="1fr">Current</Grid.Label>
+                <Grid.Label size="1fr">Total</Grid.Label>
+              </Grid.Header>
+
+              <Grid.Row>
+                <Grid.BlockLabel>SP</Grid.BlockLabel>
+                <Grid.Label>Stamina</Grid.Label>
+                <Grid.Input attribute="attr_stamina_current" />
+                <Grid.Input attribute="attr_stamina_total" disabled />
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.BlockLabel>HP</Grid.BlockLabel>
+                <Grid.Label>Health</Grid.Label>
+                <Grid.Input attribute="attr_health_current" />
+                <Grid.Input attribute="attr_health_total" disabled />
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.BlockLabel>RP</Grid.BlockLabel>
+                <Grid.Label>Resolve</Grid.Label>
+                <Grid.Input attribute="attr_resolve_current" />
+                <Grid.Input attribute="attr_resolve_total" disabled />
+              </Grid.Row>
+            </Grid>
+          </SectionBlock>
+
+          <SectionBlock title="Armor Class">
+            <Grid compact>
+              <Grid.Header>
+                <Grid.Spacer size="45px" />
+                <Grid.Spacer size="75px" />
+                <Grid.Label size="1fr">Total</Grid.Label>
+                <Grid.Spacer size="8px" />
+                <Grid.Spacer size="16px" />
+                <Grid.Spacer size="8px" />
+                <Grid.Label size="1fr">Armor</Grid.Label>
+                <Grid.Spacer size="8px" />
+                <Grid.Label size="1fr">Dex Mod</Grid.Label>
+                <Grid.Spacer size="8px" />
+                <Grid.Label size="1fr">Misc</Grid.Label>
+              </Grid.Header>
+
+              <Grid.Row>
+                <Grid.BlockLabel>EAC</Grid.BlockLabel>
+                <Grid.Label>Energy Armor Class</Grid.Label>
+                <Grid.Input />
+                <Grid.Label>=</Grid.Label>
+                <Grid.Label align="center">10</Grid.Label>
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input />
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.BlockLabel>KAC</Grid.BlockLabel>
+                <Grid.Label>Kinetic Armor Class</Grid.Label>
+                <Grid.Input />
+                <Grid.Label>=</Grid.Label>
+                <Grid.Label align="center">10</Grid.Label>
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input />
+              </Grid.Row>
+
+              <Grid.Separator />
+            </Grid>
+
+            <Grid compact>
+              <Grid.Header>
+                <Grid.Spacer size="125px" />
+                <Grid.Spacer size="1fr" />
+                <Grid.Spacer size="8px" />
+                <Grid.Spacer size="16px" />
+                <Grid.Spacer size="8px" />
+                <Grid.Spacer size="1fr" />
+                <Grid.Spacer size="8px" />
+                <Grid.Spacer size="1fr" />
+                <Grid.Spacer size="8px" />
+                <Grid.Spacer size="1fr" />
+              </Grid.Header>
+
+              <Grid.Row>
+                <Grid.Label>AC vs. Combat Maneuvers</Grid.Label>
+                <Grid.Input />
+                <Grid.Label>=</Grid.Label>
+                <Grid.Label align="center">8</Grid.Label>
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input defaultValue="KAC" disabled />
+              </Grid.Row>
+            </Grid>
+          </SectionBlock>
+        </ColumnLayout.Column>
+      </ColumnLayout>
+
       <div className="grid">
-        <SectionBlock
-          className="grid__item--ability-scores"
-          title="Ability Scores"
-        >
-          <AbilityScoreGrid>
-            <AbilityScoreGrid.Row
-              abbreviation="STR"
-              name="Strength"
-              attribute="strength"
-            />
-
-            <AbilityScoreGrid.Row
-              abbreviation="DEX"
-              name="Dexterity"
-              attribute="dexterity"
-            />
-
-            <AbilityScoreGrid.Row
-              abbreviation="CON"
-              name="Constitution"
-              attribute="constitution"
-            />
-
-            <AbilityScoreGrid.Row
-              abbreviation="INT"
-              name="Intelligence"
-              attribute="intelligence"
-            />
-
-            <AbilityScoreGrid.Row
-              abbreviation="WIS"
-              name="Wisdom"
-              attribute="wisdom"
-            />
-
-            <AbilityScoreGrid.Row
-              abbreviation="CHA"
-              name="Charisma"
-              attribute="charisma"
-            />
-          </AbilityScoreGrid>
-        </SectionBlock>
-
         <div className="grid__item--skills section-block">
           <h2 className="section-block__heading">Skills</h2>
           <div className="skill-grid">
@@ -267,164 +395,6 @@ function CharacterScreen() {
               <div className="skill-grid__label">
                 * Trained only skill <span className="spacer"></span> ¤ Armor
                 check penalty applies
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid__item--initiative section-block section-block--stand-alone">
-          <h2 className="section-block__heading">Initiative</h2>
-          <div className="section-block__grid">
-            <div className="section-block__row section-block__row--heading">
-              <div className="section-block__label section-block__label--total">
-                Total
-              </div>
-              <div className="section-block__label section-block__label--dexterity-mod">
-                Dex Mod
-              </div>
-              <div className="section-block__label section-block__label--misc">
-                Misc
-              </div>
-            </div>
-
-            <div className="section-block__row">
-              <div className="section-block__input">
-                <GridInput attribute="attr_initiative_bonus" disabled />
-              </div>
-              <div className="section-block__operation">=</div>
-              <div className="section-block__input">
-                <GridInput attribute="attr_dexterity_mod" disabled />
-              </div>
-              <div className="section-block__operation">+</div>
-              <div className="section-block__input">
-                <GridInput attribute="attr_initiative_misc" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid__item--health-and-resolve section-block">
-          <h2 className="section-block__heading">Health and Resolve</h2>
-          <div className="health-and-resolve-grid">
-            <div className="health-and-resolve-grid__row health-and-resolve-grid__row--heading">
-              <div className="health-and-resolve-grid__label">Current</div>
-              <div className="health-and-resolve-grid__label">Total</div>
-            </div>
-
-            <div className="health-and-resolve-grid__row">
-              <div className="health-and-resolve-grid__abbreviation">SP</div>
-              <div className="health-and-resolve-grid__label">Stamina</div>
-              <div className="health-and-resolve-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-              <div className="health-and-resolve-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-            </div>
-
-            <div className="health-and-resolve-grid__row">
-              <div className="health-and-resolve-grid__abbreviation">HP</div>
-              <div className="health-and-resolve-grid__label">Health</div>
-              <div className="health-and-resolve-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-              <div className="health-and-resolve-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-            </div>
-
-            <div className="health-and-resolve-grid__row">
-              <div className="health-and-resolve-grid__abbreviation">RP</div>
-              <div className="health-and-resolve-grid__label">Resolve</div>
-              <div className="health-and-resolve-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-              <div className="health-and-resolve-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid__item--armor-class section-block">
-          <h2 className="section-block__heading">Armor Class</h2>
-          <div className="armor-class-grid">
-            <div className="armor-class-grid__row armor-class-grid__row--heading">
-              <div className="armor-class-grid__label armor-class-grid__label--total">
-                Total
-              </div>
-              <div className="armor-class-grid__label armor-class-grid__label--armor-bonus">
-                Armor
-              </div>
-              <div className="armor-class-grid__label armor-class-grid__label--dex-mod">
-                Dex Mod
-              </div>
-              <div className="armor-class-grid__label armor-class-grid__label--misc-mod">
-                Misc
-              </div>
-            </div>
-
-            <div className="armor-class-grid__row">
-              <div className="armor-class-grid__abbreviation">EAC</div>
-              <div className="armor-class-grid__label">Energy Armor Class</div>
-              <div className="armor-class-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="armor-class-grid__operation">=</div>
-              <div className="armor-class-grid__placeholder">10</div>
-              <div className="armor-class-grid__operation">+</div>
-              <div className="armor-class-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="armor-class-grid__operation">+</div>
-              <div className="armor-class-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="armor-class-grid__operation">+</div>
-              <div className="armor-class-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-            </div>
-
-            <div className="armor-class-grid__row">
-              <div className="armor-class-grid__abbreviation">KAC</div>
-              <div className="armor-class-grid__label">Kinetic Armor Class</div>
-              <div className="armor-class-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="armor-class-grid__operation">=</div>
-              <div className="armor-class-grid__placeholder">10</div>
-              <div className="armor-class-grid__operation">+</div>
-              <div className="armor-class-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="armor-class-grid__operation">+</div>
-              <div className="armor-class-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="armor-class-grid__operation">+</div>
-              <div className="armor-class-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-            </div>
-
-            <div className="armor-class-grid__row armor-class-grid__row--spacer">
-              <div className="armor-class-grid__combined-label">
-                AC vs. Combat Maneuvers
-              </div>
-              <div className="armor-class-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="armor-class-grid__operation">=</div>
-              <div className="armor-class-grid__placeholder">8</div>
-              <div className="armor-class-grid__operation">+</div>
-              <div className="armor-class-grid__input">
-                <input
-                  className="grid-input"
-                  disabled
-                  type="text"
-                  defaultValue="KAC"
-                />
               </div>
             </div>
           </div>
