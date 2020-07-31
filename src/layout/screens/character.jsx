@@ -1,10 +1,10 @@
 const React = require('react')
 
-const GridInput = require('../grid-input')
 const SectionBlock = require('../section-block')
 
 const ColumnLayout = require('../components/columns')
 const Grid = require('../components/grid')
+const skills = require('../../data/skills.js')
 
 function CharacterScreen() {
   return (
@@ -134,6 +134,72 @@ function CharacterScreen() {
               ))}
             </Grid>
           </SectionBlock>
+
+          <SectionBlock title="Skills">
+            <Grid compact tall>
+              <Grid.Header>
+                <Grid.Label size="16px">Class Skill</Grid.Label>
+                <Grid.Spacer size="140px" />
+                <Grid.Label size="1fr">Total</Grid.Label>
+                <Grid.Spacer size="6px" />
+                <Grid.Label size="1fr">Ranks</Grid.Label>
+                <Grid.Spacer size="6px" />
+                <Grid.Label size="1fr">Insight Bonus</Grid.Label>
+                <Grid.Spacer size="6px" />
+                <Grid.Label size="1fr">Ability Mod</Grid.Label>
+                <Grid.Spacer size="6px" />
+                <Grid.Label size="1fr">Misc</Grid.Label>
+              </Grid.Header>
+
+              {skills.map((skill) => {
+                const attributeSkillName = skill.name.replace(/\s/g, '_')
+
+                if (skill.name === 'profession') {
+                  return null
+                }
+
+                return (
+                  <Grid.Row key={skill.name}>
+                    <Grid.Input
+                      attribute={`attr_skills_${attributeSkillName}_class_skill`}
+                      type="checkbox"
+                    />
+                    <Grid.Label>
+                      {skill.name} ({skill.ability.substring(0, 3)})
+                      {skill.trainedOnly ? '*' : ''}{' '}
+                      {skill.armorCheckPenalty ? '¤' : ''}
+                    </Grid.Label>
+                    <Grid.Input
+                      attribute={`attr_skills_${attributeSkillName}_mod`}
+                      disabled
+                    />
+                    <Grid.Label>=</Grid.Label>
+                    <Grid.Input
+                      attribute={`attr_skills_${attributeSkillName}_ranks`}
+                    />
+                    <Grid.Label>+</Grid.Label>
+                    <Grid.Input
+                      attribute={`attr_skills_${attributeSkillName}_insight`}
+                    />
+                    <Grid.Label>+</Grid.Label>
+                    <Grid.Input
+                      attribute={`attr_${skill.ability}_mod`}
+                      disabled
+                    />
+                    <Grid.Label>+</Grid.Label>
+                    <Grid.Input attribute={`attr_skills_${skill.name}_misc`} />
+                  </Grid.Row>
+                )
+              })}
+
+              <Grid.FullWidth>
+                <Grid.Label>
+                  * Trained only skill &nbsp;&nbsp;&nbsp;&nbsp; ¤ Armor check
+                  penalty applies
+                </Grid.Label>
+              </Grid.FullWidth>
+            </Grid>
+          </SectionBlock>
         </ColumnLayout.Column>
         <ColumnLayout.Column size="1fr">
           <SectionBlock standalone title="Initiative">
@@ -259,351 +325,144 @@ function CharacterScreen() {
               </Grid.Row>
             </Grid>
           </SectionBlock>
+
+          <SectionBlock title="Saving Throws">
+            <Grid>
+              <Grid.Header>
+                <Grid.Spacer size="120px" />
+                <Grid.Label size="1fr">Total</Grid.Label>
+                <Grid.Spacer size="4px" />
+                <Grid.Label size="1fr">Base</Grid.Label>
+                <Grid.Spacer size="4px" />
+                <Grid.Label size="1fr" span>
+                  Ability Mod
+                </Grid.Label>
+                <Grid.Spacer size="4px" />
+                <Grid.Label size="1fr">Misc</Grid.Label>
+              </Grid.Header>
+
+              <Grid.Row>
+                <Grid.Abbreviation abbr="Fortitude">
+                  Constitution
+                </Grid.Abbreviation>
+                <Grid.Input attribute="attr_fortitude_save_mod" disabled />
+                <Grid.Label>=</Grid.Label>
+                <Grid.Input attribute="attr_fortitude_save_base" disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input attribute="attr_constitution_mod" disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input attribute="attr_fortitude_save_misc" />
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Abbreviation abbr="Reflex">Dexterity</Grid.Abbreviation>
+                <Grid.Input attribute="attr_reflex_save_mod" disabled />
+                <Grid.Label>=</Grid.Label>
+                <Grid.Input attribute="attr_reflex_save_base" disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input attribute="attr_dexterity_mod" disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input attribute="attr_reflex_save_misc" />
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Abbreviation abbr="Will">Wisdom</Grid.Abbreviation>
+                <Grid.Input attribute="attr_will_save_mod" disabled />
+                <Grid.Label>=</Grid.Label>
+                <Grid.Input attribute="attr_will_save_base" disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input attribute="attr_wisdom_mod" disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input attribute="attr_will_save_misc" />
+              </Grid.Row>
+            </Grid>
+          </SectionBlock>
+
+          <SectionBlock title="Attack Bonuses">
+            <Grid>
+              <Grid.Header>
+                <Grid.Spacer size="120px" />
+                <Grid.Label size="1fr">Total</Grid.Label>
+                <Grid.Spacer size="4px" />
+                <Grid.Label size="1fr">BAB</Grid.Label>
+                <Grid.Spacer size="4px" />
+                <Grid.Label size="1fr" span>
+                  Strength Mod
+                </Grid.Label>
+                <Grid.Spacer size="4px" />
+                <Grid.Label size="1fr">Misc</Grid.Label>
+              </Grid.Header>
+
+              <Grid.Row>
+                <Grid.BlockLabel>Melee Attack</Grid.BlockLabel>
+                <Grid.Input attribute="attr_melee_attack_mod" disabled />
+                <Grid.Label>=</Grid.Label>
+                <Grid.Input attribute="attr_base_attack_bonus" disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input attribute="attr_strength_mod" disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input attribute="attr_melee_attack_misc" />
+              </Grid.Row>
+
+              <Grid.Separator />
+            </Grid>
+
+            <Grid>
+              <Grid.Header>
+                <Grid.Spacer size="120px" />
+                <Grid.Label size="1fr">Total</Grid.Label>
+                <Grid.Spacer size="4px" />
+                <Grid.Label size="1fr">BAB</Grid.Label>
+                <Grid.Spacer size="4px" />
+                <Grid.Label size="1fr" span>
+                  Dexterity Mod
+                </Grid.Label>
+                <Grid.Spacer size="4px" />
+                <Grid.Label size="1fr">Misc</Grid.Label>
+              </Grid.Header>
+
+              <Grid.Row>
+                <Grid.BlockLabel>Ranged Attack</Grid.BlockLabel>
+                <Grid.Input attribute="attr_ranged_attack_mod" disabled />
+                <Grid.Label>=</Grid.Label>
+                <Grid.Input attribute="attr_base_attack_bonus" disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input attribute="attr_dexterity_mod" disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input attribute="attr_ranged_attack_misc" />
+              </Grid.Row>
+
+              <Grid.Separator />
+            </Grid>
+
+            <Grid>
+              <Grid.Header>
+                <Grid.Spacer size="120px" />
+                <Grid.Label size="1fr">Total</Grid.Label>
+                <Grid.Spacer size="4px" />
+                <Grid.Label size="1fr">BAB</Grid.Label>
+                <Grid.Spacer size="4px" />
+                <Grid.Label size="1fr" span>
+                  Strength Mod
+                </Grid.Label>
+                <Grid.Spacer size="4px" />
+                <Grid.Label size="1fr">Misc</Grid.Label>
+              </Grid.Header>
+
+              <Grid.Row>
+                <Grid.BlockLabel>Thrown Attack</Grid.BlockLabel>
+                <Grid.Input attribute="attr_thrown_attack_mod" disabled />
+                <Grid.Label>=</Grid.Label>
+                <Grid.Input attribute="attr_base_attack_bonus" disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input attribute="attr_strength_mod" disabled />
+                <Grid.Label>+</Grid.Label>
+                <Grid.Input attribute="attr_thrown_attack_misc" />
+              </Grid.Row>
+            </Grid>
+          </SectionBlock>
         </ColumnLayout.Column>
       </ColumnLayout>
-
-      <div className="grid">
-        <div className="grid__item--skills section-block">
-          <h2 className="section-block__heading">Skills</h2>
-          <div className="skill-grid">
-            <div className="skill-grid__row skill-grid__row--heading">
-              <div className="skill-grid__label skill-grid__label--class-skill">
-                Class Skill
-              </div>
-              <div className="skill-grid__label skill-grid__label--total">
-                Total
-              </div>
-              <div className="skill-grid__label skill-grid__label--ranks">
-                Ranks
-              </div>
-              <div className="skill-grid__label skill-grid__label--class-bonus">
-                Insight Bonus
-              </div>
-              <div className="skill-grid__label skill-grid__label--ability-mod">
-                Ability Mod
-              </div>
-              <div className="skill-grid__label skill-grid__label--misc">
-                Misc
-              </div>
-            </div>
-
-            <div className="skill-grid__row">
-              <div className="skill-grid__checkbox">
-                <input className="grid-check" type="checkbox" />
-              </div>
-              <div className="skill-grid__label">Acrobatics (DEX) ¤</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="skill-grid__operation">=</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-              <div className="skill-grid__operation">+</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-              <div className="skill-grid__operation">+</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="skill-grid__operation">+</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-            </div>
-
-            <div className="skill-grid__row">
-              <div className="skill-grid__checkbox">
-                <input className="grid-check" type="checkbox" />
-              </div>
-              <div className="skill-grid__label">Bluff (CHA)</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="skill-grid__operation">=</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-              <div className="skill-grid__operation">+</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-              <div className="skill-grid__operation">+</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="skill-grid__operation">+</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-            </div>
-
-            <div className="skill-grid__row">
-              <div className="skill-grid__checkbox">
-                <input className="grid-check" type="checkbox" />
-              </div>
-              <div className="skill-grid__label">Physical Science (INT)*</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="skill-grid__operation">=</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-              <div className="skill-grid__operation">+</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-              <div className="skill-grid__operation">+</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="skill-grid__operation">+</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-            </div>
-
-            <div className="skill-grid__row">
-              <div className="skill-grid__checkbox">
-                <input className="grid-check" type="checkbox" />
-              </div>
-              <div className="skill-grid__label">Sleight of Hand (DEX)* ¤</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="skill-grid__operation">=</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-              <div className="skill-grid__operation">+</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-              <div className="skill-grid__operation">+</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" disabled type="text" />
-              </div>
-              <div className="skill-grid__operation">+</div>
-              <div className="skill-grid__input">
-                <input className="grid-input" type="text" />
-              </div>
-            </div>
-
-            <div className="skill-grid__notes">
-              <div className="skill-grid__label">
-                * Trained only skill <span className="spacer"></span> ¤ Armor
-                check penalty applies
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid__item--saving-throws section-block">
-          <h2 className="section-block__heading">Saving Throws</h2>
-          <div className="saving-throws-grid">
-            <div className="saving-throws-grid__row saving-throws-grid__row--heading">
-              <div className="saving-throws-grid__label saving-throws-grid__label--total">
-                Total
-              </div>
-              <div className="saving-throws-grid__label saving-throws-grid__label--base-save">
-                Base
-              </div>
-              <div className="saving-throws-grid__label saving-throws-grid__label--ability-mod">
-                Ability Mod
-              </div>
-              <div className="saving-throws-grid__label saving-throws-grid__label--misc">
-                Misc
-              </div>
-            </div>
-
-            <div className="saving-throws-grid__row">
-              <div className="saving-throws-grid__label">
-                <div className="saving-throws-grid__abbreviation">
-                  Fortitude
-                </div>
-                Constitution
-              </div>
-              <div className="saving-throws-grid__input">
-                <GridInput attribute="attr_fortitude_save_mod" disabled />
-              </div>
-              <div className="saving-throws-grid__operation">=</div>
-              <div className="saving-throws-grid__input">
-                <GridInput attribute="attr_fortitude_save_base" disabled />
-              </div>
-              <div className="saving-throws-grid__operation">+</div>
-              <div className="saving-throws-grid__input">
-                <GridInput attribute="attr_constitution_mod" disabled />
-              </div>
-              <div className="saving-throws-grid__operation">+</div>
-              <div className="saving-throws-grid__input">
-                <GridInput attribute="attr_fortitude_save_misc" />
-              </div>
-            </div>
-
-            <div className="saving-throws-grid__row">
-              <div className="saving-throws-grid__label">
-                <div className="saving-throws-grid__abbreviation">Reflex</div>
-                Dexterity
-              </div>
-              <div className="saving-throws-grid__input">
-                <GridInput attribute="attr_reflex_save_mod" disabled />
-              </div>
-              <div className="saving-throws-grid__operation">=</div>
-              <div className="saving-throws-grid__input">
-                <GridInput attribute="attr_reflex_save_base" disabled />
-              </div>
-              <div className="saving-throws-grid__operation">+</div>
-              <div className="saving-throws-grid__input">
-                <GridInput attribute="attr_dexterity_mod" disabled />
-              </div>
-              <div className="saving-throws-grid__operation">+</div>
-              <div className="saving-throws-grid__input">
-                <GridInput attribute="attr_reflex_save_misc" />
-              </div>
-            </div>
-
-            <div className="saving-throws-grid__row">
-              <div className="saving-throws-grid__label">
-                <div className="saving-throws-grid__abbreviation">Will</div>
-                Wisdom
-              </div>
-              <div className="saving-throws-grid__input">
-                <GridInput attribute="attr_will_save_mod" disabled />
-              </div>
-              <div className="saving-throws-grid__operation">=</div>
-              <div className="saving-throws-grid__input">
-                <GridInput attribute="attr_will_save_base" disabled />
-              </div>
-              <div className="saving-throws-grid__operation">+</div>
-              <div className="saving-throws-grid__input">
-                <GridInput attribute="attr_wisdom_mod" disabled />
-              </div>
-              <div className="saving-throws-grid__operation">+</div>
-              <div className="saving-throws-grid__input">
-                <GridInput attribute="attr_will_save_misc" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid__item--attack-bonuses section-block">
-          <h2 className="section-block__heading">Attack Bonuses</h2>
-          <div className="attack-bonuses-grid">
-            <div className="attack-bonuses-grid__row attack-bonuses-grid__row--heading">
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--total">
-                Total
-              </div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--base-save">
-                BAB
-              </div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--ability-mod">
-                Strength Mod
-              </div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--misc">
-                Misc
-              </div>
-            </div>
-
-            <div className="attack-bonuses-grid__row">
-              <div className="attack-bonuses-grid__label">Melee Attack</div>
-              <div className="attack-bonuses-grid__input">
-                <GridInput attribute="attr_melee_attack_mod" disabled />
-              </div>
-              <div className="attack-bonuses-grid__operation">=</div>
-              <div className="attack-bonuses-grid__input">
-                <GridInput attribute="attr_base_attack_bonus" disabled />
-              </div>
-              <div className="attack-bonuses-grid__operation">+</div>
-              <div className="attack-bonuses-grid__input">
-                <GridInput attribute="attr_strength_mod" disabled />
-              </div>
-              <div className="attack-bonuses-grid__operation">+</div>
-              <div className="attack-bonuses-grid__input">
-                <GridInput
-                  attribute="attr_melee_attack_misc"
-                  defaultValue="0"
-                />
-              </div>
-            </div>
-
-            <div className="attack-bonuses-grid__row attack-bonuses-grid__row--heading">
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--total">
-                Total
-              </div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--base-save">
-                BAB
-              </div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--ability-mod">
-                Dexterity Mod
-              </div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--misc">
-                Misc
-              </div>
-            </div>
-
-            <div className="attack-bonuses-grid__row">
-              <div className="attack-bonuses-grid__label">Ranged Attack</div>
-              <div className="attack-bonuses-grid__input">
-                <GridInput attribute="attr_ranged_attack_mod" disabled />
-              </div>
-              <div className="attack-bonuses-grid__operation">=</div>
-              <div className="attack-bonuses-grid__input">
-                <GridInput attribute="attr_base_attack_bonus" disabled />
-              </div>
-              <div className="attack-bonuses-grid__operation">+</div>
-              <div className="attack-bonuses-grid__input">
-                <GridInput attribute="attr_dexterity_mod" disabled />
-              </div>
-              <div className="attack-bonuses-grid__operation">+</div>
-              <div className="attack-bonuses-grid__input">
-                <GridInput
-                  attribute="attr_ranged_attack_misc"
-                  defaultValue="0"
-                />
-              </div>
-            </div>
-
-            <div className="attack-bonuses-grid__row attack-bonuses-grid__row--heading">
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--total">
-                Total
-              </div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--base-save">
-                BAB
-              </div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--ability-mod">
-                Strength Mod
-              </div>
-              <div className="attack-bonuses-grid__label attack-bonuses-grid__label--misc">
-                Misc
-              </div>
-            </div>
-
-            <div className="attack-bonuses-grid__row">
-              <div className="attack-bonuses-grid__label">Thrown Attack</div>
-              <div className="attack-bonuses-grid__input">
-                <GridInput attribute="attr_thrown_attack_mod" disabled />
-              </div>
-              <div className="attack-bonuses-grid__operation">=</div>
-              <div className="attack-bonuses-grid__input">
-                <GridInput attribute="attr_base_attack_bonus" disabled />
-              </div>
-              <div className="attack-bonuses-grid__operation">+</div>
-              <div className="attack-bonuses-grid__input">
-                <GridInput attribute="attr_strength_mod" disabled />
-              </div>
-              <div className="attack-bonuses-grid__operation">+</div>
-              <div className="attack-bonuses-grid__input">
-                <GridInput
-                  attribute="attr_thrown_attack_misc"
-                  defaultValue="0"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </React.Fragment>
   )
 }

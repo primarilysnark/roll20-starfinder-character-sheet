@@ -1,16 +1,27 @@
 const React = require('react')
 const PropTypes = require('prop-types')
 
-function Grid({ children, compact }) {
+function Grid({ children, compact, tall }) {
   const childArray = React.Children.toArray(children)
-  const header = childArray.filter((child) => child.type === GridHeader)[0]
   const rows = childArray.filter((child) => child.type !== GridHeader)
+  const header = childArray.filter((child) => child.type === GridHeader)[0]
 
-  const headerChildren = React.Children.toArray(header.props.children)
+  let headerChildren = React.Children.toArray(header.props.children)
   const columnSizes = headerChildren.map((child) => child.props.size)
   const headerIsEmpty = headerChildren.every(
     (child) => child.type === GridSpacer
   )
+
+  if (!headerIsEmpty) {
+    headerChildren.forEach((child, index) => {
+      if (child.props.span) {
+        headerChildren = headerChildren
+          .slice(0, index - 1)
+          .concat([child])
+          .concat(headerChildren.slice(index + 2))
+      }
+    })
+  }
 
   return (
     <div
@@ -19,8 +30,12 @@ function Grid({ children, compact }) {
       }`}
     >
       {headerIsEmpty ? null : (
-        <div className="grid-layout__row grid-layout__row--header">
-          {header}
+        <div
+          className={`grid-layout__row grid-layout__row--header${
+            tall ? ' grid-layout__row--header-tall' : ''
+          }`}
+        >
+          {headerChildren}
         </div>
       )}
       {rows}
@@ -31,10 +46,12 @@ function Grid({ children, compact }) {
 Grid.propTypes = {
   children: PropTypes.node.isRequired,
   compact: PropTypes.bool,
+  tall: PropTypes.bool,
 }
 
 Grid.defaultProps = {
   compact: false,
+  tall: false,
 }
 
 function GridAbbreviation({ abbr, children }) {
@@ -79,6 +96,16 @@ GridHeading.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
+function GridFullWidth({ children }) {
+  return (
+    <div className="grid-layout__row grid-layout__row--heading">{children}</div>
+  )
+}
+
+GridFullWidth.propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
 function GridRow({ children }) {
   return <div className="grid-layout__row">{children}</div>
 }
@@ -87,7 +114,7 @@ GridRow.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-function GridLabel({ align, children, compact }) {
+function GridLabel({ align, children, compact, span }) {
   const style = {}
 
   if (align) {
@@ -97,7 +124,8 @@ function GridLabel({ align, children, compact }) {
   return (
     <div
       className={`grid-layout__label
-      ${compact ? ' grid-layout__label--compact' : ''}`}
+      ${compact ? ' grid-layout__label--compact' : ''}
+      ${span ? ' grid-layout__label--span' : ''}`}
       style={style}
     >
       {children}
@@ -108,11 +136,13 @@ function GridLabel({ align, children, compact }) {
 GridLabel.propTypes = {
   align: PropTypes.string,
   children: PropTypes.node.isRequired,
+  span: PropTypes.bool,
   compact: PropTypes.bool,
 }
 
 GridLabel.defaultProps = {
   compact: false,
+  span: false,
 }
 
 function GridInput({
@@ -269,6 +299,7 @@ GridSpacer.propTypes = {
 
 Grid.Abbreviation = GridAbbreviation
 Grid.BlockLabel = GridBlockLabel
+Grid.FullWidth = GridFullWidth
 Grid.Header = GridHeader
 Grid.Heading = GridHeading
 Grid.Input = GridInput
