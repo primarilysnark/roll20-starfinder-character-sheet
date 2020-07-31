@@ -99,11 +99,11 @@ function OptionsScreen() {
               </Grid.Header>
 
               <Grid.Row>
-                <Grid.Input align="left" attribute="atr_race_name" />
-                <Grid.Input attribute="atr_race_type" />
-                <Grid.Input attribute="atr_race_subtypes" />
+                <Grid.Input align="left" attribute="attr_race_name" />
+                <Grid.Input attribute="attr_race_type" />
+                <Grid.Input attribute="attr_race_subtypes" />
                 <Grid.Input
-                  attribute="atr_race_size"
+                  attribute="attr_race_size"
                   options={[
                     ['fine', 'Fine'],
                     ['diminutive', 'Diminutive'],
@@ -118,8 +118,8 @@ function OptionsScreen() {
                   defaultValue="medium"
                   type="select"
                 />
-                <Grid.Input attribute="atr_race_hp" />
-                <Grid.Input attribute="atr_race_speed" />
+                <Grid.Input attribute="attr_race_hp" />
+                <Grid.Input attribute="attr_race_speed" />
               </Grid.Row>
             </Grid>
           </SectionBlock>

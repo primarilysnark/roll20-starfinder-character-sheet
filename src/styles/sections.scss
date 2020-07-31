@@ -1,0 +1,73 @@
+.sheet-section-block {
+  margin: 3.25rem 0 1.75rem 1rem;
+  border: 2px solid #3893cd;
+  padding: 1rem;
+
+  & ~ .sheet-section-block {
+    margin-top: 5rem;
+  }
+
+  &__heading {
+    background-color: #245680;
+    background-image: url('https://raw.githubusercontent.com/primarilysnark/roll20-starfinder-character-sheet/master/assets/header-background.svg');
+    border: 2px solid #3893cd;
+    box-sizing: border-box;
+    color: white;
+    display: block;
+    font-family: 'Bebas Neue';
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1;
+    margin: calc(-4.25rem - 4px) 0 1rem -2rem;
+    padding: 0.75rem 1.75rem 0.5rem 1.75rem;
+    position: relative;
+    text-transform: uppercase;
+    width: 50%;
+    
+    &:before {
+      background: white;
+      border-right: 2px solid #3893cd;
+      bottom: calc(-0.75rem - 1px);
+      content: '';
+      height: 1.5rem;
+      left: calc(-0.75rem - 2px);
+      position: absolute;
+      transform: rotate(-45deg);
+      width: 1.5rem;
+      z-index: 0;
+    }
+
+    &:after {
+      background: white;
+      border-right: 2px solid #3893cd;
+      top: calc(-1rem - 2px);
+      content: '';
+      height: 2rem;
+      right: calc(-1rem - 2px);
+      position: absolute;
+      transform: rotate(135deg);
+      width: 2rem;
+      z-index: 0;
+    }
+  }
+
+  &--standalone {
+    align-items: flex-end;
+    border: 0;
+    column-gap: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: -1.1rem 0 0;
+    padding: 0;
+
+    .sheet-grid-layout {
+      height: 4.5rem;
+    }
+
+    .sheet-section-block__heading {
+      height: 36px;
+      margin: 0;
+      width: 100%;
+    }
+  }
+}

@@ -106,12 +106,23 @@ GridFullWidth.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-function GridRow({ children }) {
-  return <div className="grid-layout__row">{children}</div>
+function GridRow({ children, spaced }) {
+  return (
+    <div
+      className={`grid-layout__row${spaced ? ' grid-layout__row--spaced' : ''}`}
+    >
+      {children}
+    </div>
+  )
 }
 
 GridRow.propTypes = {
   children: PropTypes.node.isRequired,
+  spaced: PropTypes.bool,
+}
+
+GridRow.defaultProps = {
+  spaced: false,
 }
 
 function GridLabel({ align, children, compact, span }) {

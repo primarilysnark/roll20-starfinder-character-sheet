@@ -9,89 +9,83 @@ const skills = require('../../data/skills.js')
 function CharacterScreen() {
   return (
     <React.Fragment>
-      <div className="overview-grid">
-        <div className="character-grid">
-          <div className="character-grid__row character-grid__row--4-2-2">
-            <div className="character-grid__field">
-              <label>
-                <span>Class</span>
-                <input className="grid-input" disabled type="text" />
-              </label>
-            </div>
+      <Grid>
+        <Grid.Header>
+          <Grid.Label align="left" size="2fr">
+            Class
+          </Grid.Label>
+          <Grid.Label align="left" size="1fr">
+            Race
+          </Grid.Label>
+          <Grid.Label align="left" size="1fr">
+            Theme
+          </Grid.Label>
+        </Grid.Header>
 
-            <div className="character-grid__field">
-              <label>
-                <span>Race</span>
-                <input className="grid-input" disabled type="text" />
-              </label>
-            </div>
+        <Grid.Row spaced>
+          <Grid.Input align="left" attribute="attr_" disabled />
+          <Grid.Input align="left" attribute="attr_race_name" disabled />
+          <Grid.Input align="left" attribute="attr_theme" />
+        </Grid.Row>
+      </Grid>
 
-            <div className="character-grid__field">
-              <label>
-                <span>Theme</span>
-                <input className="grid-input" type="text" />
-              </label>
-            </div>
-          </div>
+      <Grid>
+        <Grid.Header>
+          <Grid.Label align="left" size="2fr">
+            Size
+          </Grid.Label>
+          <Grid.Label align="left" size="1fr">
+            Speed
+          </Grid.Label>
+          <Grid.Label align="left" size="1fr">
+            Gender
+          </Grid.Label>
+          <Grid.Label align="left" size="4fr">
+            Homeworld
+          </Grid.Label>
+        </Grid.Header>
 
-          <div className="character-grid__row character-grid__row--2-1-1-4">
-            <div className="character-grid__field">
-              <label>
-                <span>Size</span>
-                <select className="grid-input" type="text">
-                  <option>Small</option>
-                </select>
-              </label>
-            </div>
+        <Grid.Row spaced>
+          <Grid.Input align="left" attribute="attr_race_size" disabled />
+          <Grid.Input align="left" attribute="attr_race_speed" disabled />
+          <Grid.Input align="left" attribute="attr_gender" />
+          <Grid.Input align="left" attribute="attr_homeworld" />
+        </Grid.Row>
+      </Grid>
 
-            <div className="character-grid__field">
-              <label>
-                <span>Speed</span>
-                <input className="grid-input" disabled type="text" />
-              </label>
-            </div>
+      <Grid>
+        <Grid.Header>
+          <Grid.Label align="left" size="2fr">
+            Alignment
+          </Grid.Label>
+          <Grid.Label align="left" size="3fr">
+            deity
+          </Grid.Label>
+          <Grid.Label align="left" size="3fr">
+            Player
+          </Grid.Label>
+        </Grid.Header>
 
-            <div className="character-grid__field">
-              <label>
-                <span>Gender</span>
-                <input className="grid-input" type="text" />
-              </label>
-            </div>
-
-            <div className="character-grid__field">
-              <label>
-                <span>Homeworld</span>
-                <input className="grid-input" type="text" />
-              </label>
-            </div>
-          </div>
-
-          <div className="character-grid__row character-grid__row--2-3-3">
-            <div className="character-grid__field">
-              <label>
-                <span>Alignment</span>
-                <select className="grid-input" type="text">
-                  <option>Lawful Good</option>
-                </select>
-              </label>
-            </div>
-
-            <div className="character-grid__field">
-              <label>
-                <span>Deity</span>
-                <input className="grid-input" type="text" />
-              </label>
-            </div>
-
-            <div className="character-grid__field">
-              <label>
-                <span>Player</span>
-                <input className="grid-input" disabled type="text" />
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
+        <Grid.Row spaced>
+          <Grid.Input
+            attribute="attr_alignment"
+            options={[
+              'Lawful Good',
+              'Lawful Neutral',
+              'Lawful Evil',
+              'Neutral Good',
+              'True Neutral',
+              'Neutral Evil',
+              'Chaotic Good',
+              'Chaotic Neutral',
+              'Chaotic Evil',
+            ]}
+            type="select"
+          />
+          <Grid.Input align="left" attribute="attr_deity" />
+          <Grid.Input align="left" attribute="attr_player" />
+        </Grid.Row>
+      </Grid>
 
       <ColumnLayout>
         <ColumnLayout.Column size="1fr">

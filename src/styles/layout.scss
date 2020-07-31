@@ -1,6 +1,7 @@
 .sheet-column-layout {
   display: grid;
   column-gap: 1.5rem;
+  margin-top: 2rem;
 
   &--1fr-1fr {
     grid-template-columns: 1fr 1fr;
@@ -29,6 +30,10 @@
 
     &:last-of-type {
       margin-bottom: 0;
+    }
+
+    &--spaced {
+      margin-bottom: 1rem !important;
     }
 
     &--header {
@@ -71,6 +76,24 @@
   &--1fr-6px-1fr-6px-1fr {
     .sheet-grid-layout__row {
       grid-template-columns: 1fr 6px 1fr 6px 1fr;
+    }
+  }
+
+  &--2fr-1fr-1fr {
+    .sheet-grid-layout__row {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+
+  &--2fr-1fr-1fr-4fr {
+    .sheet-grid-layout__row {
+      grid-template-columns: 2fr 1fr 1fr 4fr;
+    }
+  }
+
+  &--2fr-3fr-3fr {
+    .sheet-grid-layout__row {
+      grid-template-columns: 2fr 3fr 3fr;
     }
   }
 
