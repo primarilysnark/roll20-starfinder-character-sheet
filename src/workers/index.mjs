@@ -278,4 +278,7 @@ notifier.addListener('will_save_mod', {
   dependencies: ['will_save_base', 'wisdom_mod', 'will_save_misc'],
 })
 
+/* Options Pane */
+notifier.addListener('rolls_show_name', commonFormats.boolean)
+
 notifier.start()

@@ -13,14 +13,14 @@ describe('Formatters', function () {
 
   describe('Booleans', function () {
     describe('#parse', function () {
-      it('should parse "on" to true', function () {
-        const result = subject.parseBoolean('on')
+      it('should parse "1" to true', function () {
+        const result = subject.parseBoolean('1')
 
         should(result).equal(true)
       })
 
-      it('should parse "off" to false', function () {
-        const result = subject.parseBoolean('off')
+      it('should parse "0" to false', function () {
+        const result = subject.parseBoolean('0')
 
         should(result).equal(false)
       })
@@ -39,16 +39,16 @@ describe('Formatters', function () {
     })
 
     describe('#format', function () {
-      it('should format true to "on"', function () {
+      it('should format true to "1"', function () {
         const result = subject.formatBoolean(true)
 
-        should(result).equal('on')
+        should(result).equal('1')
       })
 
-      it('should format false to "off"', function () {
+      it('should format false to "0"', function () {
         const result = subject.formatBoolean(false)
 
-        should(result).equal('off')
+        should(result).equal('0')
       })
 
       it('should format null to ""', function () {

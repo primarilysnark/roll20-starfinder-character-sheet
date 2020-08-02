@@ -3,7 +3,7 @@ export const parseBoolean = (value) => {
     return null
   }
 
-  if (value === 'on') {
+  if (value === '1') {
     return true
   }
 
@@ -12,11 +12,11 @@ export const parseBoolean = (value) => {
 
 export const formatBoolean = (value) => {
   if (value === true) {
-    return 'on'
+    return '1'
   }
 
   if (value === false) {
-    return 'off'
+    return '0'
   }
 
   return ''

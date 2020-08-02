@@ -8,15 +8,28 @@ $secondary-background: $nepal-blue;
 
 .sheet-rolltemplate-base {
   .sheet-template {
+    background: $true-white;
+    border: 1px solid $primary-background;
+
+    &__name {
+      background: $true-white;
+      color: $primary-background;
+      font: bold 2rem/1 'Bebas Neue';
+      padding: 0.75rem;
+      border-bottom: 1px solid $primary-background;
+      text-align: center;
+    }
+
     &__roll {
       align-items: center;
+      background: $true-white;
       display: flex;
     }
 
     &__header {
       background-color: $primary-background;
       background-image: url('https://raw.githubusercontent.com/primarilysnark/roll20-starfinder-character-sheet/master/assets/header-background.svg');
-      clip-path: polygon(0 0, calc(100% - 10px) 0%, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      clip-path: polygon(0 0, 100% 0, calc(100% - 3rem) 100%, 0% 100%);
       color: $true-white;
       flex: 1;
       font: bold 2rem/1 'Bebas Neue';
@@ -25,7 +38,6 @@ $secondary-background: $nepal-blue;
 
     &__result {
       margin: 0 1.5rem 0 2rem;
-      position: relative;
 
       .inlinerollresult {
         background: none;
@@ -36,17 +48,6 @@ $secondary-background: $nepal-blue;
         padding: 0;
         position: relative;
         z-index: 1;
-      }
-
-      &:after {
-        color: $secondary-background;
-        content: '0';
-        font-family: 'dicefontd20';
-        font-size: 3.5rem;
-        left: 50%;
-        position: absolute;
-        top: 60%;
-        transform: translate(-50%, -50%);
       }
     }
 
