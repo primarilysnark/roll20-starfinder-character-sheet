@@ -16,6 +16,16 @@ function RollTemplates() {
             <Roll.Field name="rollname" />
           </div>
           <div className="sheet-template__result">
+            <Roll.ConditionalIf name="rollWasCrit() result">
+              <div className="sheet-template__result__critical sheet-template__result__critical--success">
+                {'{'}
+              </div>
+            </Roll.ConditionalIf>
+            <Roll.ConditionalIf name="rollWasFumble() result">
+              <div className="sheet-template__result__critical sheet-template__result__critical--failure">
+                {'}'}
+              </div>
+            </Roll.ConditionalIf>
             <Roll.Field name="result" />
           </div>
         </div>

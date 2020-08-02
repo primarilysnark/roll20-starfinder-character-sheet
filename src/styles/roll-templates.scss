@@ -1,6 +1,8 @@
 $bahama-blue: #245680;
 $nepal-blue: #94aac0;
 $true-white: #ffffff;
+$jaffa-orange: #f38142;
+$deep-sky-blue: #00b9f1;
 
 $primary-background: $bahama-blue;
 $primary-text: $true-white;
@@ -48,6 +50,28 @@ $secondary-background: $nepal-blue;
         padding: 0;
         position: relative;
         z-index: 1;
+
+        &.fullcrit {
+          color: $deep-sky-blue;
+        }
+
+        &.fullfail {
+          color: $jaffa-orange;
+        }
+      }
+
+      &__critical {
+        display: inline;
+        font: 1.5rem/2rem 'Pictos';
+        vertical-align: middle;
+
+        &--success {
+          color: $deep-sky-blue;
+        }
+
+        &--failure {
+          color: $jaffa-orange;
+        }
       }
     }
 
