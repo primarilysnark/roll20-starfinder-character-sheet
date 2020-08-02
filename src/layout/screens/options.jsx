@@ -139,6 +139,7 @@ function OptionsScreen() {
                   attribute="attr_rolls_whisper"
                   compact
                   type="checkbox"
+                  defaultValue="/w gm "
                 />
                 <Grid.Label compact>Whisper rolls</Grid.Label>
                 <Grid.Input

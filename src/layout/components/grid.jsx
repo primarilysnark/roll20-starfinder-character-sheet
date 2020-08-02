@@ -61,7 +61,7 @@ function GridAbbreviation({ abbr, children, name, rollable, rollName }) {
         className="grid-layout__label grid-layout__label--abbreviated"
         type="roll"
         name={name}
-        value={`&{template:base} {{rollname=${
+        value={`@{rolls_whisper}  &{template:base} {{rollname=${
           rollName || abbr
         }}} {{result=[[${rollable}]]}} {{show_name=[[0 + @{rolls_show_name}]]}} {{character_name=@{character_name}}}`}
       >
@@ -234,7 +234,7 @@ function GridInput({
             compact ? ' grid-layout__input--compact' : ''
           }`}
         >
-          <input name={attribute} type="checkbox" value="1" />
+          <input name={attribute} type="checkbox" value={defaultValue || '1'} />
         </div>
       )
 

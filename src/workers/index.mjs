@@ -279,6 +279,7 @@ notifier.addListener('will_save_mod', {
 })
 
 /* Options Pane */
+notifier.addListener('rolls_whisper', commonFormats.string)
 notifier.addListener('rolls_show_name', commonFormats.boolean)
 
 notifier.start()
