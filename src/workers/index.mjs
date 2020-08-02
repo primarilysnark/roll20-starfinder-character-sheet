@@ -44,8 +44,8 @@ const commonFormats = {
       return Math.floor((adjustedScore - 10) / 2)
     },
     dependencies: [`${abilityScoreName}_adjusted`],
-    format: formatters.formatModifier,
-    parse: formatters.parseModifier,
+    format: formatters.formatInteger,
+    parse: formatters.parseInteger,
   }),
   string: {
     format: (value) => value,
@@ -127,7 +127,7 @@ notifier.addListener('charisma_mod', commonFormats.modifier('charisma'))
 
 notifier.addListener('initiative_misc', commonFormats.integer)
 notifier.addListener('initiative_bonus', {
-  ...commonFormats.modifier,
+  ...commonFormats.integer,
   calculate: commonCalculators.sum,
   dependencies: ['dexterity_mod', 'initiative_misc'],
 })

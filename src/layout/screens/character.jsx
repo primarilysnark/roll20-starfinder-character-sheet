@@ -111,7 +111,7 @@ function CharacterScreen() {
                   <Grid.Abbreviation
                     abbr={abbreviation}
                     name={`roll_${field.toLowerCase()}_check`}
-                    rollable={`1d20 + (0 @{${field.toLowerCase()}_mod})[MOD]`}
+                    rollable={`1d20 + @{${field.toLowerCase()}_mod}[MOD]`}
                     rollName={field}
                   >
                     {field}
