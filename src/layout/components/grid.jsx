@@ -54,14 +54,16 @@ Grid.defaultProps = {
   tall: false,
 }
 
-function GridAbbreviation({ abbr, children, name, rollable }) {
+function GridAbbreviation({ abbr, children, name, rollable, rollName }) {
   if (rollable) {
     return (
       <button
         className="grid-layout__label grid-layout__label--abbreviated"
         type="roll"
         name={name}
-        value={`&{template:base} {{rollname=${abbr}}} {{result=[[${rollable}]]}} {{show_name=[[0 + @{rolls_show_name}]]}} {{character_name=@{character_name}}}`}
+        value={`&{template:base} {{rollname=${
+          rollName || abbr
+        }}} {{result=[[${rollable}]]}} {{show_name=[[0 + @{rolls_show_name}]]}} {{character_name=@{character_name}}}`}
       >
         <div className="grid-layout__label__abbreviation">{abbr}</div>
         {children}
@@ -82,6 +84,7 @@ GridAbbreviation.propTypes = {
   children: PropTypes.node.isRequired,
   name: PropTypes.string,
   rollable: PropTypes.string,
+  rollName: PropTypes.string,
 }
 
 function GridBlockLabel({ children }) {
