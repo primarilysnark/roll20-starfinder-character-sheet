@@ -70,10 +70,32 @@ Navigator.addTabListeners([
 ])
 
 const notifier = new ChangeNotifier()
+
+/* Navigation */
 notifier.addListener('navigation_tab', commonFormats.string)
 notifier.addListener('error_message', commonFormats.string)
 notifier.addListener('show_error', commonFormats.boolean)
 
+/* Options screen */
+notifier.addNestedListener('repeating_classes', {
+  level: commonFormats.integer,
+  bab: commonFormats.string,
+  hp: commonFormats.integer,
+  sp: commonFormats.integer,
+  fortitude_save_progression: commonFormats.string,
+  reflex_save_progression: commonFormats.string,
+  will_save_progression: commonFormats.string,
+  key_ability: commonFormats.string,
+})
+
+notifier.addListener('race_hp', commonFormats.integer)
+
+notifier.addListener('homebrew_resolve', commonFormats.boolean)
+
+notifier.addListener('rolls_whisper', commonFormats.string)
+notifier.addListener('rolls_show_name', commonFormats.boolean)
+
+/* Character screen */
 notifier.addListener('strength_base', commonFormats.integer)
 notifier.addListener('strength_penalty', commonFormats.integer)
 notifier.addListener('strength_drain', commonFormats.integer)
@@ -132,13 +154,6 @@ notifier.addListener('initiative_bonus', {
   dependencies: ['dexterity_mod', 'initiative_misc'],
 })
 
-notifier.addNestedListener('repeating_classes', {
-  level: commonFormats.integer,
-  bab: commonFormats.string,
-  fortitude_save_progression: commonFormats.string,
-  reflex_save_progression: commonFormats.string,
-  will_save_progression: commonFormats.string,
-})
 notifier.addListener('base_attack_bonus', {
   ...commonFormats.integer,
   calculate: (values) =>
@@ -278,8 +293,89 @@ notifier.addListener('will_save_mod', {
   dependencies: ['will_save_base', 'wisdom_mod', 'will_save_misc'],
 })
 
-/* Options Pane */
-notifier.addListener('rolls_whisper', commonFormats.string)
-notifier.addListener('rolls_show_name', commonFormats.boolean)
+notifier.addListener('resolve_max', {
+  ...commonFormats.integer,
+  calculate: (values) => {
+    const characterLevel = Object.values(values.repeating_classes)
+      .map((instance) => instance.level || 0)
+      .reduce((total, level) => total + level, 0)
+
+    const resolveFromLevels = Math.floor(characterLevel / 2)
+
+    if (values.homebrew_resolve) {
+      return Math.max(
+        1,
+        resolveFromLevels +
+          Math.max(
+            values.strength_mod,
+            values.dexterity_mod,
+            values.constitution_mod,
+            values.intelligence_mod,
+            values.wisdom_mod,
+            values.charisma_mod
+          )
+      )
+    }
+
+    return Math.max(
+      1,
+      resolveFromLevels +
+        Math.max(
+          ...Object.values(values.repeating_classes).map(
+            (instance) => values[`${instance.key_ability}_mod`]
+          )
+        )
+    )
+  },
+  dependencies: [
+    'strength_mod',
+    'dexterity_mod',
+    'constitution_mod',
+    'intelligence_mod',
+    'wisdom_mod',
+    'charisma_mod',
+    'repeating_classes:key_ability',
+    'repeating_classes:level',
+    'homebrew_resolve',
+  ],
+})
+
+notifier.addListener('stamina_max', {
+  ...commonFormats.integer,
+  calculate: (values) => {
+    return Object.values(values.repeating_classes)
+      .map((instance) => {
+        if (instance.level == null) {
+          return 0
+        }
+
+        return instance.level * (instance.sp + values.constitution_mod)
+      })
+      .reduce((total, classSp) => total + classSp, 0)
+  },
+  dependencies: [
+    'constitution_mod',
+    'repeating_classes:sp',
+    'repeating_classes:level',
+  ],
+})
+notifier.addListener('health_max', {
+  ...commonFormats.integer,
+  calculate: (values) => {
+    return (
+      values.race_hp +
+      Object.values(values.repeating_classes)
+        .map((instance) => {
+          if (instance.level == null) {
+            return 0
+          }
+
+          return instance.level * instance.hp
+        })
+        .reduce((total, classHp) => total + classHp, 0)
+    )
+  },
+  dependencies: ['race_hp', 'repeating_classes:hp', 'repeating_classes:level'],
+})
 
 notifier.start()

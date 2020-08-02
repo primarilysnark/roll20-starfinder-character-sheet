@@ -238,22 +238,22 @@ function CharacterScreen() {
               <Grid.Row>
                 <Grid.BlockLabel>SP</Grid.BlockLabel>
                 <Grid.Label>Stamina</Grid.Label>
-                <Grid.Input attribute="attr_stamina_current" />
-                <Grid.Input attribute="attr_stamina_total" disabled />
+                <Grid.Input attribute="attr_stamina" />
+                <Grid.Input attribute="attr_stamina_max" disabled />
               </Grid.Row>
 
               <Grid.Row>
                 <Grid.BlockLabel>HP</Grid.BlockLabel>
                 <Grid.Label>Health</Grid.Label>
-                <Grid.Input attribute="attr_health_current" />
-                <Grid.Input attribute="attr_health_total" disabled />
+                <Grid.Input attribute="attr_health" />
+                <Grid.Input attribute="attr_health_max" disabled />
               </Grid.Row>
 
               <Grid.Row>
                 <Grid.BlockLabel>RP</Grid.BlockLabel>
                 <Grid.Label>Resolve</Grid.Label>
-                <Grid.Input attribute="attr_resolve_current" />
-                <Grid.Input attribute="attr_resolve_total" disabled />
+                <Grid.Input attribute="attr_resolve" />
+                <Grid.Input attribute="attr_resolve_max" disabled />
               </Grid.Row>
             </Grid>
           </SectionBlock>
