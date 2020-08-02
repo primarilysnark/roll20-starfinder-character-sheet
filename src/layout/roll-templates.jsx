@@ -19,14 +19,14 @@ function RollTemplates() {
             <Roll.Field name="result" />
           </div>
         </div>
-
-        <Roll.ConditionalIf name="notes">
-          <div className="sheet-template__notes">
-            <strong>Notes:</strong>&nbsp;
-            <Roll.Field name="notes" />
-          </div>
-        </Roll.ConditionalIf>
       </div>
+
+      <Roll.ConditionalIf name="notes">
+        <div className="sheet-template__notes">
+          <strong>Notes:</strong>&nbsp;
+          <Roll.Field name="notes" />
+        </div>
+      </Roll.ConditionalIf>
     </Roll.Template>
   )
 }
