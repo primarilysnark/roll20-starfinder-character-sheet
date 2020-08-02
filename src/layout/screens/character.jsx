@@ -108,7 +108,11 @@ function CharacterScreen() {
                 ['CHA', 'Charisma'],
               ].map(([abbreviation, field]) => (
                 <Grid.Row key={abbreviation}>
-                  <Grid.Abbreviation abbr={abbreviation}>
+                  <Grid.Abbreviation
+                    abbr={abbreviation}
+                    rollable={`1d20 + @{${field.toLowerCase()}_mod}`}
+                    name={`roll_${field.toLowerCase()}_check`}
+                  >
                     {field}
                   </Grid.Abbreviation>
                   <Grid.Input
@@ -336,7 +340,11 @@ function CharacterScreen() {
               </Grid.Header>
 
               <Grid.Row>
-                <Grid.Abbreviation abbr="Fortitude">
+                <Grid.Abbreviation
+                  abbr="Fortitude"
+                  rollable="1d20 + @{fortitude_save_mod}"
+                  name="roll_fortitude_save"
+                >
                   Constitution
                 </Grid.Abbreviation>
                 <Grid.Input attribute="attr_fortitude_save_mod" disabled />
@@ -349,7 +357,13 @@ function CharacterScreen() {
               </Grid.Row>
 
               <Grid.Row>
-                <Grid.Abbreviation abbr="Reflex">Dexterity</Grid.Abbreviation>
+                <Grid.Abbreviation
+                  abbr="Reflex"
+                  rollable="1d20 + @{reflex_save_mod}"
+                  name="roll_reflex_save"
+                >
+                  Dexterity
+                </Grid.Abbreviation>
                 <Grid.Input attribute="attr_reflex_save_mod" disabled />
                 <Grid.Label>=</Grid.Label>
                 <Grid.Input attribute="attr_reflex_save_base" disabled />
@@ -360,7 +374,13 @@ function CharacterScreen() {
               </Grid.Row>
 
               <Grid.Row>
-                <Grid.Abbreviation abbr="Will">Wisdom</Grid.Abbreviation>
+                <Grid.Abbreviation
+                  abbr="Will"
+                  rollable="1d20 + @{will_save_mod}"
+                  name="roll_will_save"
+                >
+                  Wisdom
+                </Grid.Abbreviation>
                 <Grid.Input attribute="attr_will_save_mod" disabled />
                 <Grid.Label>=</Grid.Label>
                 <Grid.Input attribute="attr_will_save_base" disabled />

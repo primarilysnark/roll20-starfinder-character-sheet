@@ -1,0 +1,65 @@
+$bahama-blue: #245680;
+$nepal-blue: #94aac0;
+$true-white: #ffffff;
+
+$primary-background: $bahama-blue;
+$primary-text: $true-white;
+$secondary-background: $nepal-blue;
+
+.sheet-rolltemplate-base {
+  .sheet-template {
+    &__roll {
+      align-items: center;
+      display: flex;
+    }
+
+    &__header {
+      background-color: $primary-background;
+      background-image: url('https://raw.githubusercontent.com/primarilysnark/roll20-starfinder-character-sheet/master/assets/header-background.svg');
+      clip-path: polygon(0 0, calc(100% - 10px) 0%, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      color: $true-white;
+      flex: 1;
+      font: bold 2rem/1 'Bebas Neue';
+      padding: 0.75rem 1.5rem;
+    }
+
+    &__result {
+      margin: 0 1.5rem 0 2rem;
+      position: relative;
+
+      .inlinerollresult {
+        background: none;
+        border: none;
+        box-sizing: border-box;
+        font: bold 2rem/1 'Source Sans Pro';
+        margin: 0;
+        padding: 0;
+        position: relative;
+        z-index: 1;
+      }
+
+      &:after {
+        color: $secondary-background;
+        content: '0';
+        font-family: 'dicefontd20';
+        font-size: 3.5rem;
+        left: 50%;
+        position: absolute;
+        top: 60%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    &__notes {
+      background: $true-white;
+      border: 1px solid $primary-background;
+      font: 1.4rem/2 'Source Sans Pro';
+      margin: 0 1rem 0 1rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+}
+
+.message.you .sheet-rolltemplate-base .sheet-template__result .inlinerollresult {
+  color: $primary-text;
+}
