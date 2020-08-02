@@ -201,7 +201,12 @@ function CharacterScreen() {
           </SectionBlock>
         </ColumnLayout.Column>
         <ColumnLayout.Column size="1fr">
-          <SectionBlock standalone title="Initiative">
+          <SectionBlock
+            rollName="initiative"
+            rollable="1d20 + @{initiative_bonus} &{tracker}"
+            standalone
+            title="Initiative"
+          >
             <Grid compact>
               <Grid.Header>
                 <Grid.Label size="1fr">Total</Grid.Label>

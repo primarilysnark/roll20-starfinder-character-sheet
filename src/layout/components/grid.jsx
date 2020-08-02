@@ -1,6 +1,8 @@
 const React = require('react')
 const PropTypes = require('prop-types')
 
+const { getBasicMacroRoll } = require('../utils/rolls')
+
 function Grid({ children, compact, tall }) {
   const childArray = React.Children.toArray(children)
   const rows = childArray.filter((child) => child.type !== GridHeader)
@@ -61,9 +63,7 @@ function GridAbbreviation({ abbr, children, name, rollable, rollName }) {
         className="grid-layout__label grid-layout__label--abbreviated"
         type="roll"
         name={name}
-        value={`@{rolls_whisper}  &{template:base} {{rollname=${
-          rollName || abbr
-        }}} {{result=[[${rollable}]]}} {{show_name=[[0 + @{rolls_show_name}]]}} {{character_name=@{character_name}}}`}
+        value={getBasicMacroRoll(rollName || abbr, rollable)}
       >
         <div className="grid-layout__label__abbreviation">{abbr}</div>
         {children}
