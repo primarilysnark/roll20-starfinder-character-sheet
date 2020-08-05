@@ -1,4 +1,4 @@
-const repeatingRegex = /([a-zA-Z0-9_]+)_(-[a-zA-Z0-9]*)_([a-zA-Z0-9_]+)$/
+const repeatingRegex = /([a-zA-Z0-9_]+)_(-[a-zA-Z0-9-]*)(?:_([a-zA-Z0-9_]+))?$/
 
 export function parseAttributeName(attributeName) {
   if (attributeName.startsWith('repeating')) {
