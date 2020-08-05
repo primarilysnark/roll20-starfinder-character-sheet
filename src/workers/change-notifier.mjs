@@ -256,8 +256,6 @@ export class ChangeNotifier {
   start() {
     // Register all attribute handlers
     this.listeners.forEach((_, attributeName) => {
-      console.log('[adding] event listener', attributeName)
-
       roll20.addEventListener(`change:${attributeName}`, (event) =>
         this._handleChangeEvent(event)
       )
