@@ -92,6 +92,12 @@
       }
     }
 
+    &--3fr-3fr-1fr-3fr-3fr {
+      .sheet-grid-layout__row {
+        grid-template-columns: 3fr 3fr 1fr 3fr 3fr;
+      }
+    }
+
     &--2fr-3fr-3fr {
       .sheet-grid-layout__row {
         grid-template-columns: 2fr 3fr 3fr;
@@ -181,6 +187,12 @@
 
       &--compact {
         height: 2rem;
+      }
+
+      &--flat {
+        align-items: center;
+        flex-direction: row;
+        justify-content: flex-start;
       }
 
       &--span {
@@ -286,6 +298,24 @@
       &:first-of-type input[type="checkbox"] {
         margin-left: 0;
         margin-right: 0;
+      }
+
+      &--ability-marker ~ .sheet-grid-layout__input--strength,
+      &--ability-marker ~ .sheet-grid-layout__input--dexterity,
+      &--ability-marker ~ .sheet-grid-layout__input--constitution,
+      &--ability-marker ~ .sheet-grid-layout__input--intelligence,
+      &--ability-marker ~ .sheet-grid-layout__input--wisdom,
+      &--ability-marker ~ .sheet-grid-layout__input--charisma {
+        display: none;
+      }
+
+      &--ability-marker[value=str] ~ .sheet-grid-layout__input--strength,
+      &--ability-marker[value=dex] ~ .sheet-grid-layout__input--dexterity,
+      &--ability-marker[value=con] ~ .sheet-grid-layout__input--constitution,
+      &--ability-marker[value=int] ~ .sheet-grid-layout__input--intelligence,
+      &--ability-marker[value=wis] ~ .sheet-grid-layout__input--wisdom,
+      &--ability-marker[value=cha] ~ .sheet-grid-layout__input--charisma {
+        display: initial;
       }
     }
   }

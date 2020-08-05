@@ -106,5 +106,5 @@ export const getAttributes = (names, callback) => {
 
 export const addEventListener = (name, listener) => on(name, listener)
 
-export const setAttributes = (attributeMap, options) =>
+export const setAttributes = (attributeMap, options = { silent: false }) =>
   setAttrs(attributeMap, options)

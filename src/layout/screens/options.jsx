@@ -4,7 +4,12 @@ const ColumnLayout = require('../components/columns')
 const Grid = require('../components/grid')
 const SectionBlock = require('../section-block')
 
+const { getAbbreviationForAttribute } = require('../utils/attributes')
+const skills = require('../data/skills')
+
 function OptionsScreen() {
+  const filteredSkills = skills.filter((skill) => skill.name !== 'profession')
+
   return (
     <div>
       <SectionBlock title="Class">
@@ -195,6 +200,77 @@ function OptionsScreen() {
                 />
                 <Grid.Label compact>Damage rolls</Grid.Label>
               </Grid.Row>
+            </Grid>
+          </SectionBlock>
+
+          <SectionBlock title="Skills">
+            <Grid>
+              <Grid.Header>
+                <Grid.Label align="left" size="3fr">
+                  Skill
+                </Grid.Label>
+                <Grid.Label size="3fr">Ability</Grid.Label>
+                <Grid.Spacer size="1fr" />
+                <Grid.Label align="left" size="3fr">
+                  Skill
+                </Grid.Label>
+                <Grid.Label size="3fr">Ability</Grid.Label>
+              </Grid.Header>
+
+              {filteredSkills
+                .slice(0, Math.ceil(skills.length / 2))
+                .map((skill, index, array) => {
+                  const skill1 = skill
+                  const skill2 = filteredSkills[array.length + index]
+
+                  return (
+                    <Grid.Row key={skill1.name}>
+                      <Grid.Label>{skill1.name}</Grid.Label>
+                      <Grid.Input
+                        attribute={`attr_skills_${skill1.name.replace(
+                          /\s/g,
+                          '_'
+                        )}_ability`}
+                        options={[
+                          ['str', 'Strength'],
+                          ['dex', 'Dexterity'],
+                          ['con', 'Constitution'],
+                          ['int', 'Intelligence'],
+                          ['wis', 'Wisdom'],
+                          ['cha', 'Charisma'],
+                        ]}
+                        defaultValue={getAbbreviationForAttribute(
+                          skill1.ability
+                        )}
+                        type="select"
+                      />
+                      {skill2 ? (
+                        <React.Fragment>
+                          <Grid.Spacer />
+                          <Grid.Label>{skill2.name}</Grid.Label>
+                          <Grid.Input
+                            attribute={`attr_skills_${skill2.name.replace(
+                              /\s/g,
+                              '_'
+                            )}_ability`}
+                            options={[
+                              ['str', 'Strength'],
+                              ['dex', 'Dexterity'],
+                              ['con', 'Constitution'],
+                              ['int', 'Intelligence'],
+                              ['wis', 'Wisdom'],
+                              ['cha', 'Charisma'],
+                            ]}
+                            defaultValue={getAbbreviationForAttribute(
+                              skill2.ability
+                            )}
+                            type="select"
+                          />
+                        </React.Fragment>
+                      ) : null}
+                    </Grid.Row>
+                  )
+                })}
             </Grid>
           </SectionBlock>
         </ColumnLayout.Column>

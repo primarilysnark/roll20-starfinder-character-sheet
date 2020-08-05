@@ -4,7 +4,9 @@ const SectionBlock = require('../section-block')
 
 const ColumnLayout = require('../components/columns')
 const Grid = require('../components/grid')
-const skills = require('../../data/skills.js')
+
+const { getAbbreviationForAttribute } = require('../utils/attributes')
+const skills = require('../data/skills')
 
 function CharacterScreen() {
   return (
@@ -108,6 +110,17 @@ function CharacterScreen() {
                 ['CHA', 'Charisma'],
               ].map(([abbreviation, field]) => (
                 <Grid.Row key={abbreviation}>
+                  <input
+                    name={`attr_${field.toLowerCase()}_adjusted`}
+                    type="hidden"
+                    value="10"
+                  />
+                  <input
+                    name={`attr_${field.toLowerCase()}_mod`}
+                    type="hidden"
+                    value="0"
+                  />
+
                   <Grid.Abbreviation
                     abbr={abbreviation}
                     name={`roll_${field.toLowerCase()}_check`}
@@ -119,10 +132,10 @@ function CharacterScreen() {
                   <Grid.Input
                     attribute={`attr_${field.toLowerCase()}_base`}
                     overlay={`attr_${field.toLowerCase()}_adjusted`}
-                    defaultValue="10"
                   />
                   <Grid.Input
                     attribute={`attr_${field.toLowerCase()}_mod`}
+                    defaultValue="0"
                     disabled
                   />
                   <Grid.Input
@@ -159,13 +172,23 @@ function CharacterScreen() {
 
                 return (
                   <Grid.Row key={skill.name}>
+                    <input
+                      name={`attr_skills_${attributeSkillName}_ability`}
+                      className="grid-layout__input grid-layout__input--hidden grid-layout__input--ability-marker"
+                      type="hidden"
+                      value={getAbbreviationForAttribute(skill.ability)}
+                    />
                     <Grid.Input
                       attribute={`attr_skills_${attributeSkillName}_class_skill`}
                       type="checkbox"
                     />
-                    <Grid.Label>
-                      {skill.name} ({skill.ability.substring(0, 3)})
-                      {skill.trainedOnly ? '*' : ''}{' '}
+                    <Grid.Label flat>
+                      {skill.name} (
+                      <span
+                        name={`attr_skills_${attributeSkillName}_ability`}
+                        value={getAbbreviationForAttribute(skill.ability)}
+                      />
+                      ){skill.trainedOnly ? '*' : ''}{' '}
                       {skill.armorCheckPenalty ? '¤' : ''}
                     </Grid.Label>
                     <Grid.Input
@@ -182,11 +205,39 @@ function CharacterScreen() {
                     />
                     <Grid.Label>+</Grid.Label>
                     <Grid.Input
-                      attribute={`attr_${skill.ability}_mod`}
+                      attribute="attr_strength_mod"
+                      className="grid-layout__input--strength"
+                      disabled
+                    />
+                    <Grid.Input
+                      attribute="attr_dexterity_mod"
+                      className="grid-layout__input--dexterity"
+                      disabled
+                    />
+                    <Grid.Input
+                      attribute="attr_constitution_mod"
+                      className="grid-layout__input--constitution"
+                      disabled
+                    />
+                    <Grid.Input
+                      attribute="attr_intelligence_mod"
+                      className="grid-layout__input--intelligence"
+                      disabled
+                    />
+                    <Grid.Input
+                      attribute="attr_wisdom_mod"
+                      className="grid-layout__input--wisdom"
+                      disabled
+                    />
+                    <Grid.Input
+                      attribute="attr_charisma_mod"
+                      className="grid-layout__input--charisma"
                       disabled
                     />
                     <Grid.Label>+</Grid.Label>
-                    <Grid.Input attribute={`attr_skills_${skill.name}_misc`} />
+                    <Grid.Input
+                      attribute={`attr_skills_${attributeSkillName}_misc`}
+                    />
                   </Grid.Row>
                 )
               })}
@@ -346,6 +397,11 @@ function CharacterScreen() {
               </Grid.Header>
 
               <Grid.Row>
+                <input
+                  name="attr_fortitude_save_base"
+                  type="hidden"
+                  value="0"
+                />
                 <Grid.Abbreviation
                   abbr="Fortitude"
                   rollable="1d20 + @{fortitude_save_mod}"
@@ -363,6 +419,7 @@ function CharacterScreen() {
               </Grid.Row>
 
               <Grid.Row>
+                <input name="attr_reflex_save_base" type="hidden" value="0" />
                 <Grid.Abbreviation
                   abbr="Reflex"
                   rollable="1d20 + @{reflex_save_mod}"
@@ -380,6 +437,7 @@ function CharacterScreen() {
               </Grid.Row>
 
               <Grid.Row>
+                <input name="attr_will_save_base" type="hidden" value="0" />
                 <Grid.Abbreviation
                   abbr="Will"
                   rollable="1d20 + @{will_save_mod}"
@@ -399,6 +457,8 @@ function CharacterScreen() {
           </SectionBlock>
 
           <SectionBlock title="Attack Bonuses">
+            <input name="attr_base_attack_bonus" type="hidden" value="0" />
+
             <Grid>
               <Grid.Header>
                 <Grid.Spacer size="120px" />

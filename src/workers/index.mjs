@@ -1,6 +1,8 @@
-import * as formatters from './utils/formatter.mjs'
 import { ChangeNotifier } from './change-notifier.mjs'
 import { Navigator } from './navigator.mjs'
+import * as formatters from './utils/formatter.mjs'
+
+import skills from './data/skills.mjs'
 
 const commonFormats = {
   adjustedScore: (abilityScoreName) => ({
@@ -96,56 +98,32 @@ notifier.addListener('rolls_whisper', commonFormats.string)
 notifier.addListener('rolls_show_name', commonFormats.boolean)
 
 /* Character screen */
-notifier.addListener('strength_base', commonFormats.integer)
-notifier.addListener('strength_penalty', commonFormats.integer)
-notifier.addListener('strength_drain', commonFormats.integer)
-notifier.addListener(
-  'strength_adjusted',
-  commonFormats.adjustedScore('strength')
-)
-notifier.addListener('strength_mod', commonFormats.modifier('strength'))
+;[
+  'strength',
+  'dexterity',
+  'constitution',
+  'intelligence',
+  'wisdom',
+  'charisma',
+].forEach((abilityScoreName) => {
+  notifier.addListener(`${abilityScoreName}_base`, {
+    ...commonFormats.integer,
+    autocalculate: true,
+    defaultValue: 10,
+  })
 
-notifier.addListener('dexterity_base', commonFormats.integer)
-notifier.addListener('dexterity_penalty', commonFormats.integer)
-notifier.addListener('dexterity_drain', commonFormats.integer)
-notifier.addListener(
-  'dexterity_adjusted',
-  commonFormats.adjustedScore('dexterity')
-)
-notifier.addListener('dexterity_mod', commonFormats.modifier('dexterity'))
+  notifier.addListener(`${abilityScoreName}_penalty`, commonFormats.integer)
+  notifier.addListener(`${abilityScoreName}_drain`, commonFormats.integer)
+  notifier.addListener(
+    `${abilityScoreName}_adjusted`,
+    commonFormats.adjustedScore(abilityScoreName)
+  )
 
-notifier.addListener('constitution_base', commonFormats.integer)
-notifier.addListener('constitution_penalty', commonFormats.integer)
-notifier.addListener('constitution_drain', commonFormats.integer)
-notifier.addListener(
-  'constitution_adjusted',
-  commonFormats.adjustedScore('constitution')
-)
-notifier.addListener('constitution_mod', commonFormats.modifier('constitution'))
-
-notifier.addListener('intelligence_base', commonFormats.integer)
-notifier.addListener('intelligence_penalty', commonFormats.integer)
-notifier.addListener('intelligence_drain', commonFormats.integer)
-notifier.addListener(
-  'intelligence_adjusted',
-  commonFormats.adjustedScore('intelligence')
-)
-notifier.addListener('intelligence_mod', commonFormats.modifier('intelligence'))
-
-notifier.addListener('wisdom_base', commonFormats.integer)
-notifier.addListener('wisdom_penalty', commonFormats.integer)
-notifier.addListener('wisdom_drain', commonFormats.integer)
-notifier.addListener('wisdom_adjusted', commonFormats.adjustedScore('wisdom'))
-notifier.addListener('wisdom_mod', commonFormats.modifier('wisdom'))
-
-notifier.addListener('charisma_base', commonFormats.integer)
-notifier.addListener('charisma_penalty', commonFormats.integer)
-notifier.addListener('charisma_drain', commonFormats.integer)
-notifier.addListener(
-  'charisma_adjusted',
-  commonFormats.adjustedScore('charisma')
-)
-notifier.addListener('charisma_mod', commonFormats.modifier('charisma'))
+  notifier.addListener(
+    `${abilityScoreName}_mod`,
+    commonFormats.modifier(abilityScoreName)
+  )
+})
 
 notifier.addListener('initiative_misc', commonFormats.integer)
 notifier.addListener('initiative_bonus', {
@@ -157,7 +135,7 @@ notifier.addListener('initiative_bonus', {
 notifier.addListener('base_attack_bonus', {
   ...commonFormats.integer,
   calculate: (values) =>
-    Object.values(values.repeating_classes)
+    Object.values(values.repeating_classes || {})
       .map((instance) => {
         if (instance.level == null) {
           return 0
@@ -206,7 +184,7 @@ notifier.addListener('will_save_misc', commonFormats.integer)
 notifier.addListener('fortitude_save_base', {
   ...commonFormats.integer,
   calculate: (values) =>
-    Object.values(values.repeating_classes)
+    Object.values(values.repeating_classes || {})
       .map((instance) => {
         if (instance.level == null) {
           return 0
@@ -229,7 +207,7 @@ notifier.addListener('fortitude_save_base', {
 notifier.addListener('reflex_save_base', {
   ...commonFormats.integer,
   calculate: (values) =>
-    Object.values(values.repeating_classes)
+    Object.values(values.repeating_classes || {})
       .map((instance) => {
         if (instance.level == null) {
           return 0
@@ -252,7 +230,7 @@ notifier.addListener('reflex_save_base', {
 notifier.addListener('will_save_base', {
   ...commonFormats.integer,
   calculate: (values) =>
-    Object.values(values.repeating_classes)
+    Object.values(values.repeating_classes || {})
       .map((instance) => {
         if (instance.level == null) {
           return 0
@@ -296,7 +274,7 @@ notifier.addListener('will_save_mod', {
 notifier.addListener('resolve_max', {
   ...commonFormats.integer,
   calculate: (values) => {
-    const characterLevel = Object.values(values.repeating_classes)
+    const characterLevel = Object.values(values.repeating_classes || {})
       .map((instance) => instance.level || 0)
       .reduce((total, level) => total + level, 0)
 
@@ -321,7 +299,7 @@ notifier.addListener('resolve_max', {
       1,
       resolveFromLevels +
         Math.max(
-          ...Object.values(values.repeating_classes).map(
+          ...Object.values(values.repeating_classes || {}).map(
             (instance) => values[`${instance.key_ability}_mod`]
           )
         )
@@ -343,7 +321,7 @@ notifier.addListener('resolve_max', {
 notifier.addListener('stamina_max', {
   ...commonFormats.integer,
   calculate: (values) => {
-    return Object.values(values.repeating_classes)
+    return Object.values(values.repeating_classes || {})
       .map((instance) => {
         if (instance.level == null) {
           return 0
@@ -364,7 +342,7 @@ notifier.addListener('health_max', {
   calculate: (values) => {
     return (
       values.race_hp +
-      Object.values(values.repeating_classes)
+      Object.values(values.repeating_classes || {})
         .map((instance) => {
           if (instance.level == null) {
             return 0
@@ -376,6 +354,93 @@ notifier.addListener('health_max', {
     )
   },
   dependencies: ['race_hp', 'repeating_classes:hp', 'repeating_classes:level'],
+})
+
+skills.forEach((skill) => {
+  if (skill.name === 'profession') {
+    return
+  }
+
+  const attributeSkillName = skill.name.replace(/\s/g, '_')
+
+  notifier.addListener(
+    `skills_${attributeSkillName}_class_skill`,
+    commonFormats.boolean
+  )
+  notifier.addListener(
+    `skills_${attributeSkillName}_ranks`,
+    commonFormats.integer
+  )
+  notifier.addListener(
+    `skills_${attributeSkillName}_insight`,
+    commonFormats.integer
+  )
+  notifier.addListener(
+    `skills_${attributeSkillName}_misc`,
+    commonFormats.integer
+  )
+  notifier.addListener(
+    `skills_${attributeSkillName}_ability`,
+    commonFormats.string
+  )
+
+  notifier.addListener(`skills_${attributeSkillName}_mod`, {
+    ...commonFormats.integer,
+    calculate: (values) => {
+      let skillModifier =
+        values[`skills_${attributeSkillName}_ranks`] +
+        values[`skills_${attributeSkillName}_insight`] +
+        values[`skills_${attributeSkillName}_misc`]
+
+      if (
+        values[`skills_${attributeSkillName}_class_skill`] &&
+        values[`skills_${attributeSkillName}_ranks`] > 0
+      ) {
+        skillModifier += 3
+      }
+
+      switch (values[`skills_${attributeSkillName}_ability`]) {
+        case 'str':
+          skillModifier += values.strength_mod
+          break
+
+        case 'dex':
+          skillModifier += values.dexterity_mod
+          break
+
+        case 'con':
+          skillModifier += values.constitution_mod
+          break
+
+        case 'int':
+          skillModifier += values.intelligence_mod
+          break
+
+        case 'wis':
+          skillModifier += values.wisdom_mod
+          break
+
+        case 'cha':
+          skillModifier += values.charisma_mod
+          break
+      }
+
+      return skillModifier
+    },
+    dependencies: [
+      `skills_${attributeSkillName}_class_skill`,
+      `skills_${attributeSkillName}_ranks`,
+      `skills_${attributeSkillName}_insight`,
+      `skills_${attributeSkillName}_misc`,
+      `skills_${attributeSkillName}_ability`,
+      'strength_mod',
+      'dexterity_mod',
+      'constitution_mod',
+      'intelligence_mod',
+      'wisdom_mod',
+      'charisma_mod',
+    ],
+  })
 })
 
 notifier.start()

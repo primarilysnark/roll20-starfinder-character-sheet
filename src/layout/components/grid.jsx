@@ -144,7 +144,7 @@ GridRow.defaultProps = {
   spaced: false,
 }
 
-function GridLabel({ align, children, compact, span }) {
+function GridLabel({ align, children, compact, flat, span }) {
   const style = {}
 
   if (align) {
@@ -153,9 +153,11 @@ function GridLabel({ align, children, compact, span }) {
 
   return (
     <div
-      className={`grid-layout__label
-      ${compact ? ' grid-layout__label--compact' : ''}
-      ${span ? ' grid-layout__label--span' : ''}`}
+      className={`grid-layout__label${
+        compact ? ' grid-layout__label--compact' : ''
+      }${flat ? ' grid-layout__label--flat' : ''}${
+        span ? ' grid-layout__label--span' : ''
+      }`}
       style={style}
     >
       {children}
@@ -166,22 +168,26 @@ function GridLabel({ align, children, compact, span }) {
 GridLabel.propTypes = {
   align: PropTypes.string,
   children: PropTypes.node.isRequired,
-  span: PropTypes.bool,
   compact: PropTypes.bool,
+  flat: PropTypes.bool,
+  span: PropTypes.bool,
 }
 
 GridLabel.defaultProps = {
   compact: false,
+  flat: false,
   span: false,
 }
 
 function GridInput({
   align,
   attribute,
+  className,
   compact,
   disabled,
   options,
   overlay,
+  defaultOverlay,
   defaultValue,
   type,
 }) {
@@ -197,7 +203,7 @@ function GridInput({
         <div
           className={`grid-layout__input${
             compact ? ' grid-layout__input--compact' : ''
-          }`}
+          }${className ? ` ${className}` : ''}`}
         >
           <select name={attribute}>
             {options.map((option, index) => {
@@ -232,7 +238,7 @@ function GridInput({
         <div
           className={`grid-layout__input${
             compact ? ' grid-layout__input--compact' : ''
-          }`}
+          }${className ? ` ${className}` : ''}`}
         >
           <input name={attribute} type="checkbox" value={defaultValue || '1'} />
         </div>
@@ -245,10 +251,10 @@ function GridInput({
           <div
             className={`grid-layout__input${
               compact ? ' grid-layout__input--compact' : ''
-            }`}
+            }${className ? ` ${className}` : ''}`}
           >
             <div className="grid-layout__input__field grid-layout__input__field--overlay">
-              <span name={overlay} />
+              <span name={overlay}>{defaultOverlay}</span>
             </div>
             <input
               defaultValue={defaultValue}
@@ -265,7 +271,7 @@ function GridInput({
           <div
             className={`grid-layout__input${
               compact ? ' grid-layout__input--compact' : ''
-            }`}
+            }${className ? ` ${className}` : ''}`}
           >
             <span
               className="grid-layout__input__field grid-layout__input__field--disabled"
@@ -282,7 +288,7 @@ function GridInput({
         <div
           className={`grid-layout__input${
             compact ? ' grid-layout__input--compact' : ''
-          }`}
+          }${className ? ` ${className}` : ''}`}
         >
           <input
             defaultValue={defaultValue}
@@ -298,7 +304,9 @@ function GridInput({
 GridInput.propTypes = {
   align: PropTypes.string,
   attribute: PropTypes.string.isRequired,
+  className: PropTypes.string,
   compact: PropTypes.bool,
+  defaultOverlay: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
   options: PropTypes.oneOfType([

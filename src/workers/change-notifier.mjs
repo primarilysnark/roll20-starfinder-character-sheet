@@ -1,6 +1,7 @@
 import * as roll20 from './utils/roll20.mjs'
-import { Navigator } from './navigator.mjs'
 import { parseAttributeName, validateAttribute } from './utils/attributes.mjs'
+
+import { Navigator } from './navigator.mjs'
 
 export class ChangeNotifier {
   constructor({ shouldLog = true } = {}) {
@@ -255,8 +256,40 @@ export class ChangeNotifier {
   start() {
     // Register all attribute handlers
     this.listeners.forEach((_, attributeName) => {
+      console.log('[adding] event listener', attributeName)
+
       roll20.addEventListener(`change:${attributeName}`, (event) =>
         this._handleChangeEvent(event)
+      )
+    })
+
+    roll20.addEventListener('sheet:opened', () => {
+      console.log('[opened] Sheet opened')
+
+      const autocalculatedAttributes = [...this.listeners.values()].filter(
+        (attribute) => attribute.autocalculate
+      )
+
+      roll20.getAttributes(
+        autocalculatedAttributes.map((attribute) => attribute.name),
+        (values) => {
+          const valuesToCalculate = Object.keys(values).filter(
+            (attributeKey) =>
+              values[attributeKey] == null || values[attributeKey].length === 0
+          )
+
+          console.log('[opened] Updating attributes', valuesToCalculate)
+
+          roll20.setAttributes(
+            valuesToCalculate.reduce(
+              (operation, attribute) => ({
+                ...operation,
+                [attribute]: this.listeners.get(attribute).defaultValue,
+              }),
+              {}
+            )
+          )
+        }
       )
     })
   }
