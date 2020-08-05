@@ -87,12 +87,27 @@ GridAbbreviation.propTypes = {
   rollName: PropTypes.string,
 }
 
-function GridBlockLabel({ children }) {
+function GridBlockLabel({ children, rollable, rollName }) {
+  if (rollable) {
+    return (
+      <button
+        className="grid-layout__block-label"
+        type="roll"
+        name={rollName}
+        value={getBasicMacroRoll(rollName, rollable)}
+      >
+        {children}
+      </button>
+    )
+  }
+
   return <div className="grid-layout__block-label">{children}</div>
 }
 
 GridBlockLabel.propTypes = {
   children: PropTypes.node.isRequired,
+  rollable: PropTypes.string,
+  rollName: PropTypes.string,
 }
 
 function GridHeader({ children }) {

@@ -478,7 +478,12 @@ function CharacterScreen() {
               </Grid.Header>
 
               <Grid.Row>
-                <Grid.BlockLabel>Melee Attack</Grid.BlockLabel>
+                <Grid.BlockLabel
+                  rollName="Melee Attack"
+                  rollable="1d20 + @{melee_attack_mod}"
+                >
+                  Melee Attack
+                </Grid.BlockLabel>
                 <Grid.Input attribute="attr_melee_attack_mod" disabled />
                 <Grid.Label>=</Grid.Label>
                 <Grid.Input attribute="attr_base_attack_bonus" disabled />
@@ -506,7 +511,12 @@ function CharacterScreen() {
               </Grid.Header>
 
               <Grid.Row>
-                <Grid.BlockLabel>Ranged Attack</Grid.BlockLabel>
+                <Grid.BlockLabel
+                  rollName="Ranged Attack"
+                  rollable="1d20 + @{ranged_attack_mod}"
+                >
+                  Ranged Attack
+                </Grid.BlockLabel>
                 <Grid.Input attribute="attr_ranged_attack_mod" disabled />
                 <Grid.Label>=</Grid.Label>
                 <Grid.Input attribute="attr_base_attack_bonus" disabled />
@@ -534,7 +544,12 @@ function CharacterScreen() {
               </Grid.Header>
 
               <Grid.Row>
-                <Grid.BlockLabel>Thrown Attack</Grid.BlockLabel>
+                <Grid.BlockLabel
+                  rollName="Thrown Attack"
+                  rollable="1d20 + @{thrown_attack_mod}"
+                >
+                  Thrown Attack
+                </Grid.BlockLabel>
                 <Grid.Input attribute="attr_thrown_attack_mod" disabled />
                 <Grid.Label>=</Grid.Label>
                 <Grid.Input attribute="attr_base_attack_bonus" disabled />
