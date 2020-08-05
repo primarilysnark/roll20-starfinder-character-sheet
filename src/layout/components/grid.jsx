@@ -144,11 +144,37 @@ GridRow.defaultProps = {
   spaced: false,
 }
 
-function GridLabel({ align, children, compact, flat, span }) {
+function GridLabel({
+  align,
+  children,
+  compact,
+  flat,
+  rollable,
+  rollName,
+  span,
+}) {
   const style = {}
 
   if (align) {
     style.textAlign = align
+  }
+
+  if (rollable) {
+    return (
+      <button
+        className={`grid-layout__label${
+          compact ? ' grid-layout__label--compact' : ''
+        }${flat ? ' grid-layout__label--flat' : ''}${
+          span ? ' grid-layout__label--span' : ''
+        }`}
+        name={rollName}
+        style={style}
+        type="roll"
+        value={getBasicMacroRoll(rollName, rollable)}
+      >
+        {children}
+      </button>
+    )
   }
 
   return (
@@ -170,6 +196,8 @@ GridLabel.propTypes = {
   children: PropTypes.node.isRequired,
   compact: PropTypes.bool,
   flat: PropTypes.bool,
+  rollable: PropTypes.string,
+  rollName: PropTypes.string,
   span: PropTypes.bool,
 }
 

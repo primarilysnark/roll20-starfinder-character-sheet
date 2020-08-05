@@ -182,7 +182,11 @@ function CharacterScreen() {
                       attribute={`attr_skills_${attributeSkillName}_class_skill`}
                       type="checkbox"
                     />
-                    <Grid.Label flat>
+                    <Grid.Label
+                      flat
+                      rollName={skill.name}
+                      rollable={`1d20 + @{skills_${attributeSkillName}_mod}`}
+                    >
                       {skill.name} (
                       <span
                         name={`attr_skills_${attributeSkillName}_ability`}
