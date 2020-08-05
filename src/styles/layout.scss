@@ -224,11 +224,6 @@
         grid-column: 5 / 8;
       }
 
-      &--abbreviated {
-        height: 4.5rem;
-        text-align: center;
-      }
-
       &[type=roll] {
         align-items: center;
         background: none;
@@ -242,7 +237,7 @@
         width: 100%;
 
         &:before {
-          color: white;
+          color: black;
           content: '0';
           opacity: 0;
           position: absolute;
@@ -252,6 +247,15 @@
 
         &:hover:before {
           opacity: 1;
+        }
+      }
+
+      &--abbreviated {
+        height: 4.5rem;
+        text-align: center;
+
+        &[type=roll]:before {
+          color: white;
         }
       }
 
