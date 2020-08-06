@@ -84,15 +84,15 @@
       }
     }
 
-    &--2fr-1fr-1fr {
+    &--1fr-1fr-1fr {
       .sheet-grid-layout__row {
-        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
       }
     }
 
-    &--2fr-1fr-1fr-4fr {
+    &--2fr-2fr-1fr-1fr-4fr {
       .sheet-grid-layout__row {
-        grid-template-columns: 2fr 1fr 1fr 4fr;
+        grid-template-columns: 2fr 2fr 1fr 1fr 4fr;
       }
     }
 

@@ -13,28 +13,31 @@ function CharacterScreen() {
     <React.Fragment>
       <Grid>
         <Grid.Header>
-          <Grid.Label align="left" size="2fr">
+          <Grid.Label align="left" size="1fr">
+            Character Name
+          </Grid.Label>
+          <Grid.Label align="left" size="1fr">
             Class
           </Grid.Label>
           <Grid.Label align="left" size="1fr">
-            Race
-          </Grid.Label>
-          <Grid.Label align="left" size="1fr">
-            Theme
+            Player
           </Grid.Label>
         </Grid.Header>
 
         <Grid.Row spaced>
           <input name="attr_class_display" type="hidden" />
 
+          <Grid.Input align="left" attribute="attr_character_name" />
           <Grid.Input align="left" attribute="attr_class_display" disabled />
-          <Grid.Input align="left" attribute="attr_race_name" disabled />
-          <Grid.Input align="left" attribute="attr_theme" />
+          <Grid.Input align="left" attribute="attr_player" />
         </Grid.Row>
       </Grid>
 
       <Grid>
         <Grid.Header>
+          <Grid.Label align="left" size="2fr">
+            Race
+          </Grid.Label>
           <Grid.Label align="left" size="2fr">
             Size
           </Grid.Label>
@@ -45,15 +48,16 @@ function CharacterScreen() {
             Gender
           </Grid.Label>
           <Grid.Label align="left" size="4fr">
-            Homeworld
+            Theme
           </Grid.Label>
         </Grid.Header>
 
         <Grid.Row spaced>
+          <Grid.Input align="left" attribute="attr_race_name" disabled />
           <Grid.Input align="left" attribute="attr_race_size" disabled />
           <Grid.Input align="left" attribute="attr_race_speed" disabled />
           <Grid.Input align="left" attribute="attr_gender" />
-          <Grid.Input align="left" attribute="attr_homeworld" />
+          <Grid.Input align="left" attribute="attr_theme" />
         </Grid.Row>
       </Grid>
 
@@ -63,10 +67,10 @@ function CharacterScreen() {
             Alignment
           </Grid.Label>
           <Grid.Label align="left" size="3fr">
-            deity
+            Deity
           </Grid.Label>
           <Grid.Label align="left" size="3fr">
-            Player
+            Homeworld
           </Grid.Label>
         </Grid.Header>
 
@@ -87,7 +91,7 @@ function CharacterScreen() {
             type="select"
           />
           <Grid.Input align="left" attribute="attr_deity" />
-          <Grid.Input align="left" attribute="attr_player" />
+          <Grid.Input align="left" attribute="attr_homeworld" />
         </Grid.Row>
       </Grid>
 
