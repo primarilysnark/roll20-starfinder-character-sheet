@@ -32,6 +32,11 @@
       display: grid;
       column-gap: 1rem;
       margin-bottom: 1rem;
+      position: relative;
+
+      &:hover .sheet-grid-layout__float-button {
+        display: block;
+      }
 
       &:last-of-type {
         margin-bottom: 0;
@@ -165,6 +170,29 @@
     &--80px-2fr-1fr-1fr-1fr {
       .sheet-grid-layout__row {
         grid-template-columns: 80px 2fr repeat(3, 1fr);
+      }
+    }
+
+    &__float-button {
+      background: #ffffff;
+      border: 2px solid #3893cd;
+      border-bottom-left-radius: 4px;
+      border-top-left-radius: 4px;
+      display: none;
+      padding: 0.5rem 1rem 0.5rem 0.5rem;
+      position: absolute;
+      right: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+
+      &:after {
+        background: #ffffff;
+        bottom: -2px;
+        content: '';
+        position: absolute;
+        right: -2px;
+        top: -2px;
+        width: 1rem;
       }
     }
 
@@ -351,5 +379,51 @@
         display: initial;
       }
     }
+
+    &__hidden {
+      display: none;
+    }
   }
+}
+
+.sheet-icon-button {
+  background: none;
+  border: none;
+  color: #245680;
+  font: 1.5rem/1 'Pictos';
+  height: 1.5rem;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 1.5rem;
+
+  input[type=checkbox] {
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    height: 0;
+    width: 0;
+  }
+}
+
+input[name=attr_skills_acrobatics_show_notes][value="1"] ~ .sheet-grid-layout__hidden--acrobatics,
+input[name=attr_skills_athletics_show_notes][value="1"] ~ .sheet-grid-layout__hidden--athletics,
+input[name=attr_skills_bluff_show_notes][value="1"] ~ .sheet-grid-layout__hidden--bluff,
+input[name=attr_skills_computers_show_notes][value="1"] ~ .sheet-grid-layout__hidden--computers,
+input[name=attr_skills_culture_show_notes][value="1"] ~ .sheet-grid-layout__hidden--culture,
+input[name=attr_skills_diplomacy_show_notes][value="1"] ~ .sheet-grid-layout__hidden--diplomacy,
+input[name=attr_skills_disguise_show_notes][value="1"] ~ .sheet-grid-layout__hidden--disguise,
+input[name=attr_skills_engineering_show_notes][value="1"] ~ .sheet-grid-layout__hidden--engineering,
+input[name=attr_skills_intimidate_show_notes][value="1"] ~ .sheet-grid-layout__hidden--intimidate,
+input[name=attr_skills_life_science_show_notes][value="1"] ~ .sheet-grid-layout__hidden--life_science,
+input[name=attr_skills_medicine_show_notes][value="1"] ~ .sheet-grid-layout__hidden--medicine,
+input[name=attr_skills_mysticism_show_notes][value="1"] ~ .sheet-grid-layout__hidden--mysticism,
+input[name=attr_skills_perception_show_notes][value="1"] ~ .sheet-grid-layout__hidden--perception,
+input[name=attr_skills_physical_science_show_notes][value="1"] ~ .sheet-grid-layout__hidden--physical_science,
+input[name=attr_skills_piloting_show_notes][value="1"] ~ .sheet-grid-layout__hidden--piloting,
+input[name=attr_skills_sense_motive_show_notes][value="1"] ~ .sheet-grid-layout__hidden--sense_motive,
+input[name=attr_skills_sleight_of_hand_show_notes][value="1"] ~ .sheet-grid-layout__hidden--sleight_of_hand,
+input[name=attr_skills_stealth_show_notes][value="1"] ~ .sheet-grid-layout__hidden--stealth,
+input[name=attr_skills_survival_show_notes][value="1"] ~ .sheet-grid-layout__hidden--survival {
+  display: block;
 }

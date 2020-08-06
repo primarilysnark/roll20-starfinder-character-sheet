@@ -130,6 +130,14 @@ GridHeading.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
+function GridFloatButton({ children }) {
+  return <div className="grid-layout__float-button">{children}</div>
+}
+
+GridFloatButton.propTypes = {
+  children: PropTypes.node.isRequired,
+}
+
 function GridFullWidth({ children }) {
   return (
     <div className="grid-layout__row grid-layout__row--heading">{children}</div>
@@ -164,6 +172,7 @@ function GridLabel({
   children,
   compact,
   flat,
+  notes,
   rollable,
   rollName,
   span,
@@ -185,7 +194,7 @@ function GridLabel({
         name={rollName}
         style={style}
         type="roll"
-        value={getBasicMacroRoll(rollName, rollable)}
+        value={getBasicMacroRoll(rollName, rollable, notes)}
       >
         {children}
       </button>
@@ -211,6 +220,7 @@ GridLabel.propTypes = {
   children: PropTypes.node.isRequired,
   compact: PropTypes.bool,
   flat: PropTypes.bool,
+  notes: PropTypes.string,
   rollable: PropTypes.string,
   rollName: PropTypes.string,
   span: PropTypes.bool,
@@ -284,6 +294,22 @@ function GridInput({
           }${className ? ` ${className}` : ''}`}
         >
           <input name={attribute} type="checkbox" value={defaultValue || '1'} />
+        </div>
+      )
+
+    case 'textarea':
+      return (
+        <div
+          className={`grid-layout__input${
+            compact ? ' grid-layout__input--compact' : ''
+          }${className ? ` ${className}` : ''}`}
+        >
+          <textarea
+            defaultValue={defaultValue}
+            name={attribute}
+            style={style}
+            type="text"
+          />
         </div>
       )
 
@@ -380,6 +406,7 @@ GridSpacer.propTypes = {
 
 Grid.Abbreviation = GridAbbreviation
 Grid.BlockLabel = GridBlockLabel
+Grid.FloatButton = GridFloatButton
 Grid.FullWidth = GridFullWidth
 Grid.Header = GridHeader
 Grid.Heading = GridHeading

@@ -386,6 +386,15 @@ skills.forEach((skill) => {
   const attributeSkillName = skill.name.replace(/\s/g, '_')
 
   notifier.addListener(
+    `skills_${attributeSkillName}_show_notes`,
+    commonFormats.boolean
+  )
+  notifier.addListener(
+    `skills_${attributeSkillName}_notes`,
+    commonFormats.string
+  )
+
+  notifier.addListener(
     `skills_${attributeSkillName}_class_skill`,
     commonFormats.boolean
   )

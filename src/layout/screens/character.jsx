@@ -7,6 +7,7 @@ const Grid = require('../components/grid')
 
 const { getAbbreviationForAttribute } = require('../utils/attributes')
 const skills = require('../data/skills')
+const IconButton = require('../components/icon-button')
 
 function CharacterScreen() {
   return (
@@ -177,78 +178,104 @@ function CharacterScreen() {
                 }
 
                 return (
-                  <Grid.Row key={skill.name}>
+                  <React.Fragment key={skill.name}>
                     <input
-                      name={`attr_skills_${attributeSkillName}_ability`}
-                      className="grid-layout__input grid-layout__input--hidden grid-layout__input--ability-marker"
+                      name={`attr_skills_${attributeSkillName}_show_notes`}
                       type="hidden"
-                      value={getAbbreviationForAttribute(skill.ability)}
                     />
-                    <Grid.Input
-                      attribute={`attr_skills_${attributeSkillName}_class_skill`}
-                      type="checkbox"
-                    />
-                    <Grid.Label
-                      flat
-                      rollName={skill.name}
-                      rollable={`1d20 + @{skills_${attributeSkillName}_mod}`}
-                    >
-                      {skill.name} (
-                      <span
+                    <Grid.Row>
+                      <input
                         name={`attr_skills_${attributeSkillName}_ability`}
+                        className="grid-layout__input grid-layout__input--hidden grid-layout__input--ability-marker"
+                        type="hidden"
                         value={getAbbreviationForAttribute(skill.ability)}
                       />
-                      ){skill.trainedOnly ? '*' : ''}{' '}
-                      {skill.armorCheckPenalty ? '¤' : ''}
-                    </Grid.Label>
-                    <Grid.Input
-                      attribute={`attr_skills_${attributeSkillName}_mod`}
-                      disabled
-                    />
-                    <Grid.Label>=</Grid.Label>
-                    <Grid.Input
-                      attribute={`attr_skills_${attributeSkillName}_ranks`}
-                    />
-                    <Grid.Label>+</Grid.Label>
-                    <Grid.Input
-                      attribute={`attr_skills_${attributeSkillName}_insight`}
-                    />
-                    <Grid.Label>+</Grid.Label>
-                    <Grid.Input
-                      attribute="attr_strength_mod"
-                      className="grid-layout__input--strength"
-                      disabled
-                    />
-                    <Grid.Input
-                      attribute="attr_dexterity_mod"
-                      className="grid-layout__input--dexterity"
-                      disabled
-                    />
-                    <Grid.Input
-                      attribute="attr_constitution_mod"
-                      className="grid-layout__input--constitution"
-                      disabled
-                    />
-                    <Grid.Input
-                      attribute="attr_intelligence_mod"
-                      className="grid-layout__input--intelligence"
-                      disabled
-                    />
-                    <Grid.Input
-                      attribute="attr_wisdom_mod"
-                      className="grid-layout__input--wisdom"
-                      disabled
-                    />
-                    <Grid.Input
-                      attribute="attr_charisma_mod"
-                      className="grid-layout__input--charisma"
-                      disabled
-                    />
-                    <Grid.Label>+</Grid.Label>
-                    <Grid.Input
-                      attribute={`attr_skills_${attributeSkillName}_misc`}
-                    />
-                  </Grid.Row>
+                      <Grid.Input
+                        attribute={`attr_skills_${attributeSkillName}_class_skill`}
+                        type="checkbox"
+                      />
+                      <Grid.Label
+                        flat
+                        rollName={skill.name}
+                        rollable={`1d20 + @{skills_${attributeSkillName}_mod}`}
+                        notes={`@{skills_${attributeSkillName}_notes}`}
+                      >
+                        {skill.name} (
+                        <span
+                          name={`attr_skills_${attributeSkillName}_ability`}
+                          value={getAbbreviationForAttribute(skill.ability)}
+                        />
+                        ){skill.trainedOnly ? '*' : ''}{' '}
+                        {skill.armorCheckPenalty ? '¤' : ''}
+                      </Grid.Label>
+                      <Grid.Input
+                        attribute={`attr_skills_${attributeSkillName}_mod`}
+                        disabled
+                      />
+                      <Grid.Label>=</Grid.Label>
+                      <Grid.Input
+                        attribute={`attr_skills_${attributeSkillName}_ranks`}
+                      />
+                      <Grid.Label>+</Grid.Label>
+                      <Grid.Input
+                        attribute={`attr_skills_${attributeSkillName}_insight`}
+                      />
+                      <Grid.Label>+</Grid.Label>
+                      <Grid.Input
+                        attribute="attr_strength_mod"
+                        className="grid-layout__input--strength"
+                        disabled
+                      />
+                      <Grid.Input
+                        attribute="attr_dexterity_mod"
+                        className="grid-layout__input--dexterity"
+                        disabled
+                      />
+                      <Grid.Input
+                        attribute="attr_constitution_mod"
+                        className="grid-layout__input--constitution"
+                        disabled
+                      />
+                      <Grid.Input
+                        attribute="attr_intelligence_mod"
+                        className="grid-layout__input--intelligence"
+                        disabled
+                      />
+                      <Grid.Input
+                        attribute="attr_wisdom_mod"
+                        className="grid-layout__input--wisdom"
+                        disabled
+                      />
+                      <Grid.Input
+                        attribute="attr_charisma_mod"
+                        className="grid-layout__input--charisma"
+                        disabled
+                      />
+                      <Grid.Label>+</Grid.Label>
+                      <Grid.Input
+                        attribute={`attr_skills_${attributeSkillName}_misc`}
+                      />
+
+                      <Grid.FloatButton>
+                        <IconButton
+                          attribute={`attr_skills_${attributeSkillName}_show_notes`}
+                          icon="y"
+                        />
+                      </Grid.FloatButton>
+                    </Grid.Row>
+
+                    <div
+                      className={`grid-layout__hidden grid-layout__hidden--${attributeSkillName}`}
+                    >
+                      <Grid.FullWidth>
+                        <Grid.Input
+                          align="left"
+                          attribute={`attr_skills_${attributeSkillName}_notes`}
+                          type="textarea"
+                        />
+                      </Grid.FullWidth>
+                    </div>
+                  </React.Fragment>
                 )
               })}
 
