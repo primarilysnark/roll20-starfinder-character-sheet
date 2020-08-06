@@ -10,6 +10,7 @@ export class ChangeNotifier {
     this.shouldLog = shouldLog
 
     this._handleChangeEvent = this._handleChangeEvent.bind(this)
+    this._handleRemoveEvent = this._handleRemoveEvent.bind(this)
     this._log = this._log.bind(this)
 
     this._log('[create event] Created change notifier')
@@ -101,6 +102,33 @@ export class ChangeNotifier {
         }
       }
     )
+  }
+
+  _handleRemoveEvent(event) {
+    this._log('[change event] Removed', event.sourceAttribute)
+
+    const attributeNameProperties = parseAttributeName(event.sourceAttribute)
+    if (!this.nestedListeners.has(attributeNameProperties.repeating.kind)) {
+      this._log(
+        '[change event] No repeating class registered for',
+        attributeNameProperties.repeating.kind
+      )
+
+      return
+    }
+
+    this.nestedListeners
+      .get(attributeNameProperties.repeating.kind)
+      .map(
+        (nestedAttribute) =>
+          `${attributeNameProperties.repeating.kind}_${attributeNameProperties.repeating.sectionID}_${nestedAttribute}`
+      )
+      .forEach((nestedAttributeName) => {
+        this._handleChangeEvent({
+          newValue: '',
+          sourceAttribute: nestedAttributeName,
+        })
+      })
   }
 
   _log(...messages) {
@@ -229,12 +257,7 @@ export class ChangeNotifier {
       })
     })
 
-    this.nestedListeners.set(
-      name,
-      Object.values(nestedAttributes).map(
-        (nestedAttribute) => nestedAttribute.name
-      )
-    )
+    this.nestedListeners.set(name, Object.keys(nestedAttributes))
   }
 
   hasListener(attributeName) {
@@ -261,8 +284,14 @@ export class ChangeNotifier {
       )
     })
 
+    this.nestedListeners.forEach((_, attributeName) => {
+      roll20.addEventListener(`remove:${attributeName}`, (event) => {
+        this._handleRemoveEvent(event)
+      })
+    })
+
     roll20.addEventListener('sheet:opened', () => {
-      console.log('[opened] Sheet opened')
+      this._log('[opened] Sheet opened')
 
       const autocalculatedAttributes = [...this.listeners.values()].filter(
         (attribute) => attribute.autocalculate
@@ -276,7 +305,7 @@ export class ChangeNotifier {
               values[attributeKey] == null || values[attributeKey].length === 0
           )
 
-          console.log('[opened] Updating attributes', valuesToCalculate)
+          this._log('[opened] Updating attributes', valuesToCalculate)
 
           roll20.setAttributes(
             valuesToCalculate.reduce(
