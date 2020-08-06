@@ -38,6 +38,7 @@ function OptionsScreen() {
               <Grid.Input attribute="attr_hp" />
               <Grid.Input
                 attribute="attr_bab"
+                defaultValue="half"
                 options={[
                   ['half', '1/2'],
                   ['three-quarter', '3/4'],
@@ -47,6 +48,7 @@ function OptionsScreen() {
               />
               <Grid.Input
                 attribute="attr_fortitude_save_progression"
+                defaultValue="poor"
                 options={[
                   ['poor', 'Poor'],
                   ['good', 'Good'],
@@ -55,6 +57,7 @@ function OptionsScreen() {
               />
               <Grid.Input
                 attribute="attr_reflex_save_progression"
+                defaultValue="poor"
                 options={[
                   ['poor', 'Poor'],
                   ['good', 'Good'],
@@ -63,6 +66,7 @@ function OptionsScreen() {
               />
               <Grid.Input
                 attribute="attr_will_save_progression"
+                defaultValue="poor"
                 options={[
                   ['poor', 'Poor'],
                   ['good', 'Good'],
@@ -72,6 +76,7 @@ function OptionsScreen() {
               <Grid.Input attribute="attr_skills" />
               <Grid.Input
                 attribute="attr_key_ability"
+                defaultValue="strength"
                 options={[
                   ['strength', 'Strength'],
                   ['dexterity', 'Dexterity'],
@@ -110,17 +115,17 @@ function OptionsScreen() {
                 <Grid.Input
                   attribute="attr_race_size"
                   options={[
-                    ['fine', 'Fine'],
-                    ['diminutive', 'Diminutive'],
-                    ['tiny', 'Tiny'],
-                    ['small', 'Small'],
-                    ['medium', 'Medium'],
-                    ['large', 'Large'],
-                    ['huge', 'Huge'],
-                    ['gargantuan', 'Gargantuan'],
-                    ['colossal', 'Colossal'],
+                    '',
+                    'Fine',
+                    'Diminutive',
+                    'Tiny',
+                    'Small',
+                    'Medium',
+                    'Large',
+                    'Huge',
+                    'Gargantuan',
+                    'Colossal',
                   ]}
-                  defaultValue="medium"
                   type="select"
                 />
                 <Grid.Input attribute="attr_race_hp" />
