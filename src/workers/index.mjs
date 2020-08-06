@@ -80,6 +80,7 @@ notifier.addListener('show_error', commonFormats.boolean)
 
 /* Options screen */
 notifier.addNestedListener('repeating_classes', {
+  name: commonFormats.string,
   level: commonFormats.integer,
   bab: commonFormats.string,
   hp: commonFormats.integer,
@@ -90,7 +91,28 @@ notifier.addNestedListener('repeating_classes', {
   key_ability: commonFormats.string,
 })
 
+notifier.addListener('class_display', {
+  ...commonFormats.string,
+  calculate: (values) =>
+    Object.values(values.repeating_classes || {})
+      .map((instance) => {
+        if (instance.level == null || instance.level == 0) {
+          return null
+        }
+
+        return `${instance.name} ${instance.level}`
+      })
+      .filter((instance) => instance != null)
+      .join(', '),
+  dependencies: ['repeating_classes:name', 'repeating_classes:level'],
+})
+
+notifier.addListener('race_name', commonFormats.string)
+notifier.addListener('race_type', commonFormats.string)
+notifier.addListener('race_subtypes', commonFormats.string)
 notifier.addListener('race_hp', commonFormats.integer)
+notifier.addListener('race_size', commonFormats.string)
+notifier.addListener('race_speed', commonFormats.integer)
 
 notifier.addListener('homebrew_resolve', commonFormats.boolean)
 

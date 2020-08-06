@@ -25,7 +25,9 @@ function CharacterScreen() {
         </Grid.Header>
 
         <Grid.Row spaced>
-          <Grid.Input align="left" attribute="attr_" disabled />
+          <input name="attr_class_display" type="hidden" />
+
+          <Grid.Input align="left" attribute="attr_class_display" disabled />
           <Grid.Input align="left" attribute="attr_race_name" disabled />
           <Grid.Input align="left" attribute="attr_theme" />
         </Grid.Row>
