@@ -70,6 +70,10 @@
 
 .sheet-character-tab {
   display: none;
+
+  &--options {
+    padding-top: 0.5rem;
+  }
 }
 
 .sheet-navigation-control[value="character"] ~ .sheet-character-tab--character,
