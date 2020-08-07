@@ -56,14 +56,14 @@ Grid.defaultProps = {
   tall: false,
 }
 
-function GridAbbreviation({ abbr, children, name, rollable, rollName }) {
+function GridAbbreviation({ abbr, children, name, notes, rollable, rollName }) {
   if (rollable) {
     return (
       <button
         className="grid-layout__label grid-layout__label--abbreviated"
         type="roll"
         name={name}
-        value={getBasicMacroRoll(rollName || abbr, rollable)}
+        value={getBasicMacroRoll(rollName || abbr, rollable, notes)}
       >
         <div className="grid-layout__label__abbreviation">{abbr}</div>
         {children}
@@ -83,6 +83,7 @@ GridAbbreviation.propTypes = {
   abbr: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   name: PropTypes.string,
+  notes: PropTypes.string,
   rollable: PropTypes.string,
   rollName: PropTypes.string,
 }
@@ -130,8 +131,14 @@ GridHeading.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-function GridFloatButton({ children }) {
-  return <div className="grid-layout__float-button">{children}</div>
+function GridFloatButton({ children, name }) {
+  return (
+    <div
+      className={`grid-layout__float-button grid-layout__float-button--${name}`}
+    >
+      {children}
+    </div>
+  )
 }
 
 GridFloatButton.propTypes = {
@@ -372,7 +379,7 @@ function GridInput({
 
 GridInput.propTypes = {
   align: PropTypes.string,
-  attribute: PropTypes.string.isRequired,
+  attribute: PropTypes.string,
   className: PropTypes.string,
   compact: PropTypes.bool,
   defaultOverlay: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -401,7 +408,7 @@ function GridSpacer() {
 }
 
 GridSpacer.propTypes = {
-  size: PropTypes.string.isRequired,
+  size: PropTypes.string,
 }
 
 Grid.Abbreviation = GridAbbreviation

@@ -305,6 +305,20 @@
     &__input {
       position: relative;
 
+      textarea {
+        background: #ffffff;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        display: block;
+        font: 1.5rem/1.2 'Source Sans Pro';
+        height: 64px;
+        margin: 0;
+        padding: 4px;
+        text-align: center;
+        width: 100%;
+      }
+
       input, select, .sheet-grid-layout__input__field {
         background: #ffffff;
         border: 1px solid #cccccc;
@@ -382,6 +396,7 @@
 
     &__hidden {
       display: none;
+      margin: -1rem 0 1rem;
     }
   }
 }
@@ -390,6 +405,7 @@
   background: none;
   border: none;
   color: #245680;
+  cursor: pointer;
   font: 1.5rem/1 'Pictos';
   height: 1.5rem;
   margin: 0;
@@ -407,23 +423,49 @@
 }
 
 input[name=attr_skills_acrobatics_show_notes][value="1"] ~ .sheet-grid-layout__hidden--acrobatics,
+input[name=attr_skills_acrobatics_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_acrobatics_show_notes,
 input[name=attr_skills_athletics_show_notes][value="1"] ~ .sheet-grid-layout__hidden--athletics,
+input[name=attr_skills_athletics_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_athletics_show_notes,
 input[name=attr_skills_bluff_show_notes][value="1"] ~ .sheet-grid-layout__hidden--bluff,
+input[name=attr_skills_bluff_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_bluff_show_notes,
 input[name=attr_skills_computers_show_notes][value="1"] ~ .sheet-grid-layout__hidden--computers,
+input[name=attr_skills_computers_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_computers_show_notes,
 input[name=attr_skills_culture_show_notes][value="1"] ~ .sheet-grid-layout__hidden--culture,
+input[name=attr_skills_culture_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_culture_show_notes,
 input[name=attr_skills_diplomacy_show_notes][value="1"] ~ .sheet-grid-layout__hidden--diplomacy,
+input[name=attr_skills_diplomacy_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_diplomacy_show_notes,
 input[name=attr_skills_disguise_show_notes][value="1"] ~ .sheet-grid-layout__hidden--disguise,
+input[name=attr_skills_disguise_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_disguise_show_notes,
 input[name=attr_skills_engineering_show_notes][value="1"] ~ .sheet-grid-layout__hidden--engineering,
+input[name=attr_skills_engineering_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_engineering_show_notes,
 input[name=attr_skills_intimidate_show_notes][value="1"] ~ .sheet-grid-layout__hidden--intimidate,
+input[name=attr_skills_intimidate_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_intimidate_show_notes,
 input[name=attr_skills_life_science_show_notes][value="1"] ~ .sheet-grid-layout__hidden--life_science,
+input[name=attr_skills_life_science_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_life_science_show_notes,
 input[name=attr_skills_medicine_show_notes][value="1"] ~ .sheet-grid-layout__hidden--medicine,
+input[name=attr_skills_medicine_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_medicine_show_notes,
 input[name=attr_skills_mysticism_show_notes][value="1"] ~ .sheet-grid-layout__hidden--mysticism,
+input[name=attr_skills_mysticism_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_mysticism_show_notes,
 input[name=attr_skills_perception_show_notes][value="1"] ~ .sheet-grid-layout__hidden--perception,
+input[name=attr_skills_perception_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_perception_show_notes,
 input[name=attr_skills_physical_science_show_notes][value="1"] ~ .sheet-grid-layout__hidden--physical_science,
+input[name=attr_skills_physical_science_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_physical_science_show_notes,
 input[name=attr_skills_piloting_show_notes][value="1"] ~ .sheet-grid-layout__hidden--piloting,
+input[name=attr_skills_piloting_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_piloting_show_notes,
 input[name=attr_skills_sense_motive_show_notes][value="1"] ~ .sheet-grid-layout__hidden--sense_motive,
+input[name=attr_skills_sense_motive_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_sense_motive_show_notes,
 input[name=attr_skills_sleight_of_hand_show_notes][value="1"] ~ .sheet-grid-layout__hidden--sleight_of_hand,
+input[name=attr_skills_sleight_of_hand_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_sleight_of_hand_show_notes,
 input[name=attr_skills_stealth_show_notes][value="1"] ~ .sheet-grid-layout__hidden--stealth,
-input[name=attr_skills_survival_show_notes][value="1"] ~ .sheet-grid-layout__hidden--survival {
+input[name=attr_skills_stealth_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_stealth_show_notes,
+input[name=attr_skills_survival_show_notes][value="1"] ~ .sheet-grid-layout__hidden--survival,
+input[name=attr_skills_survival_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--attr_skills_survival_show_notes,
+
+input[name=attr_fortitude_show_notes][value="1"] ~ .sheet-grid-layout__hidden--fortitude,
+input[name=attr_fortitude_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--fortitude,
+input[name=attr_reflex_show_notes][value="1"] ~ .sheet-grid-layout__hidden--reflex,
+input[name=attr_reflex_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--reflex,
+input[name=attr_will_show_notes][value="1"] ~ .sheet-grid-layout__hidden--will,
+input[name=attr_will_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--will {
   display: block;
 }

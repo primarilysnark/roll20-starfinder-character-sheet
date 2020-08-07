@@ -256,10 +256,13 @@ function CharacterScreen() {
                         attribute={`attr_skills_${attributeSkillName}_misc`}
                       />
 
-                      <Grid.FloatButton>
+                      <Grid.FloatButton
+                        name={`attr_skills_${attributeSkillName}_show_notes`}
+                      >
                         <IconButton
                           attribute={`attr_skills_${attributeSkillName}_show_notes`}
-                          icon="y"
+                          icon="W"
+                          title="Show notes field"
                         />
                       </Grid.FloatButton>
                     </Grid.Row>
@@ -268,6 +271,7 @@ function CharacterScreen() {
                       className={`grid-layout__hidden grid-layout__hidden--${attributeSkillName}`}
                     >
                       <Grid.FullWidth>
+                        <Grid.Label>{skill.name} Notes</Grid.Label>
                         <Grid.Input
                           align="left"
                           attribute={`attr_skills_${attributeSkillName}_notes`}
@@ -433,6 +437,7 @@ function CharacterScreen() {
                 <Grid.Label size="1fr">Misc</Grid.Label>
               </Grid.Header>
 
+              <input name="attr_fortitude_show_notes" type="hidden" />
               <Grid.Row>
                 <input
                   name="attr_fortitude_save_base"
@@ -443,6 +448,7 @@ function CharacterScreen() {
                   abbr="Fortitude"
                   rollable="1d20 + @{fortitude_save_mod}"
                   name="roll_fortitude_save"
+                  notes="@{fortitude_notes}"
                 >
                   Constitution
                 </Grid.Abbreviation>
@@ -453,14 +459,35 @@ function CharacterScreen() {
                 <Grid.Input attribute="attr_constitution_mod" disabled />
                 <Grid.Label>+</Grid.Label>
                 <Grid.Input attribute="attr_fortitude_save_misc" />
+
+                <Grid.FloatButton name="fortitude">
+                  <IconButton
+                    attribute="attr_fortitude_show_notes"
+                    icon="W"
+                    title="Show notes field"
+                  />
+                </Grid.FloatButton>
               </Grid.Row>
 
+              <div className="grid-layout__hidden grid-layout__hidden--fortitude">
+                <Grid.FullWidth>
+                  <Grid.Label>Notes</Grid.Label>
+                  <Grid.Input
+                    align="left"
+                    attribute="attr_fortitude_notes"
+                    type="textarea"
+                  />
+                </Grid.FullWidth>
+              </div>
+
+              <input name="attr_reflex_show_notes" type="hidden" />
               <Grid.Row>
                 <input name="attr_reflex_save_base" type="hidden" value="0" />
                 <Grid.Abbreviation
                   abbr="Reflex"
                   rollable="1d20 + @{reflex_save_mod}"
                   name="roll_reflex_save"
+                  notes="@{reflex_notes}"
                 >
                   Dexterity
                 </Grid.Abbreviation>
@@ -471,14 +498,35 @@ function CharacterScreen() {
                 <Grid.Input attribute="attr_dexterity_mod" disabled />
                 <Grid.Label>+</Grid.Label>
                 <Grid.Input attribute="attr_reflex_save_misc" />
+
+                <Grid.FloatButton name="reflex">
+                  <IconButton
+                    attribute="attr_reflex_show_notes"
+                    icon="W"
+                    title="Show notes field"
+                  />
+                </Grid.FloatButton>
               </Grid.Row>
 
+              <div className="grid-layout__hidden grid-layout__hidden--reflex">
+                <Grid.FullWidth>
+                  <Grid.Label>Notes</Grid.Label>
+                  <Grid.Input
+                    align="left"
+                    attribute="attr_reflex_notes"
+                    type="textarea"
+                  />
+                </Grid.FullWidth>
+              </div>
+
+              <input name="attr_will_show_notes" type="hidden" />
               <Grid.Row>
                 <input name="attr_will_save_base" type="hidden" value="0" />
                 <Grid.Abbreviation
                   abbr="Will"
                   rollable="1d20 + @{will_save_mod}"
                   name="roll_will_save"
+                  notes="@{will_notes}"
                 >
                   Wisdom
                 </Grid.Abbreviation>
@@ -489,7 +537,26 @@ function CharacterScreen() {
                 <Grid.Input attribute="attr_wisdom_mod" disabled />
                 <Grid.Label>+</Grid.Label>
                 <Grid.Input attribute="attr_will_save_misc" />
+
+                <Grid.FloatButton name="will">
+                  <IconButton
+                    attribute="attr_will_show_notes"
+                    icon="W"
+                    title="Show notes field"
+                  />
+                </Grid.FloatButton>
               </Grid.Row>
+
+              <div className="grid-layout__hidden grid-layout__hidden--will">
+                <Grid.FullWidth>
+                  <Grid.Label>Notes</Grid.Label>
+                  <Grid.Input
+                    align="left"
+                    attribute="attr_will_notes"
+                    type="textarea"
+                  />
+                </Grid.FullWidth>
+              </div>
             </Grid>
           </SectionBlock>
 
