@@ -71,8 +71,8 @@
 .sheet-character-tab {
   display: none;
 
-  &--options {
-    padding-top: 0.5rem;
+  &--equipment, &--options {
+    padding-top: 0.75rem;
   }
 }
 

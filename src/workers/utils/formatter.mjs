@@ -22,6 +22,43 @@ export const formatBoolean = (value) => {
   return ''
 }
 
+export const parseBulk = (value) => {
+  if (value == null || value == '') {
+    return null
+  }
+
+  if (typeof value === 'number') {
+    return value
+  }
+
+  if (typeof value !== 'string') {
+    return null
+  }
+
+  if (value.toUpperCase() === 'L') {
+    return 1 / 10
+  }
+
+  const parsedInt = parseInt(value, 10)
+  if (isNaN(parsedInt)) {
+    throw new Error('Provided bulk value must be an integer number or L.')
+  }
+
+  return parsedInt
+}
+
+export const formatBulk = (value) => {
+  if (typeof value === 'number') {
+    return value
+  }
+
+  if (value === 1 / 10) {
+    return 'L'
+  }
+
+  return value.toString()
+}
+
 export const parseModifier = (value) => {
   if (value == null || value == '') {
     return null

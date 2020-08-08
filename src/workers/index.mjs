@@ -34,6 +34,10 @@ const commonFormats = {
     format: formatters.formatBoolean,
     parse: formatters.parseBoolean,
   },
+  bulk: {
+    format: formatters.formatBulk,
+    parse: formatters.parseBulk,
+  },
   integer: {
     format: formatters.formatInteger,
     parse: formatters.parseInteger,
@@ -60,6 +64,10 @@ const commonCalculators = {
     dependencies
       .map((dependency) => values[dependency])
       .reduce((sum, value) => sum + value, 0),
+  sumWithBase: (base) => (values, dependencies) =>
+    dependencies
+      .map((dependency) => values[dependency])
+      .reduce((sum, value) => sum + value, base),
 }
 
 Navigator.addErrorListeners()
@@ -115,9 +123,26 @@ notifier.addListener('race_size', commonFormats.string)
 notifier.addListener('race_speed', commonFormats.integer)
 
 notifier.addListener('homebrew_resolve', commonFormats.boolean)
+notifier.addListener('homebrew_combat_maneuvers', commonFormats.boolean)
 
 notifier.addListener('rolls_whisper', commonFormats.string)
 notifier.addListener('rolls_show_name', commonFormats.boolean)
+
+/* Equipment screen */
+notifier.addNestedListener('repeating_armors', {
+  armor_equipped: commonFormats.boolean,
+  armor_name: commonFormats.string,
+  armor_type: commonFormats.string,
+  armor_eac: commonFormats.integer,
+  armor_kac: commonFormats.integer,
+  armor_max_dex: commonFormats.integer,
+  armor_acp: commonFormats.integer,
+  armor_speed: commonFormats.integer,
+  armor_upgrade_slots: commonFormats.integer,
+  armor_bulk: commonFormats.bulk,
+  armor_level: commonFormats.integer,
+  armor_price: commonFormats.integer,
+})
 
 /* Character screen */
 ;[
@@ -152,6 +177,79 @@ notifier.addListener('initiative_bonus', {
   ...commonFormats.integer,
   calculate: commonCalculators.sum,
   dependencies: ['dexterity_mod', 'initiative_misc'],
+})
+
+notifier.addListener('eac_misc', commonFormats.integer)
+notifier.addListener('eac_armor_bonus', {
+  ...commonFormats.integer,
+  calculate: (values) =>
+    Object.values(values.repeating_armors || {})
+      .map((instance) => {
+        if (!instance.armor_equipped) {
+          return 0
+        }
+
+        return instance.armor_eac
+      })
+      .reduce((total, armorEac) => total + armorEac, 0),
+  dependencies: [
+    'repeating_armors:armor_equipped',
+    'repeating_armors:armor_eac',
+  ],
+})
+notifier.addListener('kac_misc', commonFormats.integer)
+notifier.addListener('kac_armor_bonus', {
+  ...commonFormats.integer,
+  calculate: (values) =>
+    Object.values(values.repeating_armors || {})
+      .map((instance) => {
+        if (!instance.armor_equipped) {
+          return 0
+        }
+
+        return instance.armor_kac
+      })
+      .reduce((total, armorKac) => total + armorKac, 0),
+  dependencies: [
+    'repeating_armors:armor_equipped',
+    'repeating_armors:armor_kac',
+  ],
+})
+notifier.addListener('dex_armor_bonus', {
+  ...commonFormats.integer,
+  calculate: (values) =>
+    Math.min(
+      values.dexterity_mod,
+      ...Object.values(values.repeating_armors || {})
+        .filter((instance) => instance.armor_equipped)
+        .map((instance) => instance.armor_max_dex)
+    ),
+  dependencies: [
+    'repeating_armors:armor_equipped',
+    'repeating_armors:armor_max_dex',
+    'dexterity_mod',
+  ],
+})
+notifier.addListener('eac_armor_total', {
+  ...commonFormats.integer,
+  calculate: commonCalculators.sumWithBase(10),
+  dependencies: ['dex_armor_bonus', 'eac_armor_bonus', 'eac_misc'],
+})
+notifier.addListener('kac_armor_total', {
+  ...commonFormats.integer,
+  calculate: commonCalculators.sumWithBase(10),
+  dependencies: ['dex_armor_bonus', 'kac_armor_bonus', 'kac_misc'],
+})
+notifier.addListener('combat_maneuver_base', {
+  ...commonFormats.integer,
+  defaultValue: 8,
+  calculate: (values) => (values.homebrew_combat_maneuvers ? 4 : 8),
+  dependencies: ['homebrew_combat_maneuvers'],
+})
+notifier.addListener('combat_maneuver_total', {
+  ...commonFormats.integer,
+  calculate: commonCalculators.sum,
+  dependencies: ['combat_maneuver_base', 'kac_armor_total'],
 })
 
 notifier.addListener('base_attack_bonus', {

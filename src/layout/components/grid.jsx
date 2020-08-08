@@ -9,7 +9,9 @@ function Grid({ children, compact, tall }) {
   const header = childArray.filter((child) => child.type === GridHeader)[0]
 
   let headerChildren = React.Children.toArray(header.props.children)
-  const columnSizes = headerChildren.map((child) => child.props.size)
+  const columnSizes = headerChildren.map((child) =>
+    child.props.size.replace(/\./g, '_')
+  )
   const headerIsEmpty = headerChildren.every(
     (child) => child.type === GridSpacer
   )

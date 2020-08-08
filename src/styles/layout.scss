@@ -131,6 +131,12 @@
       }
     }
 
+    &--16px-5fr-2_75fr-1fr-1fr-2_5fr-2fr-1_25fr-2fr-1fr-1fr-2fr {
+      .sheet-grid-layout__row {
+        grid-template-columns: 16px 5fr 2.75fr 1fr 1fr 2.5fr 2fr 1.25fr 2fr 1fr 1fr 2fr;
+      }
+    }
+
     &--16px-140px-1fr-6px-1fr-6px-1fr-6px-1fr-6px-1fr {
       .sheet-grid-layout__row {
         grid-template-columns: 16px 140px 1fr 6px 1fr 6px 1fr 6px 1fr 6px 1fr;

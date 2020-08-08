@@ -322,7 +322,7 @@ function OptionsScreen() {
               <Grid.Heading>Combat</Grid.Heading>
               <Grid.Row>
                 <Grid.Input
-                  attribute="attr_homebrew_kac"
+                  attribute="attr_homebrew_combat_maneuvers"
                   compact
                   type="checkbox"
                 />

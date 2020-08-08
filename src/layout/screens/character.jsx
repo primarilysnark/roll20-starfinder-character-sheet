@@ -369,29 +369,29 @@ function CharacterScreen() {
               <Grid.Row>
                 <Grid.BlockLabel>EAC</Grid.BlockLabel>
                 <Grid.Label>Energy Armor Class</Grid.Label>
-                <Grid.Input />
+                <Grid.Input attribute="attr_eac_armor_total" disabled />
                 <Grid.Label>=</Grid.Label>
                 <Grid.Label align="center">10</Grid.Label>
                 <Grid.Label>+</Grid.Label>
-                <Grid.Input disabled />
+                <Grid.Input attribute="attr_eac_armor_bonus" disabled />
                 <Grid.Label>+</Grid.Label>
-                <Grid.Input disabled />
+                <Grid.Input attribute="attr_dex_armor_bonus" disabled />
                 <Grid.Label>+</Grid.Label>
-                <Grid.Input />
+                <Grid.Input attribute="attr_eac_misc" />
               </Grid.Row>
 
               <Grid.Row>
                 <Grid.BlockLabel>KAC</Grid.BlockLabel>
                 <Grid.Label>Kinetic Armor Class</Grid.Label>
-                <Grid.Input />
+                <Grid.Input attribute="attr_kac_armor_total" disabled />
                 <Grid.Label>=</Grid.Label>
                 <Grid.Label align="center">10</Grid.Label>
                 <Grid.Label>+</Grid.Label>
-                <Grid.Input disabled />
+                <Grid.Input attribute="attr_kac_armor_bonus" disabled />
                 <Grid.Label>+</Grid.Label>
-                <Grid.Input disabled />
+                <Grid.Input attribute="attr_dex_armor_bonus" disabled />
                 <Grid.Label>+</Grid.Label>
-                <Grid.Input />
+                <Grid.Input attribute="attr_kac_misc" />
               </Grid.Row>
 
               <Grid.Separator />
@@ -413,9 +413,16 @@ function CharacterScreen() {
 
               <Grid.Row>
                 <Grid.Label>AC vs. Combat Maneuvers</Grid.Label>
-                <Grid.Input />
+                <Grid.Input attribute="attr_combat_maneuver_total" disabled />
                 <Grid.Label>=</Grid.Label>
-                <Grid.Label align="center">8</Grid.Label>
+                <Grid.Label align="center">
+                  <input
+                    name="attr_combat_maneuver_base"
+                    type="hidden"
+                    value="8"
+                  />
+                  <span name="attr_combat_maneuver_base" />
+                </Grid.Label>
                 <Grid.Label>+</Grid.Label>
                 <Grid.Input defaultValue="KAC" disabled />
               </Grid.Row>
