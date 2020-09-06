@@ -197,6 +197,7 @@ function GridFloatButton({ children, name }) {
 
 GridFloatButton.propTypes = {
   children: PropTypes.node.isRequired,
+  name: PropTypes.string.isRequired,
 }
 
 function GridFullWidth({ children }) {

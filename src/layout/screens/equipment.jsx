@@ -136,9 +136,18 @@ function EquipmentScreen() {
                       </Grid.Header>
 
                       <Grid.Row>
-                        <Grid.Input attribute="attr_weapon_damage" placeholder="e.g. 1d6" />
-                        <Grid.Input attribute="attr_weapon_damage_type" placeholder="e.g. fire" />
-                        <Grid.Input attribute="attr_weapon_special" placeholder="e.g. unwieldy" />
+                        <Grid.Input
+                          attribute="attr_weapon_damage"
+                          placeholder="e.g. 1d6"
+                        />
+                        <Grid.Input
+                          attribute="attr_weapon_damage_type"
+                          placeholder="e.g. fire"
+                        />
+                        <Grid.Input
+                          attribute="attr_weapon_special"
+                          placeholder="e.g. unwieldy"
+                        />
                       </Grid.Row>
                     </Grid>
 
@@ -151,8 +160,14 @@ function EquipmentScreen() {
                       </Grid.Header>
 
                       <Grid.Row>
-                        <Grid.Input attribute="attr_weapon_effect" placeholder="e.g. first arc [[1d6]]" />
-                        <Grid.Input attribute="attr_weapon_critical_effect" placeholder="e.g. bleed [[4d6]]" />
+                        <Grid.Input
+                          attribute="attr_weapon_effect"
+                          placeholder="e.g. first arc [[1d6]]"
+                        />
+                        <Grid.Input
+                          attribute="attr_weapon_critical_effect"
+                          placeholder="e.g. bleed [[4d6]]"
+                        />
                         <Grid.Input attribute="attr_weapon_usage" />
                         <Grid.Input attribute="attr_weapon_capacity" />
                       </Grid.Row>
@@ -167,7 +182,7 @@ function EquipmentScreen() {
                     <Grid.Input disabled defaultValue="+5" />
                     <Grid.Input disabled defaultValue="1d8+3 fire" />
                     <Grid.Input disabled defaultValue="19 / 20" />
-                    <Grid.FloatButton>
+                    <Grid.FloatButton name="weapon_edit_mode">
                       <IconButton
                         attribute={`attr_weapon_edit_mode`}
                         icon="y"
