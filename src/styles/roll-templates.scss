@@ -1,16 +1,9 @@
-$bahama-blue: #245680;
-$nepal-blue: #94aac0;
-$true-white: #ffffff;
-$jaffa-orange: #f38142;
-$deep-sky-blue: #00b9f1;
+@import './colors.scss';
 
-$primary-background: $bahama-blue;
-$primary-text: $true-white;
-$secondary-background: $nepal-blue;
-
-.sheet-rolltemplate-base {
+.sheet-rolltemplate-base, .sheet-rolltemplate-attack {
   .sheet-template {
-    background: $true-white;
+    background-color: $primary-background;
+    background-image: url('https://raw.githubusercontent.com/primarilysnark/roll20-starfinder-character-sheet/master/assets/header-background.svg');
     border: 1px solid $primary-background;
 
     &__name {
@@ -23,23 +16,71 @@ $secondary-background: $nepal-blue;
     }
 
     &__roll {
-      align-items: center;
-      background: $true-white;
+      align-items: stretch;
       display: flex;
+      justify-content: stretch;
+    }
+
+    &__row {
+      align-items: center;
+      background: transparentize($color: $true-white, $amount: 0.55);
+      border-top: 1px solid $true-white;
+      border-bottom: 1px solid transparent;
+      display: flex;
+
+      &:last-of-type {
+        border-bottom: none;
+      }
+
+      &:nth-of-type(2n) .sheet-template__field {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 3rem 100%);
+      }
+
+      &:only-of-type .sheet-template__field {
+        clip-path: polygon(3rem 0, 100% 0, 100% 100%, 0 100%);
+      }
     }
 
     &__header {
-      background-color: $primary-background;
-      background-image: url('https://raw.githubusercontent.com/primarilysnark/roll20-starfinder-character-sheet/master/assets/header-background.svg');
-      clip-path: polygon(0 0, 100% 0, calc(100% - 3rem) 100%, 0% 100%);
       color: $true-white;
       flex: 1;
       font: bold 2rem/1 'Bebas Neue';
       padding: 0.75rem 1.5rem;
     }
 
+    &__label {
+      box-sizing: border-box;
+      color: $true-white;
+      font: bold 1.75rem/1 'Bebas Neue';
+      padding: 0.75rem 1.5rem;
+      width: 10rem;
+    }
+
+    &__field {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      flex: 1;
+      height: 35px;
+      justify-content: flex-end;
+    }
+
     &__result {
-      margin: 0 1.5rem 0 2rem;
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      width: 80px;
+    }
+
+    &__result, &__field {
+      background: $true-white;
+      box-sizing: border-box;
+      clip-path: polygon(3rem 0, 100% 0, 100% 100%, 0% 100%);
+      font: 1.5rem/1 'Source Sans Pro';
+      padding: 0.7rem 1.5rem 0.7rem 0;
+      text-align: right;
+      white-space: break-spaces;
 
       .inlinerollresult {
         background: none;
@@ -61,8 +102,9 @@ $secondary-background: $nepal-blue;
       }
 
       &__critical {
-        display: inline;
-        font: 1.5rem/2rem 'Pictos';
+        display: inline-block;
+        font: 1.5rem/1 'Pictos';
+        margin-top: 4px;
         vertical-align: middle;
 
         &--success {

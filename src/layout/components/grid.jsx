@@ -1,9 +1,10 @@
 const React = require('react')
 const PropTypes = require('prop-types')
 
+const Icon = require('./icon')
 const { getBasicMacroRoll } = require('../utils/rolls')
 
-function Grid({ children, compact, tall }) {
+function Grid({ children, compact, inverse, tall }) {
   const childArray = React.Children.toArray(children)
   const rows = childArray.filter((child) => child.type !== GridHeader)
   const header = childArray.filter((child) => child.type === GridHeader)[0]
@@ -33,7 +34,7 @@ function Grid({ children, compact, tall }) {
         compact ? ' grid-layout--compact' : ''
       }`}
     >
-      {headerIsEmpty ? null : (
+      {headerIsEmpty || inverse ? null : (
         <div
           className={`grid-layout__row grid-layout__row--header${
             tall ? ' grid-layout__row--header-tall' : ''
@@ -43,6 +44,16 @@ function Grid({ children, compact, tall }) {
         </div>
       )}
       {rows}
+
+      {headerIsEmpty || !inverse ? null : (
+        <div
+          className={`grid-layout__row grid-layout__row--header${
+            tall ? ' grid-layout__row--header-tall' : ''
+          }`}
+        >
+          {headerChildren}
+        </div>
+      )}
     </div>
   )
 }
@@ -50,11 +61,13 @@ function Grid({ children, compact, tall }) {
 Grid.propTypes = {
   children: PropTypes.node.isRequired,
   compact: PropTypes.bool,
+  inverse: PropTypes.bool,
   tall: PropTypes.bool,
 }
 
 Grid.defaultProps = {
   compact: false,
+  inverse: false,
   tall: false,
 }
 
@@ -90,11 +103,13 @@ GridAbbreviation.propTypes = {
   rollName: PropTypes.string,
 }
 
-function GridBlockLabel({ children, rollable, rollName }) {
+function GridBlockLabel({ children, floating, rollable, rollName }) {
   if (rollable) {
     return (
       <button
-        className="grid-layout__block-label"
+        className={`grid-layout__block-label${
+          floating ? ' grid-layout__block-label--floating' : ''
+        }`}
         type="roll"
         name={rollName}
         value={getBasicMacroRoll(rollName, rollable)}
@@ -104,13 +119,50 @@ function GridBlockLabel({ children, rollable, rollName }) {
     )
   }
 
-  return <div className="grid-layout__block-label">{children}</div>
+  return (
+    <div
+      className={`grid-layout__block-label${
+        floating ? ' grid-layout__block-label--floating' : ''
+      }`}
+    >
+      {children}
+    </div>
+  )
 }
 
 GridBlockLabel.propTypes = {
   children: PropTypes.node.isRequired,
+  floating: PropTypes.bool,
   rollable: PropTypes.string,
   rollName: PropTypes.string,
+}
+
+GridBlockLabel.defaultProps = {
+  floating: false,
+}
+
+function GridToggle({ children, floating, isActive }) {
+  return (
+    <div
+      className={`grid-layout__block-label grid-layout__block-label--toggle${
+        isActive ? ' grid-layout__block-label--toggle-active' : ''
+      }${floating ? ' grid-layout__block-label--floating' : ''}`}
+    >
+      {isActive ? <Icon.Check /> : null}
+      {children}
+    </div>
+  )
+}
+
+GridToggle.propTypes = {
+  children: PropTypes.node.isRequired,
+  floating: PropTypes.bool,
+  isActive: PropTypes.bool,
+}
+
+GridToggle.defaultProps = {
+  floating: false,
+  isActive: false,
 }
 
 function GridHeader({ children }) {
@@ -149,7 +201,9 @@ GridFloatButton.propTypes = {
 
 function GridFullWidth({ children }) {
   return (
-    <div className="grid-layout__row grid-layout__row--heading">{children}</div>
+    <div className="grid-layout__row grid-layout__row--full-width">
+      {children}
+    </div>
   )
 }
 
@@ -246,11 +300,12 @@ function GridInput({
   attribute,
   className,
   compact,
+  defaultOverlay,
+  defaultValue,
   disabled,
   options,
   overlay,
-  defaultOverlay,
-  defaultValue,
+  placeholder,
   type,
 }) {
   const style = {}
@@ -316,6 +371,7 @@ function GridInput({
           <textarea
             defaultValue={defaultValue}
             name={attribute}
+            placeholder={placeholder}
             style={style}
             type="text"
           />
@@ -371,6 +427,7 @@ function GridInput({
           <input
             defaultValue={defaultValue}
             name={attribute}
+            placeholder={placeholder}
             style={style}
             type="text"
           />
@@ -392,6 +449,7 @@ GridInput.propTypes = {
     PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
   ]),
   overlay: PropTypes.string,
+  placeholder: PropTypes.string,
   type: PropTypes.string,
 }
 
@@ -424,5 +482,6 @@ Grid.Label = GridLabel
 Grid.Row = GridRow
 Grid.Separator = GridSeparator
 Grid.Spacer = GridSpacer
+Grid.Toggle = GridToggle
 
 module.exports = Grid

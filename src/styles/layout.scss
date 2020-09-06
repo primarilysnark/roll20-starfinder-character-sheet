@@ -21,12 +21,14 @@
     }
   }
 
-  .itemcontrol + .sheet-grid-layout__row:last-of-type {
-    margin-bottom: 1rem;
+  .itemcontrol + .sheet-grid-layout__row:last-of-type,
+  .sheet-grid-layout__repeating-edit .sheet-grid-layout__row:last-of-type {
+    margin-bottom: 1rem !important;
   }
 
   .sheet-grid-layout {
-    display: block;
+    display: flex;
+    flex-direction: column;
 
     &__row {
       display: grid;
@@ -38,7 +40,7 @@
         display: block;
       }
 
-      &:last-of-type {
+      &:not(.sheet-grid-layout__row--header):last-of-type {
         margin-bottom: 0;
       }
 
@@ -48,6 +50,7 @@
 
       &--header {
         margin-bottom: 0.5rem;
+        order: -1;
 
         .sheet-grid-layout__label {
           font-size: 1rem;
@@ -64,7 +67,7 @@
         }
       }
 
-      &--heading {
+      &--heading, &--full-width {
         grid-template-columns: 1fr !important;
         margin-bottom: 0.5rem;
       }
@@ -125,6 +128,30 @@
       }
     }
 
+    &--80px-8fr-2fr-4fr-3fr {
+      .sheet-grid-layout__row {
+        grid-template-columns: 80px 8fr 2fr 4fr 3fr;
+      }
+    }
+
+    &--10fr-11fr-4fr-4px-4fr {
+      .sheet-grid-layout__row {
+        grid-template-columns: 10fr 11fr 4fr 4px 4fr;
+      }
+    }
+
+    &--2fr-1fr-4fr {
+      .sheet-grid-layout__row {
+        grid-template-columns: 2fr 1fr 4fr;
+      }
+    }
+
+    &--2fr-2fr-1fr-1fr {
+      .sheet-grid-layout__row {
+        grid-template-columns: 2fr 2fr 1fr 1fr;
+      }
+    }
+
     &--4fr-4fr-4fr-5fr-2fr-3fr {
       .sheet-grid-layout__row {
         grid-template-columns: repeat(3, 4fr) 5fr 2fr 3fr;
@@ -179,6 +206,29 @@
       }
     }
 
+    &__repeating {
+      padding: 0 0 8px;
+
+      & + .sheet-grid-layout__hidden {
+        display: block;
+        overflow: hidden;
+        height: 0;
+        transition: height 0.2s;
+
+        &:hover {
+          height: 50px;
+          margin: -1rem 0 0;
+          padding: 1rem 0;
+        }
+      }
+
+      &:hover + .sheet-grid-layout__hidden {
+        height: 50px;
+        margin: -1rem 0 0;
+        padding: 1rem 0;
+      }
+    }
+
     &__float-button {
       background: #ffffff;
       border: 2px solid #3893cd;
@@ -206,9 +256,24 @@
       background: #000000;
       border-radius: 4px;
       color: #ffffff;
+      display: inline-block;
       font: bold 1.5rem/3rem 'Source Sans Pro';
       text-align: center;
       text-transform: uppercase;
+
+      &--toggle {
+        background: #94aac0;
+        float: right;
+
+        &-active {
+          background: #245680;
+        }
+      }
+
+      &--floating {
+        margin: 0 4px 0 0;
+        padding: 0 8px;
+      }
 
       &--compact {
         line-height: 2rem;

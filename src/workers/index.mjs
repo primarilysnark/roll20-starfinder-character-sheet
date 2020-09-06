@@ -609,4 +609,29 @@ skills.forEach((skill) => {
   })
 })
 
+/* Multiple dependency attributes */
+notifier.addListener('encumbrance_carried', {
+  ...commonFormats.bulk,
+  autocalculate: true,
+  defaultValue: 0,
+  dependencies: ['repeating_armors:armor_bulk'],
+  calculate: commonCalculators.sum,
+})
+
+notifier.addListener('encumbrance_encumbered', {
+  ...commonFormats.bulk,
+  autocalculate: true,
+  defaultValue: 5,
+  dependencies: ['strength_adjusted'],
+  calculate: (values) => Math.floor(values.strength_adjusted / 2),
+})
+
+notifier.addListener('encumbrance_overburden', {
+  ...commonFormats.bulk,
+  autocalculate: true,
+  defaultValue: 10,
+  dependencies: ['strength_adjusted'],
+  calculate: (values) => values.strength_adjusted,
+})
+
 notifier.start()
