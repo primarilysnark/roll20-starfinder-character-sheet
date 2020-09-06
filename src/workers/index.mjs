@@ -63,10 +63,12 @@ const commonCalculators = {
   sum: (values, dependencies) =>
     dependencies
       .map((dependency) => values[dependency])
+      .flat()
       .reduce((sum, value) => sum + value, 0),
   sumWithBase: (base) => (values, dependencies) =>
     dependencies
       .map((dependency) => values[dependency])
+      .flat()
       .reduce((sum, value) => sum + value, base),
 }
 
@@ -142,6 +144,41 @@ notifier.addNestedListener('repeating_armors', {
   armor_bulk: commonFormats.bulk,
   armor_level: commonFormats.integer,
   armor_price: commonFormats.integer,
+})
+
+notifier.addNestedListener('repeating_weapons', {
+  weapon_attack_type: commonFormats.string,
+  weapon_attack_mod: {
+    ...commonFormats.integer,
+    calculate: (values, _dependencies, sectionID) => {
+      switch (values.repeating_weapons[sectionID].weapon_attack_type) {
+        case 'Advanced Melee':
+        case 'Basic Melee':
+        case 'Entropic Strike (STR)':
+        case 'Operative (STR)':
+        case 'Solarian Weapon (STR)':
+          return values.melee_attack_mod
+
+        case 'Grenade':
+          return values.thrown_attack_mod
+
+        case 'Heavy Weapon':
+        case 'Longarm':
+        case 'Small Arm':
+        case 'Sniper':
+          return values.ranged_attack_mod
+
+        default:
+          return ''
+      }
+    },
+    dependencies: [
+      'repeating_weapons:$:weapon_attack_type',
+      'melee_attack_mod',
+      'ranged_attack_mod',
+      'thrown_attack_mod',
+    ],
+  },
 })
 
 /* Character screen */

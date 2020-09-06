@@ -48,15 +48,15 @@ export const parseBulk = (value) => {
 }
 
 export const formatBulk = (value) => {
-  if (typeof value === 'number') {
-    return value
+  if (value === 0) {
+    return value.toString()
   }
 
-  if (value === 1 / 10) {
+  if (value < 1) {
     return 'L'
   }
 
-  return value.toString()
+  return Math.floor(value).toString()
 }
 
 export const parseModifier = (value) => {

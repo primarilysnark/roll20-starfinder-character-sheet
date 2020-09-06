@@ -18,7 +18,9 @@ export class ChangeNotifier {
 
   _getAttributesDependingOnAttribute(attribute) {
     return [...this.listeners.values()].filter((possibleDependency) =>
-      possibleDependency.dependencies.includes(attribute.name)
+      possibleDependency.dependencies
+        .map((dependency) => dependency.replace(':$:', ':'))
+        .includes(attribute.name)
     )
   }
 
@@ -67,6 +69,16 @@ export class ChangeNotifier {
       attributesToUpdate
         .map((dependencyAttribute) => dependencyAttribute.dependencies)
         .reduce((acc, val) => acc.concat(val), [])
+        .map((dependency) => {
+          if (attributeNameProperties.repeating) {
+            return dependency.replace(
+              ':$:',
+              `:${attributeNameProperties.repeating.sectionID}:`
+            )
+          }
+
+          return dependency
+        })
     )
 
     roll20.getAttributes(
@@ -76,19 +88,72 @@ export class ChangeNotifier {
 
         const updatedAttributes = attributesToUpdate
           .map((attributeToUpdate) => {
-            let updatedValue = attributeToUpdate.calculate(
-              currentDependencyValues,
-              attributeToUpdate.dependencies
-            )
+            this._log('[change event] Calculating', attributeToUpdate.name)
 
-            if (attributeToUpdate.format) {
-              updatedValue = attributeToUpdate.format(updatedValue)
+            if (
+              attributeToUpdate.repeating &&
+              attributeNameProperties.repeating != null
+            ) {
+              let updatedValue = attributeToUpdate.calculate(
+                currentDependencyValues,
+                attributeToUpdate.dependencies,
+                attributeNameProperties.repeating.sectionID
+              )
+
+              if (attributeToUpdate.format) {
+                updatedValue = attributeToUpdate.format(updatedValue)
+              }
+
+              return {
+                key: attributeToUpdate.name.replace(
+                  ':',
+                  `_${attributeNameProperties.repeating.sectionID}_`
+                ),
+                value: updatedValue,
+              }
+            } else if (attributeToUpdate.repeating) {
+              const [repeatingSection] = attributeToUpdate.name.split(':')
+
+              const repeatingSectionIds = Object.keys(
+                currentDependencyValues[repeatingSection]
+              )
+
+              return repeatingSectionIds.map((sectionID) => {
+                let updatedValue = attributeToUpdate.calculate(
+                  currentDependencyValues,
+                  attributeToUpdate.dependencies,
+                  sectionID
+                )
+
+                if (attributeToUpdate.format) {
+                  updatedValue = attributeToUpdate.format(updatedValue)
+                }
+
+                return {
+                  key: attributeToUpdate.name.replace(':', `_${sectionID}_`),
+                  value: updatedValue,
+                }
+              })
+            } else {
+              let updatedValue = attributeToUpdate.calculate(
+                currentDependencyValues,
+                attributeToUpdate.dependencies,
+                undefined
+              )
+
+              if (attributeToUpdate.format) {
+                updatedValue = attributeToUpdate.format(updatedValue)
+              }
+
+              return {
+                key: attributeToUpdate.name,
+                value: updatedValue,
+              }
             }
-
-            return [attributeToUpdate.name, updatedValue]
           })
+          .flat()
           .reduce(
-            (updatedAttributeMap, [key, value]) => ({
+            (updatedAttributeMap, { key, value }) => ({
               ...updatedAttributeMap,
               [key]: value,
             }),
@@ -226,14 +291,6 @@ export class ChangeNotifier {
   _validate(attribute) {
     validateAttribute(attribute)
 
-    attribute.dependencies.forEach((dependencyName) => {
-      if (!this.hasListener(dependencyName)) {
-        throw new Error(
-          `Dependency "${dependencyName}" must be added before it can be depended on.`
-        )
-      }
-    })
-
     return attribute
   }
 
@@ -253,6 +310,7 @@ export class ChangeNotifier {
 
       this.addListener(nestedAttributeName, {
         ...nestedAttribute,
+        repeating: true,
         name: nestedAttributeName,
       })
     })
@@ -277,6 +335,16 @@ export class ChangeNotifier {
   }
 
   start() {
+    this.listeners.forEach((attribute) => {
+      attribute.dependencies.forEach((dependencyName) => {
+        if (!this.hasListener(dependencyName.replace(':$:', ':'))) {
+          throw new Error(
+            `Dependency "${dependencyName}" must be added before it can be depended on.`
+          )
+        }
+      })
+    })
+
     // Register all attribute handlers
     this.listeners.forEach((_, attributeName) => {
       roll20.addEventListener(`change:${attributeName}`, (event) =>

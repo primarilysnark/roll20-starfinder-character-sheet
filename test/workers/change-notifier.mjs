@@ -62,17 +62,6 @@ describe('ChangeNotifier', function () {
           dependencies: ['dependable_attribute'],
         })
       })
-
-      it('should throw when registering a new calculated attribute with missing dependency', function () {
-        should.throws(
-          () =>
-            subject.addListener('attribute_name', {
-              calculate: () => {},
-              dependencies: ['missing_attribute'],
-            }),
-          /Dependency "missing_attribute" must be added before it can be depended on./
-        )
-      })
     })
   })
 
@@ -133,6 +122,12 @@ describe('ChangeNotifier', function () {
             format: td.func(),
             parse: td.func(),
           },
+          dependent_nested_attribute: {
+            format: td.func(),
+            parse: td.func(),
+            calculate: td.func(),
+            dependencies: ['repeating_sections:$:nested_attribute'],
+          },
         }
 
         dependencyAttribute = {
@@ -171,7 +166,8 @@ describe('ChangeNotifier', function () {
                 },
               },
             },
-            dependencyAttribute.dependencies
+            dependencyAttribute.dependencies,
+            undefined
           )
         ).thenReturn('new dependency value')
 
@@ -184,6 +180,79 @@ describe('ChangeNotifier', function () {
           () => {
             td.verify(
               roll20Double.setAttributes({
+                [dependencyAttribute.name]: 'new dependency value',
+              })
+            )
+          }
+        )
+      })
+
+      it('should support dependencies between repeating section fields', function () {
+        td.when(
+          repeatingSection.nested_attribute.parse('new value')
+        ).thenReturn('new parsed value')
+
+        td.when(
+          roll20Double.getAttributes([
+            'repeating_sections:-testid:nested_attribute',
+            'repeating_sections:nested_attribute',
+          ])
+        ).thenCallback({
+          'repeating_sections:nested_attribute': ['new value'],
+          repeating_sections: {
+            '-testid': {
+              nested_attribute: 'new value',
+            },
+          },
+        })
+
+        td.when(
+          dependencyAttribute.calculate(
+            {
+              'repeating_sections:nested_attribute': ['new parsed value'],
+              repeating_sections: {
+                '-testid': {
+                  nested_attribute: 'new parsed value',
+                },
+              },
+            },
+            dependencyAttribute.dependencies,
+            undefined
+          )
+        ).thenReturn('new dependency value')
+
+        td.when(
+          repeatingSection.dependent_nested_attribute.calculate(
+            {
+              'repeating_sections:nested_attribute': ['new parsed value'],
+              repeating_sections: {
+                '-testid': {
+                  nested_attribute: 'new parsed value',
+                },
+              },
+            },
+            repeatingSection.dependent_nested_attribute.dependencies,
+            '-testid'
+          )
+        ).thenReturn('new nested dependency value')
+
+        td.when(
+          repeatingSection.dependent_nested_attribute.format(
+            'new nested dependency value'
+          )
+        ).thenReturn('new formatted nested dependency value')
+
+        subject._handleChangeEvent(
+          {
+            sourceAttribute: 'repeating_sections_-testid_nested_attribute',
+            newValue: 'new value',
+            previousValue: 'previous value',
+          },
+          () => {
+            td.verify(
+              roll20Double.setAttributes({
+                'repeating_sections_-testid_dependent_nested_attribute':
+                  'new formatted nested dependency value',
                 [dependencyAttribute.name]: 'new dependency value',
               })
             )
@@ -237,7 +306,8 @@ describe('ChangeNotifier', function () {
           {
             [baseAttribute.name]: 'new base value',
           },
-          calculatedAttribute.dependencies
+          calculatedAttribute.dependencies,
+          undefined
         )
       ).thenReturn('new calculated value')
 

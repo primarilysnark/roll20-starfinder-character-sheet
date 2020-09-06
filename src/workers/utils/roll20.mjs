@@ -33,9 +33,12 @@ export const getAttributes = (names, callback) => {
     .filter(isNestedAttribute)
     .map((name) => name.split(':'))
     .reduce(
-      (acc, [repeatingSection, attribute]) => ({
+      (acc, [repeatingSection, attributeOrId, attribute]) => ({
         ...acc,
-        [repeatingSection]: [...(acc[repeatingSection] || []), attribute],
+        [repeatingSection]: [
+          ...(acc[repeatingSection] || []),
+          attribute || attributeOrId,
+        ],
       }),
       {}
     )
