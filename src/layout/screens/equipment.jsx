@@ -82,31 +82,35 @@ function EquipmentScreen() {
                   <Grid.FullWidth>
                     <Grid>
                       <Grid.Header>
-                        <Grid.Label size="10fr">Type</Grid.Label>
-                        <Grid.Label size="11fr">Name</Grid.Label>
-                        <Grid.Label size="4fr">Attack Mod</Grid.Label>
-                        <Grid.Spacer size="4px" />
-                        <Grid.Label size="4fr">Misc Bonus</Grid.Label>
+                        <Grid.Label align="left" size="7fr">
+                          Name
+                        </Grid.Label>
+                        <Grid.Label align="left" size="3fr">
+                          Type
+                        </Grid.Label>
                       </Grid.Header>
 
                       <Grid.Row>
                         <Grid.Input
-                          attribute="attr_weapon_attack_type"
+                          align="left"
+                          attribute="attr_weapon_name"
+                          placeholder="e.g. Flash Compliance Ray"
+                        />
+                        <Grid.Input
+                          attribute="attr_weapon_type"
                           options={[
                             '',
                             'Advanced Melee',
                             'Basic Melee',
-                            'Entropic Strike (DEX)',
-                            'Entropic Strike (STR)',
+                            'Entropic Strike',
                             'Grenade',
                             'Heavy Weapon',
                             'Longarm',
-                            'Operative (DEX)',
-                            'Operative (STR)',
+                            'Operative',
                             'Small Arm',
                             'Sniper',
-                            'Solarian Weapon (DEX)',
-                            'Solarian Weapon (STR)',
+                            'Solarian Weapon',
+                            'Unarmed Strike',
                             'Custom (Non-Proficient)',
                             'Custom (Proficient)',
                             'Custom (Specialized)',
@@ -114,13 +118,43 @@ function EquipmentScreen() {
                           ]}
                           type="select"
                         />
+
+                        <Grid.FloatButton name="weapon_edit_mode">
+                          <IconButton
+                            attribute={`attr_weapon_edit_mode`}
+                            icon="y"
+                            title="Edit weapon"
+                          />
+                        </Grid.FloatButton>
+                      </Grid.Row>
+                    </Grid>
+
+                    <Grid>
+                      <Grid.Header>
+                        <Grid.Spacer size="100px" />
+                        <Grid.Label size="3fr">Attack Type</Grid.Label>
+                        <Grid.Label size="2fr">Total</Grid.Label>
+                        <Grid.Spacer size="4px" />
+                        <Grid.Label size="2fr">Attack Mod</Grid.Label>
+                        <Grid.Spacer size="4px" />
+                        <Grid.Label size="2fr">Misc Bonus</Grid.Label>
+                      </Grid.Header>
+
+                      <Grid.Row>
+                        <Grid.BlockLabel>Attack</Grid.BlockLabel>
                         <Grid.Input
-                          align="left"
-                          attribute="attr_weapon_name"
-                          placeholder="e.g. Flash Compliance Ray"
+                          attribute="attr_weapon_attack_type"
+                          options={['', 'Melee', 'Ranged', 'Thrown']}
+                          type="select"
                         />
+
                         <Grid.Input
                           attribute="attr_weapon_attack_mod"
+                          disabled
+                        />
+                        <Grid.Label>=</Grid.Label>
+                        <Grid.Input
+                          attribute="attr_weapon_attack_type_mod"
                           disabled
                         />
                         <Grid.Label>+</Grid.Label>
@@ -130,36 +164,60 @@ function EquipmentScreen() {
 
                     <Grid>
                       <Grid.Header>
-                        <Grid.Label size="2fr">Damage</Grid.Label>
-                        <Grid.Label size="1fr">Damage Type</Grid.Label>
-                        <Grid.Label size="4fr">Special</Grid.Label>
+                        <Grid.Spacer size="100px" />
+                        <Grid.Label size="3fr">Damage Type</Grid.Label>
+                        <Grid.Label size="2fr">Base Damage</Grid.Label>
+                        <Grid.Spacer size="4px" />
+                        <Grid.Label size="2fr">Specialization</Grid.Label>
+                        <Grid.Spacer size="4px" />
+                        <Grid.Label size="2fr">Attribute</Grid.Label>
                       </Grid.Header>
 
                       <Grid.Row>
-                        <Grid.Input
-                          attribute="attr_weapon_damage"
-                          placeholder="e.g. 1d6"
-                        />
+                        <Grid.BlockLabel>Damage</Grid.BlockLabel>
                         <Grid.Input
                           attribute="attr_weapon_damage_type"
                           placeholder="e.g. fire"
                         />
                         <Grid.Input
-                          attribute="attr_weapon_special"
-                          placeholder="e.g. unwieldy"
+                          attribute="attr_weapon_damage_base"
+                          placeholder="e.g. 1d6"
+                        />
+                        <Grid.Label>+</Grid.Label>
+                        <Grid.Input
+                          attribute="attr_weapon_damage_specialization"
+                          disabled
+                        />
+                        <Grid.Label>+</Grid.Label>
+                        <Grid.Input
+                          attribute="attr_weapon_damage_attribute"
+                          options={[
+                            '',
+                            'STR',
+                            'DEX',
+                            'CON',
+                            'INT',
+                            'WIS',
+                            'CHA',
+                          ]}
+                          type="select"
                         />
                       </Grid.Row>
                     </Grid>
 
                     <Grid>
                       <Grid.Header>
-                        <Grid.Label size="2fr">Effect</Grid.Label>
-                        <Grid.Label size="2fr">Critical Effect</Grid.Label>
-                        <Grid.Label size="1fr">Usage</Grid.Label>
-                        <Grid.Label size="1fr">Capacty</Grid.Label>
+                        <Grid.Spacer size="100px" />
+                        <Grid.Label align="left" size="1fr">
+                          Effect
+                        </Grid.Label>
+                        <Grid.Label align="left" size="1fr">
+                          Critical Effect
+                        </Grid.Label>
                       </Grid.Header>
 
                       <Grid.Row>
+                        <Grid.Spacer />
                         <Grid.Input
                           attribute="attr_weapon_effect"
                           placeholder="e.g. first arc [[1d6]]"
@@ -168,6 +226,41 @@ function EquipmentScreen() {
                           attribute="attr_weapon_critical_effect"
                           placeholder="e.g. bleed [[4d6]]"
                         />
+                      </Grid.Row>
+                    </Grid>
+
+                    <Grid>
+                      <Grid.Header>
+                        <Grid.Spacer size="100px" />
+                        <Grid.Label align="left" size="4fr">
+                          Special
+                        </Grid.Label>
+                        <Grid.Label size="1fr">Level</Grid.Label>
+                      </Grid.Header>
+
+                      <Grid.Row>
+                        <Grid.BlockLabel>Details</Grid.BlockLabel>
+                        <Grid.Input
+                          attribute="attr_weapon_special"
+                          placeholder="e.g. unwield"
+                        />
+                        <Grid.Input attribute="attr_weapon_level" />
+                      </Grid.Row>
+                    </Grid>
+
+                    <Grid>
+                      <Grid.Header>
+                        <Grid.Spacer size="100px" />
+                        <Grid.Label size="1fr">Weight</Grid.Label>
+                        <Grid.Label size="1fr">Range</Grid.Label>
+                        <Grid.Label size="1fr">Usage</Grid.Label>
+                        <Grid.Label size="1fr">Capacity</Grid.Label>
+                      </Grid.Header>
+
+                      <Grid.Row>
+                        <Grid.Spacer />
+                        <Grid.Input attribute="attr_weapon_weight" />
+                        <Grid.Input attribute="attr_weapon_range" />
                         <Grid.Input attribute="attr_weapon_usage" />
                         <Grid.Input attribute="attr_weapon_capacity" />
                       </Grid.Row>
@@ -177,9 +270,11 @@ function EquipmentScreen() {
 
                 <div className="grid-layout__repeating">
                   <Grid.Row>
-                    <Grid.BlockLabel>Ranged</Grid.BlockLabel>
+                    <Grid.BlockLabel>
+                      <span name="attr_weapon_attack_type" />
+                    </Grid.BlockLabel>
                     <Grid.Input disabled attribute="attr_weapon_name" />
-                    <Grid.Input disabled defaultValue="+5" />
+                    <Grid.Input disabled attribute="attr_weapon_attack_mod" />
                     <Grid.Input disabled defaultValue="1d8+3 fire" />
                     <Grid.Input disabled defaultValue="19 / 20" />
                     <Grid.FloatButton name="weapon_edit_mode">

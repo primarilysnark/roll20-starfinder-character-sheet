@@ -148,24 +148,17 @@ notifier.addNestedListener('repeating_armors', {
 
 notifier.addNestedListener('repeating_weapons', {
   weapon_attack_type: commonFormats.string,
-  weapon_attack_mod: {
+  weapon_attack_type_mod: {
     ...commonFormats.integer,
     calculate: (values, _dependencies, sectionID) => {
       switch (values.repeating_weapons[sectionID].weapon_attack_type) {
-        case 'Advanced Melee':
-        case 'Basic Melee':
-        case 'Entropic Strike (STR)':
-        case 'Operative (STR)':
-        case 'Solarian Weapon (STR)':
+        case 'Melee':
           return values.melee_attack_mod
 
-        case 'Grenade':
+        case 'Thrown':
           return values.thrown_attack_mod
 
-        case 'Heavy Weapon':
-        case 'Longarm':
-        case 'Small Arm':
-        case 'Sniper':
+        case 'Ranged':
           return values.ranged_attack_mod
 
         default:
@@ -179,6 +172,74 @@ notifier.addNestedListener('repeating_weapons', {
       'thrown_attack_mod',
     ],
   },
+  weapon_attack_misc: commonFormats.integer,
+  weapon_attack_mod: {
+    ...commonFormats.integer,
+    calculate: (values, _dependencies, sectionID) => {
+      return (
+        values.repeating_weapons[sectionID].weapon_attack_type_mod +
+        values.repeating_weapons[sectionID].weapon_attack_misc
+      )
+    },
+    dependencies: [
+      'repeating_weapons:$:weapon_attack_type_mod',
+      'repeating_weapons:$:weapon_attack_misc',
+    ],
+  },
+
+  weapon_damage_type: commonFormats.string,
+  weapon_damage_base: commonFormats.string,
+  weapon_damage_specialization: {
+    ...commonFormats.integer,
+    // calculate: () => '',
+    // dependencies: [],
+  },
+  weapon_damage_attribute: commonFormats.string,
+  weapon_damage_attribute_mod: {
+    ...commonFormats.integer,
+    calculate: (values, _dependencies, sectionID) => {
+      switch (values.repeating_weapons[sectionID].weapon_damage_attribute) {
+        case 'STR':
+          return values.strength_mod
+
+        case 'DEX':
+          return values.dexterity_mod
+
+        case 'CON':
+          return values.constitution_mod
+
+        case 'INT':
+          return values.intelligence_mod
+
+        case 'WIS':
+          return values.wisdom_mod
+
+        case 'CHA':
+          return values.charisma_mod
+
+        default:
+          return '0'
+      }
+    },
+    dependencies: [
+      'repeating_weapons:$:weapon_damage_attribute',
+      'strength_mod',
+      'dexterity_mod',
+      'constitution_mod',
+      'intelligence_mod',
+      'wisdom_mod',
+      'charisma_mod',
+    ],
+  },
+
+  weapon_capacity: commonFormats.integer,
+  weapon_critical_effect: commonFormats.string,
+  weapon_effect: commonFormats.string,
+  weapon_level: commonFormats.integer,
+  weapon_range: commonFormats.string,
+  weapon_special: commonFormats.string,
+  weapon_usage: commonFormats.integer,
+  weapon_weight: commonFormats.bulk,
 })
 
 /* Character screen */
