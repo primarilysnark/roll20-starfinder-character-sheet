@@ -167,4 +167,192 @@ describe('Formatters', function () {
       })
     })
   })
+
+  describe('Damage', function () {
+    describe('#parse', function () {
+      it('should parse standard dice notation', function () {
+        const result = subject.parseDamage('1d6')
+
+        should(result).deepEqual([
+          {
+            operation: 'addition',
+            count: 1,
+            size: 6,
+            type: 'dice',
+          },
+        ])
+      })
+
+      it('should parse multiple dice', function () {
+        const result = subject.parseDamage('1d6 + 2d8')
+
+        should(result).deepEqual([
+          {
+            operation: 'addition',
+            count: 1,
+            size: 6,
+            type: 'dice',
+          },
+          {
+            operation: 'addition',
+            count: 2,
+            size: 8,
+            type: 'dice',
+          },
+        ])
+      })
+
+      it('should parse typed dice', function () {
+        const result = subject.parseDamage('1d6 + 2d8[SPEC]')
+
+        should(result).deepEqual([
+          {
+            operation: 'addition',
+            count: 1,
+            size: 6,
+            type: 'dice',
+          },
+          {
+            operation: 'addition',
+            kind: 'SPEC',
+            count: 2,
+            size: 8,
+            type: 'dice',
+          },
+        ])
+      })
+
+      it('should parse ignoring spaces', function () {
+        const result = subject.parseDamage('1d6+  2d8')
+
+        should(result).deepEqual([
+          {
+            operation: 'addition',
+            count: 1,
+            size: 6,
+            type: 'dice',
+          },
+          {
+            operation: 'addition',
+            count: 2,
+            size: 8,
+            type: 'dice',
+          },
+        ])
+      })
+
+      it('should parse untyped modifiers', function () {
+        const result = subject.parseDamage('1d6 + 3')
+
+        should(result).deepEqual([
+          {
+            operation: 'addition',
+            count: 1,
+            size: 6,
+            type: 'dice',
+          },
+          {
+            operation: 'addition',
+            size: 3,
+            type: 'modifier',
+          },
+        ])
+      })
+
+      it('should parse typed modifiers', function () {
+        const result = subject.parseDamage('1d6 + 4[SPEC]')
+
+        should(result).deepEqual([
+          {
+            operation: 'addition',
+            count: 1,
+            size: 6,
+            type: 'dice',
+          },
+          {
+            operation: 'addition',
+            kind: 'SPEC',
+            size: 4,
+            type: 'modifier',
+          },
+        ])
+      })
+
+      it('should parse negative operations', function () {
+        const result = subject.parseDamage('1d6 - 4')
+
+        should(result).deepEqual([
+          {
+            operation: 'addition',
+            count: 1,
+            size: 6,
+            type: 'dice',
+          },
+          {
+            operation: 'subtraction',
+            size: 4,
+            type: 'modifier',
+          },
+        ])
+      })
+    })
+
+    describe('#format', function () {
+      it('should format standard dice notation', function () {
+        const result = subject.formatDamage([
+          {
+            operation: 'addition',
+            count: 1,
+            size: 6,
+            type: 'dice',
+          },
+          {
+            operation: 'addition',
+            size: 4,
+            type: 'modifier',
+          },
+        ])
+
+        should(result).equal('1d6 + 4')
+      })
+
+      it('should format negative dice notation', function () {
+        const result = subject.formatDamage([
+          {
+            operation: 'addition',
+            count: 1,
+            size: 6,
+            type: 'dice',
+          },
+          {
+            operation: 'subtraction',
+            size: 4,
+            type: 'modifier',
+          },
+        ])
+
+        should(result).equal('1d6 - 4')
+      })
+
+      it('should format typed dice notation', function () {
+        const result = subject.formatDamage([
+          {
+            operation: 'addition',
+            count: 1,
+            size: 6,
+            kind: 'WEAPON',
+            type: 'dice',
+          },
+          {
+            operation: 'addition',
+            size: 4,
+            kind: 'SPEC',
+            type: 'modifier',
+          },
+        ])
+
+        should(result).equal('1d6[WEAPON] + 4[SPEC]')
+      })
+    })
+  })
 })
