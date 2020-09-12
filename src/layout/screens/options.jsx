@@ -134,6 +134,106 @@ function OptionsScreen() {
             </Grid>
           </SectionBlock>
 
+          <SectionBlock title="Proficiencies and Specializations">
+            <Grid>
+              <Grid.Header>
+                <Grid.Label align="left" size="3fr">
+                  Category
+                </Grid.Label>
+                <Grid.Label size="4fr">Proficiency</Grid.Label>
+                <Grid.Spacer size="10px" />
+                <Grid.Label align="left" size="3fr">
+                  Category
+                </Grid.Label>
+                <Grid.Label size="4fr">Proficiency</Grid.Label>
+              </Grid.Header>
+
+              <Grid.Row>
+                <Grid.Label>Light Armor</Grid.Label>
+                <Grid.Input
+                  attribute="attr_proficiency_light_armor"
+                  options={['Not Proficient', 'Proficient']}
+                  type="select"
+                />
+                <Grid.Spacer />
+                <Grid.Label>Powered Armor</Grid.Label>
+                <Grid.Input
+                  attribute="attr_proficiency_powered_armor"
+                  options={['Not Proficient', 'Proficient']}
+                  type="select"
+                />
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Label>Heavy Armor</Grid.Label>
+                <Grid.Input
+                  attribute="attr_proficiency_heavy_armor"
+                  options={['Not Proficient', 'Proficient']}
+                  type="select"
+                />
+              </Grid.Row>
+
+              <Grid.Separator />
+
+              <Grid.Row>
+                <Grid.Label>Advanced Melee</Grid.Label>
+                <Grid.Input
+                  attribute="attr_proficiency_advanced_melee"
+                  options={['Not Proficient', 'Proficient', 'Specialized']}
+                  type="select"
+                />
+                <Grid.Spacer />
+                <Grid.Label>Longarms</Grid.Label>
+                <Grid.Input
+                  attribute="attr_proficiency_longarms"
+                  options={['Not Proficient', 'Proficient', 'Specialized']}
+                  type="select"
+                />
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Label>Basic Melee</Grid.Label>
+                <Grid.Input
+                  attribute="attr_proficiency_basic_melee"
+                  options={['Not Proficient', 'Proficient', 'Specialized']}
+                  type="select"
+                />
+                <Grid.Spacer />
+                <Grid.Label>Small Arms</Grid.Label>
+                <Grid.Input
+                  attribute="attr_proficiency_small_arms"
+                  options={['Not Proficient', 'Proficient', 'Specialized']}
+                  type="select"
+                />
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Label>Grenades</Grid.Label>
+                <Grid.Input
+                  attribute="attr_proficiency_grenades"
+                  options={['Not Proficient', 'Proficient', 'Specialized']}
+                  type="select"
+                />
+                <Grid.Spacer />
+                <Grid.Label>Snipers</Grid.Label>
+                <Grid.Input
+                  attribute="attr_proficiency_snipers"
+                  options={['Not Proficient', 'Proficient', 'Specialized']}
+                  type="select"
+                />
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Label>Heavy Weapons</Grid.Label>
+                <Grid.Input
+                  attribute="attr_proficiency_heavy_weapons"
+                  options={['Not Proficient', 'Proficient', 'Specialized']}
+                  type="select"
+                />
+              </Grid.Row>
+            </Grid>
+          </SectionBlock>
+
           <SectionBlock title="Rolls">
             <Grid>
               <Grid.Header>
