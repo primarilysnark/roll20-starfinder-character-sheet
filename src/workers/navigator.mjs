@@ -18,7 +18,7 @@ export const Navigator = {
       roll20.setAttributes(
         {
           error_message: '',
-          show_error: formatters.formatBoolean(false),
+          show_error: formatters.boolean.format(false),
         },
         {
           silent: true,
@@ -30,7 +30,7 @@ export const Navigator = {
     roll20.setAttributes(
       {
         error_message: message,
-        show_error: formatters.formatBoolean(true),
+        show_error: formatters.boolean.format(true),
       },
       {
         silent: true,

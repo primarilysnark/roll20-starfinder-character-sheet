@@ -14,25 +14,25 @@ describe('Formatters', function () {
   describe('Booleans', function () {
     describe('#parse', function () {
       it('should parse "1" to true', function () {
-        const result = subject.parseBoolean('1')
+        const result = subject.boolean.parse('1')
 
         should(result).equal(true)
       })
 
       it('should parse "0" to false', function () {
-        const result = subject.parseBoolean('0')
+        const result = subject.boolean.parse('0')
 
         should(result).equal(false)
       })
 
       it('should parse empty to null', function () {
-        const result = subject.parseBoolean('')
+        const result = subject.boolean.parse('')
 
         should(result).equal(null)
       })
 
       it('should parse null to null', function () {
-        const result = subject.parseBoolean(null)
+        const result = subject.boolean.parse(null)
 
         should(result).equal(null)
       })
@@ -40,19 +40,19 @@ describe('Formatters', function () {
 
     describe('#format', function () {
       it('should format true to "1"', function () {
-        const result = subject.formatBoolean(true)
+        const result = subject.boolean.format(true)
 
         should(result).equal('1')
       })
 
       it('should format false to "0"', function () {
-        const result = subject.formatBoolean(false)
+        const result = subject.boolean.format(false)
 
         should(result).equal('0')
       })
 
       it('should format null to ""', function () {
-        const result = subject.formatBoolean(null)
+        const result = subject.boolean.format(null)
 
         should(result).equal('')
       })
@@ -62,38 +62,38 @@ describe('Formatters', function () {
   describe('Integers', function () {
     describe('#parse', function () {
       it('should parse null to null', function () {
-        const result = subject.parseInteger(null)
+        const result = subject.integer.parse(null)
 
         should(result).equal(null)
       })
 
       it('should parse empty to null', function () {
-        const result = subject.parseInteger('')
+        const result = subject.integer.parse('')
 
         should(result).equal(null)
       })
 
       it('should parse a provided integer', function () {
-        const result = subject.parseInteger('123')
+        const result = subject.integer.parse('123')
 
         should(result).equal(123)
       })
 
       it('should parse a number for a number', function () {
-        const result = subject.parseInteger(456)
+        const result = subject.integer.parse(456)
 
         should(result).equal(456)
       })
 
       it('should parse a rounded integer for a double', function () {
-        const result = subject.parseInteger('456.2')
+        const result = subject.integer.parse('456.2')
 
         should(result).equal(456)
       })
 
       it('should throw for an invalid integer', function () {
         should.throws(
-          () => subject.parseInteger('asdf'),
+          () => subject.integer.parse('asdf'),
           /Provided value must be an integer number./
         )
       })
@@ -101,7 +101,7 @@ describe('Formatters', function () {
 
     describe('#format', function () {
       it('should format integer to string', function () {
-        const result = subject.formatInteger(123)
+        const result = subject.integer.format(123)
 
         should(result).equal('123')
       })
@@ -111,37 +111,37 @@ describe('Formatters', function () {
   describe('Modifiers', function () {
     describe('#parse', function () {
       it('should parse null to null', function () {
-        const result = subject.parseModifier(null)
+        const result = subject.modifier.parse(null)
 
         should(result).equal(null)
       })
 
       it('should parse empty to null', function () {
-        const result = subject.parseModifier('')
+        const result = subject.modifier.parse('')
 
         should(result).equal(null)
       })
 
       it('should parse number to number', function () {
-        const result = subject.parseModifier(3)
+        const result = subject.modifier.parse(3)
 
         should(result).equal(3)
       })
 
       it('should parse positive modifier to number', function () {
-        const result = subject.parseModifier('+4')
+        const result = subject.modifier.parse('+4')
 
         should(result).equal(4)
       })
 
       it('should parse negative modifier to number', function () {
-        const result = subject.parseModifier('–2')
+        const result = subject.modifier.parse('–2')
 
         should(result).equal(-2)
       })
 
       it('should parse zero modifier to number', function () {
-        const result = subject.parseModifier('0')
+        const result = subject.modifier.parse('0')
 
         should(result).equal(0)
       })
@@ -149,19 +149,19 @@ describe('Formatters', function () {
 
     describe('#format', function () {
       it('should format positive number to positive modifier', function () {
-        const result = subject.formatModifier(4)
+        const result = subject.modifier.format(4)
 
         should(result).equal('+4')
       })
 
       it('should format negative number to negative modifier', function () {
-        const result = subject.formatModifier(-3)
+        const result = subject.modifier.format(-3)
 
         should(result).equal('–3')
       })
 
       it('should format zero number to zero modifier', function () {
-        const result = subject.formatModifier(0)
+        const result = subject.modifier.format(0)
 
         should(result).equal('0')
       })
@@ -171,7 +171,7 @@ describe('Formatters', function () {
   describe('Damage', function () {
     describe('#parse', function () {
       it('should parse standard dice notation', function () {
-        const result = subject.parseDamage('1d6')
+        const result = subject.damage.parse('1d6')
 
         should(result).deepEqual([
           {
@@ -184,7 +184,7 @@ describe('Formatters', function () {
       })
 
       it('should parse multiple dice', function () {
-        const result = subject.parseDamage('1d6 + 2d8')
+        const result = subject.damage.parse('1d6 + 2d8')
 
         should(result).deepEqual([
           {
@@ -203,7 +203,7 @@ describe('Formatters', function () {
       })
 
       it('should parse typed dice', function () {
-        const result = subject.parseDamage('1d6 + 2d8[SPEC]')
+        const result = subject.damage.parse('1d6 + 2d8[INSIGHT]')
 
         should(result).deepEqual([
           {
@@ -214,7 +214,7 @@ describe('Formatters', function () {
           },
           {
             operation: 'addition',
-            kind: 'SPEC',
+            kind: 'INSIGHT',
             count: 2,
             size: 8,
             type: 'dice',
@@ -223,7 +223,7 @@ describe('Formatters', function () {
       })
 
       it('should parse ignoring spaces', function () {
-        const result = subject.parseDamage('1d6+  2d8')
+        const result = subject.damage.parse('1d6+  2d8')
 
         should(result).deepEqual([
           {
@@ -242,7 +242,7 @@ describe('Formatters', function () {
       })
 
       it('should parse untyped modifiers', function () {
-        const result = subject.parseDamage('1d6 + 3')
+        const result = subject.damage.parse('1d6 + 3')
 
         should(result).deepEqual([
           {
@@ -253,14 +253,14 @@ describe('Formatters', function () {
           },
           {
             operation: 'addition',
-            size: 3,
+            count: 3,
             type: 'modifier',
           },
         ])
       })
 
       it('should parse typed modifiers', function () {
-        const result = subject.parseDamage('1d6 + 4[SPEC]')
+        const result = subject.damage.parse('1d6 + 4[INSIGHT]')
 
         should(result).deepEqual([
           {
@@ -271,15 +271,15 @@ describe('Formatters', function () {
           },
           {
             operation: 'addition',
-            kind: 'SPEC',
-            size: 4,
+            kind: 'INSIGHT',
+            count: 4,
             type: 'modifier',
           },
         ])
       })
 
       it('should parse negative operations', function () {
-        const result = subject.parseDamage('1d6 - 4')
+        const result = subject.damage.parse('1d6 - 4')
 
         should(result).deepEqual([
           {
@@ -290,7 +290,7 @@ describe('Formatters', function () {
           },
           {
             operation: 'subtraction',
-            size: 4,
+            count: 4,
             type: 'modifier',
           },
         ])
@@ -299,7 +299,7 @@ describe('Formatters', function () {
 
     describe('#format', function () {
       it('should format standard dice notation', function () {
-        const result = subject.formatDamage([
+        const result = subject.damage.format([
           {
             operation: 'addition',
             count: 1,
@@ -308,7 +308,7 @@ describe('Formatters', function () {
           },
           {
             operation: 'addition',
-            size: 4,
+            count: 4,
             type: 'modifier',
           },
         ])
@@ -317,7 +317,7 @@ describe('Formatters', function () {
       })
 
       it('should format negative dice notation', function () {
-        const result = subject.formatDamage([
+        const result = subject.damage.format([
           {
             operation: 'addition',
             count: 1,
@@ -326,7 +326,7 @@ describe('Formatters', function () {
           },
           {
             operation: 'subtraction',
-            size: 4,
+            count: 4,
             type: 'modifier',
           },
         ])
@@ -335,7 +335,7 @@ describe('Formatters', function () {
       })
 
       it('should format typed dice notation', function () {
-        const result = subject.formatDamage([
+        const result = subject.damage.format([
           {
             operation: 'addition',
             count: 1,
@@ -345,13 +345,13 @@ describe('Formatters', function () {
           },
           {
             operation: 'addition',
-            size: 4,
-            kind: 'SPEC',
+            count: 4,
+            kind: 'INSIGHT',
             type: 'modifier',
           },
         ])
 
-        should(result).equal('1d6[WEAPON] + 4[SPEC]')
+        should(result).equal('1d6[WEAPON] + 4[INSIGHT]')
       })
     })
   })
