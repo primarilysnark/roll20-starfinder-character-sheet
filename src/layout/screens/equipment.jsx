@@ -16,8 +16,8 @@ function EquipmentScreen() {
             <Grid.Label size="2.75fr">Type</Grid.Label>
             <Grid.Label size="1fr">EAC Bonus</Grid.Label>
             <Grid.Label size="1fr">KAC Bonus</Grid.Label>
-            <Grid.Label size="2.5fr">Maximum Dexterity Bonus</Grid.Label>
-            <Grid.Label size="2fr">Armor Check Penalty</Grid.Label>
+            <Grid.Label size="2.5fr">Maximum Dex Bonus</Grid.Label>
+            <Grid.Label size="2fr">Armor Check</Grid.Label>
             <Grid.Label size="1.25fr">Speed</Grid.Label>
             <Grid.Label size="2fr">Upgrade Slots</Grid.Label>
             <Grid.Label size="1fr">Bulk</Grid.Label>
