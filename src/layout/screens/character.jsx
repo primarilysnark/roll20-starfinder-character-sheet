@@ -131,7 +131,7 @@ function CharacterScreen() {
                   <Grid.Abbreviation
                     abbr={abbreviation}
                     name={`roll_${field.toLowerCase()}_check`}
-                    rollable={`1d20 + @{${field.toLowerCase()}_mod}[MOD]`}
+                    rollable={`1d20 + @{${field.toLowerCase()}_mod}[MOD] + @{rolls_query_ability}[QUERY]`}
                     rollName={field}
                   >
                     {field}
@@ -197,7 +197,7 @@ function CharacterScreen() {
                       <Grid.Label
                         flat
                         rollName={skill.name}
-                        rollable={`1d20 + @{skills_${attributeSkillName}_mod}`}
+                        rollable={`1d20 + @{skills_${attributeSkillName}_mod} + @{rolls_query_skills}[QUERY]`}
                         notes={`@{skills_${attributeSkillName}_notes}`}
                       >
                         {skill.name} (
@@ -295,7 +295,7 @@ function CharacterScreen() {
         <ColumnLayout.Column size="1fr">
           <SectionBlock
             rollName="initiative"
-            rollable="1d20 + @{initiative_bonus} &{tracker}"
+            rollable="1d20 + @{initiative_bonus} + @{rolls_query_initiative}[QUERY] &{tracker}"
             standalone
             title="Initiative"
           >
@@ -453,7 +453,7 @@ function CharacterScreen() {
                 />
                 <Grid.Abbreviation
                   abbr="Fortitude"
-                  rollable="1d20 + @{fortitude_save_mod}"
+                  rollable="1d20 + @{fortitude_save_mod}[MOD] + @{rolls_query_saving_throws}[QUERY]"
                   name="roll_fortitude_save"
                   notes="@{fortitude_notes}"
                 >
@@ -492,7 +492,7 @@ function CharacterScreen() {
                 <input name="attr_reflex_save_base" type="hidden" value="0" />
                 <Grid.Abbreviation
                   abbr="Reflex"
-                  rollable="1d20 + @{reflex_save_mod}"
+                  rollable="1d20 + @{reflex_save_mod}[MOD] + @{rolls_query_saving_throws}[QUERY]"
                   name="roll_reflex_save"
                   notes="@{reflex_notes}"
                 >
@@ -531,7 +531,7 @@ function CharacterScreen() {
                 <input name="attr_will_save_base" type="hidden" value="0" />
                 <Grid.Abbreviation
                   abbr="Will"
-                  rollable="1d20 + @{will_save_mod}"
+                  rollable="1d20 + @{will_save_mod}[MOD] + @{rolls_query_saving_throws}[QUERY]"
                   name="roll_will_save"
                   notes="@{will_notes}"
                 >

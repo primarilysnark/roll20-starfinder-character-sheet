@@ -266,12 +266,14 @@ function OptionsScreen() {
                   attribute="attr_rolls_query_ability"
                   compact
                   type="checkbox"
+                  defaultValue="?{Modifier|0}"
                 />
                 <Grid.Label compact>Ability checks</Grid.Label>
                 <Grid.Input
                   attribute="attr_rolls_query_initiative"
                   compact
                   type="checkbox"
+                  defaultValue="?{Modifier|0}"
                 />
                 <Grid.Label compact>Initiative checks</Grid.Label>
               </Grid.Row>
@@ -281,12 +283,14 @@ function OptionsScreen() {
                   attribute="attr_rolls_query_saving_throws"
                   compact
                   type="checkbox"
+                  defaultValue="?{Modifier|0}"
                 />
                 <Grid.Label compact>Saving throws</Grid.Label>
                 <Grid.Input
                   attribute="attr_rolls_query_skills"
                   compact
                   type="checkbox"
+                  defaultValue="?{Modifier|0}"
                 />
                 <Grid.Label compact>Skill checks</Grid.Label>
               </Grid.Row>
@@ -296,12 +300,14 @@ function OptionsScreen() {
                   attribute="attr_rolls_query_attack"
                   compact
                   type="checkbox"
+                  defaultValue="?{Modifier|0}"
                 />
                 <Grid.Label compact>Attack rolls</Grid.Label>
                 <Grid.Input
                   attribute="attr_rolls_query_damage"
                   compact
                   type="checkbox"
+                  defaultValue="?{Modifier|0}"
                 />
                 <Grid.Label compact>Damage rolls</Grid.Label>
               </Grid.Row>
