@@ -321,11 +321,13 @@ function OptionsScreen() {
                   Skill
                 </Grid.Label>
                 <Grid.Label size="3fr">Ability</Grid.Label>
+                <Grid.Label size="2rem">ACP</Grid.Label>
                 <Grid.Spacer size="1fr" />
                 <Grid.Label align="left" size="3fr">
                   Skill
                 </Grid.Label>
                 <Grid.Label size="3fr">Ability</Grid.Label>
+                <Grid.Label size="2rem">ACP</Grid.Label>
               </Grid.Header>
 
               {filteredSkills
@@ -355,6 +357,15 @@ function OptionsScreen() {
                         )}
                         type="select"
                       />
+                      <Grid.Input
+                        attribute={`attr_skills_${skill.name.replace(
+                          /\s/g,
+                          '_'
+                        )}_acp`}
+                        compact
+                        type="checkbox"
+                        defaultValue="@{acp_bonus}[ACP]"
+                      />
                       {skill2 ? (
                         <React.Fragment>
                           <Grid.Spacer />
@@ -376,6 +387,15 @@ function OptionsScreen() {
                               skill2.ability
                             )}
                             type="select"
+                          />
+                          <Grid.Input
+                            attribute={`attr_skills_${skill2.name.replace(
+                              /\s/g,
+                              '_'
+                            )}_acp`}
+                            compact
+                            type="checkbox"
+                            defaultValue="@{acp_bonus}[ACP]"
                           />
                         </React.Fragment>
                       ) : null}

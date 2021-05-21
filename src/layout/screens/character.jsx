@@ -197,7 +197,7 @@ function CharacterScreen() {
                       <Grid.Label
                         flat
                         rollName={skill.name}
-                        rollable={`1d20 + @{skills_${attributeSkillName}_mod} + @{rolls_query_skills}[QUERY]`}
+                        rollable={`1d20 + @{skills_${attributeSkillName}_mod} + @{rolls_query_skills}[QUERY] + @{skills_${attributeSkillName}_acp}`}
                         notes={`@{skills_${attributeSkillName}_notes}`}
                       >
                         {skill.name} (
@@ -206,7 +206,13 @@ function CharacterScreen() {
                           value={getAbbreviationForAttribute(skill.ability)}
                         />
                         ){skill.trainedOnly ? '*' : ''}{' '}
-                        {skill.armorCheckPenalty ? '¤' : ''}
+                        <input
+                          name={`attr_skills_${attributeSkillName}_acp`}
+                          type="hidden"
+                        />
+                        <span className="skill_armor_check_penalty_icon">
+                          ¤
+                        </span>
                       </Grid.Label>
                       <Grid.Input
                         attribute={`attr_skills_${attributeSkillName}_mod`}

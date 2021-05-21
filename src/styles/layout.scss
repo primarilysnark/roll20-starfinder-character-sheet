@@ -104,9 +104,9 @@
       }
     }
 
-    &--3fr-3fr-1fr-3fr-3fr {
+    &--3fr-3fr-2rem-1fr-3fr-3fr-2rem {
       .sheet-grid-layout__row {
-        grid-template-columns: 3fr 3fr 1fr 3fr 3fr;
+        grid-template-columns: 3fr 3fr 2rem 1fr 3fr 3fr 2rem;
       }
     }
 
@@ -575,4 +575,26 @@ input[name=attr_reflex_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet
 input[name=attr_will_show_notes][value="1"] ~ .sheet-grid-layout__hidden--will,
 input[name=attr_will_show_notes][value="1"] ~ .sheet-grid-layout__row > .sheet-grid-layout__float-button--will {
   display: block;
+}
+
+input[name=attr_skills_acrobatics_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_athletics_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_bluff_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_computers_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_culture_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_diplomacy_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_disguise_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_engineering_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_intimidate_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_life_science_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_medicine_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_mysticism_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_perception_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_physical_science_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_piloting_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_sense_motive_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_sleight_of_hand_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_stealth_acp][value="0"] + .sheet-skill_armor_check_penalty_icon,
+input[name=attr_skills_survival_acp][value="0"] + .sheet-skill_armor_check_penalty_icon {
+  display: none;
 }

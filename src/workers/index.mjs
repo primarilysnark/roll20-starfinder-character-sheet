@@ -114,6 +114,24 @@ notifier.addNestedListener('repeating_armors', {
   armor_level: formatters.integer,
   armor_price: formatters.integer,
 })
+notifier.addListener('acp_bonus', {
+  ...formatters.integer,
+  defaultValue: 0,
+  calculate: (values) =>
+    Object.values(values.repeating_armors || {})
+      .map((instance) => {
+        if (!instance.armor_equipped) {
+          return 0
+        }
+
+        return instance.armor_acp
+      })
+      .reduce((total, armorAcp) => total + armorAcp, 0),
+  dependencies: [
+    'repeating_armors:armor_acp',
+    'repeating_armors:armor_equipped',
+  ],
+})
 
 notifier.addNestedListener('repeating_weapons', {
   weapon_attack_type: formatters.string,
@@ -616,6 +634,10 @@ skills.forEach((skill) => {
     `skills_${attributeSkillName}_ability`,
     formatters.string
   )
+  notifier.addListener(`skills_${attributeSkillName}_acp`, {
+    ...formatters.string,
+    defaultValue: skill.armorCheckPenalty ? '@{acp_bonus}[ACP]' : '',
+  })
 
   notifier.addListener(`skills_${attributeSkillName}_mod`, {
     ...formatters.integer,
