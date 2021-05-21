@@ -39,7 +39,7 @@ function EquipmentScreen() {
               />
               <Grid.Input
                 attribute="attr_armor_type"
-                options={['', 'Light', 'Heavy', 'Powered', 'Shield']}
+                options={['', 'Light', 'Heavy', 'Powered', 'Shield', 'Misc']}
                 type="select"
               />
               <Grid.Input attribute="attr_armor_eac" type="text" />

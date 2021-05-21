@@ -249,8 +249,11 @@ notifier.addListener('initiative_bonus', {
 notifier.addListener('eac_misc', formatters.integer)
 notifier.addListener('eac_armor_bonus', {
   ...formatters.integer,
-  calculate: (values) =>
-    Object.values(values.repeating_armors || {})
+  calculate: (values) => {
+    const stackingBonus = Object.values(values.repeating_armors || {})
+      .filter((instance) =>
+        ['Shield', 'Misc', ''].includes(instance.armor_type)
+      )
       .map((instance) => {
         if (!instance.armor_equipped) {
           return 0
@@ -258,17 +261,40 @@ notifier.addListener('eac_armor_bonus', {
 
         return instance.armor_eac
       })
-      .reduce((total, armorEac) => total + armorEac, 0),
+      .reduce((total, currentArmorEac) => total + currentArmorEac, 0)
+
+    const exclusiveBonus = Object.values(values.repeating_armors || {})
+      .filter((instance) =>
+        ['Light', 'Heavy', 'Powered'].includes(instance.armor_type)
+      )
+      .map((instance) => {
+        if (!instance.armor_equipped) {
+          return 0
+        }
+
+        return instance.armor_eac
+      })
+      .reduce(
+        (highestEac, currentArmorEac) => Math.max(highestEac, currentArmorEac),
+        0
+      )
+
+    return stackingBonus + exclusiveBonus
+  },
   dependencies: [
-    'repeating_armors:armor_equipped',
     'repeating_armors:armor_eac',
+    'repeating_armors:armor_equipped',
+    'repeating_armors:armor_type',
   ],
 })
 notifier.addListener('kac_misc', formatters.integer)
 notifier.addListener('kac_armor_bonus', {
   ...formatters.integer,
-  calculate: (values) =>
-    Object.values(values.repeating_armors || {})
+  calculate: (values) => {
+    const stackingBonus = Object.values(values.repeating_armors || {})
+      .filter((instance) =>
+        ['Shield', 'Misc', ''].includes(instance.armor_type)
+      )
       .map((instance) => {
         if (!instance.armor_equipped) {
           return 0
@@ -276,10 +302,30 @@ notifier.addListener('kac_armor_bonus', {
 
         return instance.armor_kac
       })
-      .reduce((total, armorKac) => total + armorKac, 0),
+      .reduce((total, currentArmorKac) => total + currentArmorKac, 0)
+
+    const exclusiveBonus = Object.values(values.repeating_armors || {})
+      .filter((instance) =>
+        ['Light', 'Heavy', 'Powered'].includes(instance.armor_type)
+      )
+      .map((instance) => {
+        if (!instance.armor_equipped) {
+          return 0
+        }
+
+        return instance.armor_kac
+      })
+      .reduce(
+        (highestEac, currentArmorKac) => Math.max(highestEac, currentArmorKac),
+        0
+      )
+
+    return stackingBonus + exclusiveBonus
+  },
   dependencies: [
     'repeating_armors:armor_equipped',
     'repeating_armors:armor_kac',
+    'repeating_armors:armor_type',
   ],
 })
 notifier.addListener('dex_armor_bonus', {
